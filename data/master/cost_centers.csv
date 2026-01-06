@@ -1,0 +1,11 @@
+cost_center_code,cost_center_name,parent_code,level
+401,Operations & Maintenance,,1
+401-10,Fuel Costs,401,2
+401-20,O&M Expenses,401,2
+401-10-342,Fuel - Inventory,401-10,3
+401-10-350,Fuel - Delivered,401-10,3
+401-20-300,Admin & General,401-20,3
+401-20-320,Maintenance,401-20,3
+401-20-335,Outage,401-20,3
+401-20-370,I&C,401-20,3
+

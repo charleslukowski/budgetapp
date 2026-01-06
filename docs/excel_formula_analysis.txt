@@ -1,0 +1,2546 @@
+================================================================================
+EXCEL FORMULA ANALYSIS FOR FUEL COST CATEGORIES
+================================================================================
+
+
+================================================================================
+FILE: 2025 - Fuel.xlsx
+================================================================================
+
+Sheets found: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'YE']
+
+================================================================================
+FILE: OVEC IKEC Energy Budget- 2026 Year-End BOD Update- Final- (12-8-25).xlsm
+================================================================================
+
+Sheets found: ['__snloffice', 'GACD Export Control', 'GACD_Out', '2.0 Updates', 'Comments', 'CC Forecast Inputs', 'KC Forecast Inputs', 'Northern Appalachia Coal Fcst', 'Illinois Basin Coal Fcst', 'Urea Fcst', 'Limestone Mulzer', 'Limestone Hilltop', 'Allowance Costs', 'SYS Cost Summary', 'SYS Cost Detail', 'Coal Contracts Annual View', 'Coal Cost Analysis', 'AEP Upload', 'All-Years Cheat Sheet', 'All-Years Cheat Sheet (Print)', 'Cheat Sheet', 'Peak Calendar', 'Charts', 'Charting Data', 'OVEC Forward Spreads', 'KC Generation', 'KC Reliability', 'KC Coal Burn', 'KC Coal Supply', 'KC Emissions', 'KC Stone Supply', 'KC Consumables', 'KC Byproducts', 'CC Generation', 'CC Reliability', 'CC Coal Burn', 'CC Coal Supply', 'CC Emissions', 'CC Stone Supply', 'CC Consumables', 'CC Byproducts', 'Component Costs', 'Use Factor Input', 'Scenario Data Block']
+
+------------------------------------------------------------
+SHEET: Comments
+Size: 54 rows x 5 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: Worksheet
+       Row   2: KC Forecast Inputs
+       Row   3: KC Forecast Inputs
+       Row   4: KC Forecast Inputs
+       Row   5: KC Forecast Inputs
+       Row   6: CC Forecast Inputs
+       Row   7: CC Forecast Inputs
+       Row   8: SYS Cost Detail
+       Row  20: 8/2023 Inputs.
+       Row  21: KC Forecast Inputs
+       Row  22: CC Forecast Inputs
+       Row  23: ICS Deal added
+       Row  24: KC PRB
+       Row  25: KC and CC
+       Row  26: KC
+       Row  28: 9/18/2023 Inputs
+       Row  29: KC
+       Row  30: CC & KC
+       Row  32: 9/25/2023 inputs
+       Row  33: KC
+       Row  34: CC
+       Row  35: CC
+   *** Row  36: Storage updates
+       Row  39: KC
+       Row  40: KC
+       Row  42: Kyger
+       Row  43: CC
+       Row  45: CC
+       Row  46: CC
+   *** Row  49: Storage updates
+       Row  50: New Forecast
+
+Column Headers (Row 1):
+       Col A: Worksheet
+       Col B: Cell
+       Col C: Comment Link
+       Col D: Comment By
+       Col E: Comment
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 36: Storage updates
+    Categories: ['storage']
+    E36 (Comment): VALUE = KC all coal out of storage in 2024 - 4th quarter issue needs to be addressed min of 100K tons moved out.
+
+>>> Row 49: Storage updates
+    Categories: ['storage']
+    E49 (Comment): VALUE = updated storage costs based on new forecast - coal not coming out of storage in 2023, additional coal going into to storage in 2023.
+
+------------------------------------------------------------
+SHEET: KC Forecast Inputs
+Size: 428 rows x 79 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: Kyger Creek Inputs
+       Row   2: As Of:
+       Row   3: System Cost Summary Input
+   *** Row   4: Include Market Allowance Cost in Calculations and Reporting
+       Row   5: General Inflation
+       Row   6: Generation Inputs
+       Row   7: System Regulating Reserve - MW/H
+       Row   8: GSU XF Losses - %
+       Row   9: Kyger Reserve Carrying Percentage %
+       Row  10: Generation Year-to-Last Month (Actuals, MWh)
+       Row  11: Full Load - Net MW
+       Row  12: Min Load - Net MW
+       Row  13: FGD Aux Load
+       Row  15: Coal Supply Inputs
+       Row  17: Not Committed
+       Row  18: Annual Inflation for Uncommitted Coal Barging
+       Row  19: First Date for Available Uncommitted Coal (Market Availablity)
+       Row  20: Coal Inventory Target Days Available
+       Row  21: Max Monthly Uncommitted Coal Delivery Constraint (Thousand tons)
+       Row  23: Uncommitted Barging Costs
+       Row  24: Current Barging Value in Model
+       Row  25: Current Uncommitted Barging Value (Based on Contracted Coal)
+       Row  26: Uncommitted Barging Cost Override
+       Row  28: Contracted Coal (Contract Index #)
+       Row  30: Contract Start Date
+       Row  31: Contract End Date
+       Row  32: Months
+       Row  33: Thousand Tons
+       Row  34: Contracted Btu
+       Row  35: Contracted SO2
+       Row  36: Ash
+       Row  37: Coal $/ton
+       Row  38: Barge $/ton
+       Row  41: Contract Start Date
+       Row  42: Contract End Date
+       Row  43: Months
+       Row  44: Thousand Tons
+       Row  45: Contracted Btu
+       Row  46: Contracted SO2
+       Row  47: Ash
+       Row  48: Coal $/ton
+       Row  49: Barge $/ton
+       Row  51: Alliance 32-71-26-002
+       Row  52: Contract Start Date
+       Row  53: Contract End Date
+       Row  54: Months
+       Row  55: Thousand Tons
+       Row  56: Contracted Btu
+       Row  57: Contracted SO2
+       Row  58: Ash
+
+Column Headers (Row 1):
+       Col A: Kyger Creek Inputs
+       Col B: Do not enter date here. Use Button to update -->
+       Col H: Input Checksum:
+       Col I: =SUM(3:10104)
+       Col K: =I1=J1
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 4: Include Market Allowance Cost in Calculations and Reporting
+    Categories: ['allowance']
+    B4 (Do not enter date here. Use Button to update -->): VALUE = False
+    C4 (Col 3): VALUE = ** Rates on Allowance tab
+
+------------------------------------------------------------
+SHEET: Urea Fcst
+Size: 67 rows x 19 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   3: Example Calc provided by client:
+       Row  22: Futures:
+       Row  24: Kyger Creek
+       Row  35: Clifty Creek
+   *** Row  45: Urea (Granular) FOB U.S. Gulf Futures
+   *** Row  46: https://www.cmegroup.com/markets/agriculture/fertilizer/urea-granular-fob-us-gulf.quotes.html
+       Row  48: Month
+       Row  51: UFVN5
+       Row  53: UFVQ5
+       Row  55: UFVU5
+       Row  57: UFVV5
+       Row  59: UFVX5
+       Row  61: UFVZ5
+       Row  63: UFVF6
+       Row  65: UFVG6
+       Row  67: UFVH6
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 45: Urea (Granular) FOB U.S. Gulf Futures
+    Categories: ['urea']
+
+>>> Row 46: https://www.cmegroup.com/markets/agriculture/fertilizer/urea-granular-fob-us-gulf.quotes.html
+    Categories: ['urea']
+
+------------------------------------------------------------
+SHEET: Allowance Costs
+Size: 442 rows x 32 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   2: NOx Allowance Seasonal Group 3
+       Row   3: Series Type: Historical
+       Row   4: Source: SNL
+       Row   5: Location: CSAPR NOx
+   *** Row   6: Instrument: NOx Allowance Seasonal Group 3
+       Row   7: Forward Term: 2022
+       Row   8: Forward Strip As Of: 09/01/2022
+       Row   9: Measure: Price/Value
+   *** Row  10: Add Series: SNL Emissions Allowance CSAPR NOx NOx Allowance Seasonal Group 3 (Price/Value) - 2021, SNL Emissions Allowance CSAPR NOx NOx Allowance Seasonal Group 3 (Price/Value) - 2022
+       Row  11: Historical Period: 6 Months
+       Row  12: Time Zone: Eastern Time (US & Canada)
+       Row  13: Chart Type: Line
+       Row  14: Forward Term Duration: 3 Years
+       Row  16: Date
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 2: NOx Allowance Seasonal Group 3
+    Categories: ['allowance']
+
+>>> Row 6: Instrument: NOx Allowance Seasonal Group 3
+    Categories: ['allowance']
+
+>>> Row 10: Add Series: SNL Emissions Allowance CSAPR NOx NOx Allowance Seasonal Group 3 (Price/Value) - 2021, SNL Emissions Allowance CSAPR NOx NOx Allowance Seasonal Group 3 (Price/Value) - 2022
+    Categories: ['allowance']
+
+------------------------------------------------------------
+SHEET: SYS Cost Summary
+Size: 74 rows x 16 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: Ohio Valley Electric Corporation
+       Row   2: =_xlfn.CONCAT("Calendar Years ",TEXT(B7,"0")," - ",TEXT(MAX(7:7),"0"))
+       Row   3: in thousands of dollars
+       Row   8: Generation Sales
+       Row  10: Estimated Delivered Power Sales from OVEC Generation (MWhr)
+       Row  11: Estimated Surplus Energy Use Factor
+       Row  12: Net Capacity Factor
+       Row  14: Energy Charge
+       Row  16: Projected Coal Cost (total cost of consumed coal, fuel+transportation)
+   *** Row  17: Projected Allowance Cost (based on projected weighted average inventory)
+   *** Row  18: Projected Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+       Row  19: Total Projected Energy Costs
+       Row  21: Projected Energy Costs - $/MWh
+       Row  24: Year to Date - Through May
+       Row  25: Estimated Delivered Power Sales from OVEC Generation (MWhr)
+       Row  26: Coal Cost (total cost of consumed coal, fuel+transportation)
+   *** Row  27: Allowance Cost (based on projected weighted average inventory)
+   *** Row  28: Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+       Row  29: Total Energy Costs
+       Row  33: Full Year Estimate
+       Row  34: Generation Sales
+       Row  36: Estimated Delivered Power Sales from OVEC Generation (MWhr)
+       Row  40: Energy Charge
+       Row  42: Projected Coal Cost (total cost of consumed coal, fuel+transportation)
+   *** Row  43: Projected Allowance Cost (based on projected weighted average inventory)
+   *** Row  44: Projected Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+       Row  45: Total Projected Energy Costs
+       Row  47: Projected Energy Costs - $/MWh
+
+Column Headers (Row 1):
+       Col A: Ohio Valley Electric Corporation
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 17: Projected Allowance Cost (based on projected weighted average inventory)
+    Categories: ['allowance']
+    B17 (Col 2): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(B$7,'SYS Cost Detail'!$1:$1,0))/1000
+    C17 (Col 3): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(C$7,'SYS Cost Detail'!$1:$1,0))/1000
+    D17 (Col 4): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(D$7,'SYS Cost Detail'!$1:$1,0))/1000
+    E17 (Col 5): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(E$7,'SYS Cost Detail'!$1:$1,0))/1000
+    F17 (Col 6): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(F$7,'SYS Cost Detail'!$1:$1,0))/1000
+    G17 (Col 7): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(G$7,'SYS Cost Detail'!$1:$1,0))/1000
+    H17 (Col 8): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(H$7,'SYS Cost Detail'!$1:$1,0))/1000
+    I17 (Col 9): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(I$7,'SYS Cost Detail'!$1:$1,0))/1000
+    J17 (Col 10): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(J$7,'SYS Cost Detail'!$1:$1,0))/1000
+    K17 (Col 11): FORMULA = =INDEX('SYS Cost Detail'!$64:$64,MATCH(K$7,'SYS Cost Detail'!$1:$1,0))/1000
+
+>>> Row 18: Projected Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+    Categories: ['fuel oil', 'oil', 'handling', 'reagent']
+    B18 (Col 2): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(B$7,'SYS Cost Detail'!$1:$1,0))/1000+1500
+    C18 (Col 3): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(C$7,'SYS Cost Detail'!$1:$1,0))/1000
+    D18 (Col 4): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(D$7,'SYS Cost Detail'!$1:$1,0))/1000
+    E18 (Col 5): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(E$7,'SYS Cost Detail'!$1:$1,0))/1000
+    F18 (Col 6): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(F$7,'SYS Cost Detail'!$1:$1,0))/1000
+    G18 (Col 7): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(G$7,'SYS Cost Detail'!$1:$1,0))/1000
+    H18 (Col 8): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(H$7,'SYS Cost Detail'!$1:$1,0))/1000
+    I18 (Col 9): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(I$7,'SYS Cost Detail'!$1:$1,0))/1000
+    J18 (Col 10): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(J$7,'SYS Cost Detail'!$1:$1,0))/1000
+    K18 (Col 11): FORMULA = =INDEX('SYS Cost Detail'!$77:$77,MATCH(K$7,'SYS Cost Detail'!$1:$1,0))/1000
+
+>>> Row 27: Allowance Cost (based on projected weighted average inventory)
+    Categories: ['allowance']
+    B27 (Col 2): FORMULA = =P27
+    D27 (Col 4): VALUE = 0
+    E27 (Col 5): VALUE = 0
+    F27 (Col 6): VALUE = 0
+    G27 (Col 7): VALUE = 0
+    H27 (Col 8): VALUE = 0
+    I27 (Col 9): VALUE = 0
+    P27 (Col 16): FORMULA = =SUM(D27:O27)
+
+>>> Row 28: Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+    Categories: ['fuel oil', 'oil', 'handling', 'reagent']
+    B28 (Col 2): FORMULA = =P28
+    D28 (Col 4): VALUE = 3330
+    E28 (Col 5): VALUE = 3863
+    F28 (Col 6): VALUE = 5631
+    G28 (Col 7): VALUE = 4694
+    H28 (Col 8): VALUE = 3607
+    I28 (Col 9): VALUE = 3296
+    J28 (Col 10): VALUE = 3,220.71
+    K28 (Col 11): VALUE = 2,416.94
+    L28 (Col 12): VALUE = 3,487.60
+    P28 (Col 16): FORMULA = =SUM(D28:O28)
+
+>>> Row 43: Projected Allowance Cost (based on projected weighted average inventory)
+    Categories: ['allowance']
+    B43 (Col 2): FORMULA = =B17+B27
+
+>>> Row 44: Projected Other Fuel-Related Costs (reagent, fuel oil & coal handling less byproduct sales)
+    Categories: ['fuel oil', 'oil', 'handling', 'reagent']
+    B44 (Col 2): FORMULA = =B18+B28
+
+------------------------------------------------------------
+SHEET: SYS Cost Detail
+Size: 121 rows x 79 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: OVEC-IKEC Energy Cost Projection
+       Row   3: Clifty Creek
+       Row   5: Projected Net Generation - MWH
+       Row   6: Projected Delivered Power Sales - MWH
+       Row   7: Projected Coal Burn - Tons
+       Row   8: Projected Coal Burn - MMBTU
+       Row   9: Net Heat Rate - BTU/kWh
+       Row  10: Projected Coal Cost (Delivered)
+       Row  11: Projected Delivered Coal Pricing - $/MMBTU
+   *** Row  12: CC Projected Allowance Cost
+   *** Row  13: Projected CO2 Tax
+       Row  14: Projected Other Fuel-Related Costs
+   *** Row  15: Urea
+   *** Row  16: Limestone
+   *** Row  17: Hydrated Lime
+   *** Row  18: Bioreactor Reagent and Support
+   *** Row  19: WWTP Reagent
+   *** Row  20: Misc. Reagents
+   *** Row  21: Fuel Oil
+   *** Row  22: Labor & Handling
+   *** Row  23: CC Temporary Coal Storage
+       Row  24: Byproducts
+       Row  26: Total Projected Energy Cost - $
+       Row  27: Projected Energy Cost - $/MWH
+       Row  28: Non-Coal Fuel Costs $/MWh
+       Row  29: Kyger Creek
+       Row  31: Projected Net Generation - MWH
+       Row  32: Projected Delivered Power Sales - MWH
+       Row  33: Projected Coal Burn - Tons
+       Row  34: Projected Coal Burn - MMBTU
+       Row  35: Net Heat Rate - BTU/kWh
+       Row  36: Projected Coal Cost (Delivered)
+       Row  37: Projected Delivered Coal Pricing - $/MMBTU
+   *** Row  38: KC Projected Allowance Cost
+   *** Row  39: Projected CO2 Tax
+       Row  40: Projected Other Fuel-Related Costs
+   *** Row  41: Urea
+   *** Row  42: Limestone
+       Row  43: Trona
+   *** Row  44: Bioreactor Reagent and Support
+   *** Row  45: WWTP Reagent
+   *** Row  46: Misc. Reagents
+   *** Row  47: Fuel Oil
+   *** Row  48: Labor & Handling
+   *** Row  49: KC Temporary Coal Storage
+       Row  50: Byproducts
+       Row  52: Total Projected Energy Cost - $
+       Row  53: Projected Energy Cost - $/MWH
+       Row  54: Non-Coal Fuel Costs $/MWh
+       Row  55: OVEC-IKEC System Total
+
+Column Headers (Row 1):
+       Col A: OVEC-IKEC Energy Cost Projection
+       Col C: ='KC Forecast Inputs'!B221
+       Col D: ='KC Forecast Inputs'!C221
+       Col E: ='KC Forecast Inputs'!D221
+       Col F: ='KC Forecast Inputs'!E221
+       Col G: ='KC Forecast Inputs'!F221
+       Col H: ='KC Forecast Inputs'!G221
+       Col I: ='KC Forecast Inputs'!H221
+       Col J: ='KC Forecast Inputs'!I221
+       Col K: ='KC Forecast Inputs'!J221
+       Col L: ='KC Forecast Inputs'!K221
+       Col M: ='KC Forecast Inputs'!L221
+       Col N: ='KC Forecast Inputs'!M221
+       Col O: ='KC Forecast Inputs'!N221
+       Col P: ='KC Forecast Inputs'!O221
+       Col Q: ='KC Forecast Inputs'!P221
+       Col R: ='KC Forecast Inputs'!Q221
+       Col S: ='KC Forecast Inputs'!R221
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 12: CC Projected Allowance Cost
+    Categories: ['allowance']
+    C12 (='KC Forecast Inputs'!B221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(C$1,'CC Emissions'!$1:$1,0)),0)
+    D12 (='KC Forecast Inputs'!C221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(D$1,'CC Emissions'!$1:$1,0)),0)
+    E12 (='KC Forecast Inputs'!D221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(E$1,'CC Emissions'!$1:$1,0)),0)
+    F12 (='KC Forecast Inputs'!E221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(F$1,'CC Emissions'!$1:$1,0)),0)
+    G12 (='KC Forecast Inputs'!F221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(G$1,'CC Emissions'!$1:$1,0)),0)
+    H12 (='KC Forecast Inputs'!G221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(H$1,'CC Emissions'!$1:$1,0)),0)
+    I12 (='KC Forecast Inputs'!H221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(I$1,'CC Emissions'!$1:$1,0)),0)
+    J12 (='KC Forecast Inputs'!I221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(J$1,'CC Emissions'!$1:$1,0)),0)
+    K12 (='KC Forecast Inputs'!J221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(K$1,'CC Emissions'!$1:$1,0)),0)
+    L12 (='KC Forecast Inputs'!K221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(L$1,'CC Emissions'!$1:$1,0)),0)
+    M12 (='KC Forecast Inputs'!L221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(M$1,'CC Emissions'!$1:$1,0)),0)
+    N12 (='KC Forecast Inputs'!M221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(N$1,'CC Emissions'!$1:$1,0)),0)
+    O12 (='KC Forecast Inputs'!N221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(O$1,'CC Emissions'!$1:$1,0)),0)
+    P12 (='KC Forecast Inputs'!O221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(P$1,'CC Emissions'!$1:$1,0)),0)
+    Q12 (='KC Forecast Inputs'!P221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(Q$1,'CC Emissions'!$1:$1,0)),0)
+    R12 (='KC Forecast Inputs'!Q221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(R$1,'CC Emissions'!$1:$1,0)),0)
+    S12 (='KC Forecast Inputs'!R221): FORMULA = =IF(nox_allowance_rate,INDEX('CC Emissions'!$135:$135,MATCH(S$1,'CC Emissions'!$1:$1,0)),0)
+
+>>> Row 13: Projected CO2 Tax
+    Categories: ['co2']
+
+>>> Row 15: Urea
+    Categories: ['urea']
+    C15 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D15 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E15 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F15 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G15 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H15 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I15 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J15 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K15 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L15 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M15 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N15 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O15 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P15 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q15 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R15 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S15 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$25:$25,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 16: Limestone
+    Categories: ['limestone']
+    C16 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D16 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E16 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F16 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G16 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H16 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I16 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J16 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K16 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L16 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M16 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N16 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O16 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P16 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q16 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R16 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S16 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$65:$65,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 17: Hydrated Lime
+    Categories: ['hydrated lime']
+    C17 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D17 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E17 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F17 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G17 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H17 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I17 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J17 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K17 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L17 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M17 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N17 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O17 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P17 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q17 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R17 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S17 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$84:$84,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 18: Bioreactor Reagent and Support
+    Categories: ['bioreactor', 'reagent']
+    C18 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(C$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D18 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(D$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E18 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(E$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F18 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(F$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G18 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(G$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H18 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(H$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I18 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(I$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J18 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(J$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K18 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(K$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L18 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(L$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M18 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(M$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N18 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(N$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O18 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(O$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P18 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(P$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q18 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(Q$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R18 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(R$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S18 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$179:$179,MATCH(S$1,'CC Consumables'!$1:$1,0))+
+            INDEX('CC Consumables'!$180:$180,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 19: WWTP Reagent
+    Categories: ['wwtp', 'reagent']
+    C19 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D19 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E19 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F19 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G19 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H19 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I19 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J19 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K19 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L19 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M19 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N19 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O19 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P19 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q19 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R19 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S19 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$182:$182,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 20: Misc. Reagents
+    Categories: ['misc', 'reagent']
+    C20 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(C$1,'CC Consumables'!$1:$1,0)),"")
+    D20 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(D$1,'CC Consumables'!$1:$1,0)),"")
+    E20 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(E$1,'CC Consumables'!$1:$1,0)),"")
+    F20 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(F$1,'CC Consumables'!$1:$1,0)),"")
+    G20 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(G$1,'CC Consumables'!$1:$1,0)),"")
+    H20 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(H$1,'CC Consumables'!$1:$1,0)),"")
+    I20 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(I$1,'CC Consumables'!$1:$1,0)),"")
+    J20 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(J$1,'CC Consumables'!$1:$1,0)),"")
+    K20 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(K$1,'CC Consumables'!$1:$1,0)),"")
+    L20 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(L$1,'CC Consumables'!$1:$1,0)),"")
+    M20 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(M$1,'CC Consumables'!$1:$1,0)),"")
+    N20 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(N$1,'CC Consumables'!$1:$1,0)),"")
+    O20 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(O$1,'CC Consumables'!$1:$1,0)),"")
+    P20 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(P$1,'CC Consumables'!$1:$1,0)),"")
+    Q20 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(Q$1,'CC Consumables'!$1:$1,0)),"")
+    R20 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(R$1,'CC Consumables'!$1:$1,0)),"")
+    S20 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Consumables'!$184:$184,MATCH(S$1,'CC Consumables'!$1:$1,0)),"")
+
+>>> Row 21: Fuel Oil
+    Categories: ['fuel oil', 'oil']
+    C21 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(C$1,'CC Coal Burn'!$1:$1,0)),"")
+    D21 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(D$1,'CC Coal Burn'!$1:$1,0)),"")
+    E21 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(E$1,'CC Coal Burn'!$1:$1,0)),"")
+    F21 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(F$1,'CC Coal Burn'!$1:$1,0)),"")
+    G21 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(G$1,'CC Coal Burn'!$1:$1,0)),"")
+    H21 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(H$1,'CC Coal Burn'!$1:$1,0)),"")
+    I21 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(I$1,'CC Coal Burn'!$1:$1,0)),"")
+    J21 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(J$1,'CC Coal Burn'!$1:$1,0)),"")
+    K21 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(K$1,'CC Coal Burn'!$1:$1,0)),"")
+    L21 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(L$1,'CC Coal Burn'!$1:$1,0)),"")
+    M21 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(M$1,'CC Coal Burn'!$1:$1,0)),"")
+    N21 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(N$1,'CC Coal Burn'!$1:$1,0)),"")
+    O21 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(O$1,'CC Coal Burn'!$1:$1,0)),"")
+    P21 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(P$1,'CC Coal Burn'!$1:$1,0)),"")
+    Q21 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(Q$1,'CC Coal Burn'!$1:$1,0)),"")
+    R21 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(R$1,'CC Coal Burn'!$1:$1,0)),"")
+    S21 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Coal Burn'!$128:$128,MATCH(S$1,'CC Coal Burn'!$1:$1,0)),"")
+
+>>> Row 22: Labor & Handling
+    Categories: ['labor', 'handling']
+    C22 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(C$1,'CC Coal Burn'!$1:$1,0)),"")
+    D22 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(D$1,'CC Coal Burn'!$1:$1,0)),"")
+    E22 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(E$1,'CC Coal Burn'!$1:$1,0)),"")
+    F22 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(F$1,'CC Coal Burn'!$1:$1,0)),"")
+    G22 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(G$1,'CC Coal Burn'!$1:$1,0)),"")
+    H22 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(H$1,'CC Coal Burn'!$1:$1,0)),"")
+    I22 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(I$1,'CC Coal Burn'!$1:$1,0)),"")
+    J22 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(J$1,'CC Coal Burn'!$1:$1,0)),"")
+    K22 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(K$1,'CC Coal Burn'!$1:$1,0)),"")
+    L22 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(L$1,'CC Coal Burn'!$1:$1,0)),"")
+    M22 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(M$1,'CC Coal Burn'!$1:$1,0)),"")
+    N22 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(N$1,'CC Coal Burn'!$1:$1,0)),"")
+    O22 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(O$1,'CC Coal Burn'!$1:$1,0)),"")
+    P22 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(P$1,'CC Coal Burn'!$1:$1,0)),"")
+    Q22 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(Q$1,'CC Coal Burn'!$1:$1,0)),"")
+    R22 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(R$1,'CC Coal Burn'!$1:$1,0)),"")
+    S22 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('CC Coal Burn'!$131:$131,MATCH(S$1,'CC Coal Burn'!$1:$1,0)),"")
+
+>>> Row 23: CC Temporary Coal Storage
+    Categories: ['storage', 'temporary coal']
+    C23 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!C$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    D23 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!D$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    E23 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!E$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    F23 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!F$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    G23 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!G$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    H23 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!H$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    I23 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!I$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    J23 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!J$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    K23 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!K$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    L23 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!L$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    M23 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!M$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    N23 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!N$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    O23 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",SUM(C23:N23),"")
+    P23 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!P$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    Q23 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!Q$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    R23 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!R$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    S23 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",_xlfn.IFNA(INDEX('CC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!S$1,'CC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+
+>>> Row 38: KC Projected Allowance Cost
+    Categories: ['allowance']
+    C38 (='KC Forecast Inputs'!B221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(C$1,'KC Emissions'!$1:$1,0)),0)
+    D38 (='KC Forecast Inputs'!C221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(D$1,'KC Emissions'!$1:$1,0)),0)
+    E38 (='KC Forecast Inputs'!D221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(E$1,'KC Emissions'!$1:$1,0)),0)
+    F38 (='KC Forecast Inputs'!E221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(F$1,'KC Emissions'!$1:$1,0)),0)
+    G38 (='KC Forecast Inputs'!F221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(G$1,'KC Emissions'!$1:$1,0)),0)
+    H38 (='KC Forecast Inputs'!G221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(H$1,'KC Emissions'!$1:$1,0)),0)
+    I38 (='KC Forecast Inputs'!H221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(I$1,'KC Emissions'!$1:$1,0)),0)
+    J38 (='KC Forecast Inputs'!I221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(J$1,'KC Emissions'!$1:$1,0)),0)
+    K38 (='KC Forecast Inputs'!J221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(K$1,'KC Emissions'!$1:$1,0)),0)
+    L38 (='KC Forecast Inputs'!K221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(L$1,'KC Emissions'!$1:$1,0)),0)
+    M38 (='KC Forecast Inputs'!L221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(M$1,'KC Emissions'!$1:$1,0)),0)
+    N38 (='KC Forecast Inputs'!M221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(N$1,'KC Emissions'!$1:$1,0)),0)
+    O38 (='KC Forecast Inputs'!N221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(O$1,'KC Emissions'!$1:$1,0)),0)
+    P38 (='KC Forecast Inputs'!O221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(P$1,'KC Emissions'!$1:$1,0)),0)
+    Q38 (='KC Forecast Inputs'!P221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(Q$1,'KC Emissions'!$1:$1,0)),0)
+    R38 (='KC Forecast Inputs'!Q221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(R$1,'KC Emissions'!$1:$1,0)),0)
+    S38 (='KC Forecast Inputs'!R221): FORMULA = =IF(nox_allowance_rate,INDEX('KC Emissions'!$135:$135,MATCH(S$1,'KC Emissions'!$1:$1,0)),0)
+
+>>> Row 39: Projected CO2 Tax
+    Categories: ['co2']
+
+>>> Row 41: Urea
+    Categories: ['urea']
+    C41 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(C$1,'KC Consumables'!$1:$1,0)),"")
+    D41 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(D$1,'KC Consumables'!$1:$1,0)),"")
+    E41 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(E$1,'KC Consumables'!$1:$1,0)),"")
+    F41 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(F$1,'KC Consumables'!$1:$1,0)),"")
+    G41 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(G$1,'KC Consumables'!$1:$1,0)),"")
+    H41 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(H$1,'KC Consumables'!$1:$1,0)),"")
+    I41 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(I$1,'KC Consumables'!$1:$1,0)),"")
+    J41 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(J$1,'KC Consumables'!$1:$1,0)),"")
+    K41 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(K$1,'KC Consumables'!$1:$1,0)),"")
+    L41 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(L$1,'KC Consumables'!$1:$1,0)),"")
+    M41 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(M$1,'KC Consumables'!$1:$1,0)),"")
+    N41 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(N$1,'KC Consumables'!$1:$1,0)),"")
+    O41 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(O$1,'KC Consumables'!$1:$1,0)),"")
+    P41 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(P$1,'KC Consumables'!$1:$1,0)),"")
+    Q41 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(Q$1,'KC Consumables'!$1:$1,0)),"")
+    R41 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(R$1,'KC Consumables'!$1:$1,0)),"")
+    S41 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Consumables'!$25:$25,MATCH(S$1,'KC Consumables'!$1:$1,0)),"")
+
+>>> Row 42: Limestone
+    Categories: ['limestone']
+    C42 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(C$1,'KC Consumables'!$1:$1,0)),"")
+    D42 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(D$1,'KC Consumables'!$1:$1,0)),"")
+    E42 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(E$1,'KC Consumables'!$1:$1,0)),"")
+    F42 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(F$1,'KC Consumables'!$1:$1,0)),"")
+    G42 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(G$1,'KC Consumables'!$1:$1,0)),"")
+    H42 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(H$1,'KC Consumables'!$1:$1,0)),"")
+    I42 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(I$1,'KC Consumables'!$1:$1,0)),"")
+    J42 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(J$1,'KC Consumables'!$1:$1,0)),"")
+    K42 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(K$1,'KC Consumables'!$1:$1,0)),"")
+    L42 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(L$1,'KC Consumables'!$1:$1,0)),"")
+    M42 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(M$1,'KC Consumables'!$1:$1,0)),"")
+    N42 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(N$1,'KC Consumables'!$1:$1,0)),"")
+    O42 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(O$1,'KC Consumables'!$1:$1,0)),"")
+    P42 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(P$1,'KC Consumables'!$1:$1,0)),"")
+    Q42 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(Q$1,'KC Consumables'!$1:$1,0)),"")
+    R42 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(R$1,'KC Consumables'!$1:$1,0)),"")
+    S42 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Consumables'!$65:$65,MATCH(S$1,'KC Consumables'!$1:$1,0)),"")
+
+>>> Row 44: Bioreactor Reagent and Support
+    Categories: ['bioreactor', 'reagent']
+    C44 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(C$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(C$1,'KC Consumables'!$1:$1,0)),"")
+    D44 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(D$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(D$1,'KC Consumables'!$1:$1,0)),"")
+    E44 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(E$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(E$1,'KC Consumables'!$1:$1,0)),"")
+    F44 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(F$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(F$1,'KC Consumables'!$1:$1,0)),"")
+    G44 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(G$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(G$1,'KC Consumables'!$1:$1,0)),"")
+    H44 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(H$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(H$1,'KC Consumables'!$1:$1,0)),"")
+    I44 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(I$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(I$1,'KC Consumables'!$1:$1,0)),"")
+    J44 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(J$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(J$1,'KC Consumables'!$1:$1,0)),"")
+    K44 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(K$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(K$1,'KC Consumables'!$1:$1,0)),"")
+    L44 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(L$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(L$1,'KC Consumables'!$1:$1,0)),"")
+    M44 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(M$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(M$1,'KC Consumables'!$1:$1,0)),"")
+    N44 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(N$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(N$1,'KC Consumables'!$1:$1,0)),"")
+    O44 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(O$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(O$1,'KC Consumables'!$1:$1,0)),"")
+    P44 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(P$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(P$1,'KC Consumables'!$1:$1,0)),"")
+    Q44 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(Q$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(Q$1,'KC Consumables'!$1:$1,0)),"")
+    R44 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(R$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(R$1,'KC Consumables'!$1:$1,0)),"")
+    S44 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Consumables'!$179:$179,MATCH(S$1,'KC Consumables'!$1:$1,0))+
+            INDEX('KC Consumables'!$180:$180,MATCH(S$1,'KC Consumables'!$1:$1,0)),"")
+
+>>> Row 45: WWTP Reagent
+    Categories: ['wwtp', 'reagent']
+    C45 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(C$1,'KC Consumables'!$1:$1,0)),"")
+    D45 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(D$1,'KC Consumables'!$1:$1,0)),"")
+    E45 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(E$1,'KC Consumables'!$1:$1,0)),"")
+    F45 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(F$1,'KC Consumables'!$1:$1,0)),"")
+    G45 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(G$1,'KC Consumables'!$1:$1,0)),"")
+    H45 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(H$1,'KC Consumables'!$1:$1,0)),"")
+    I45 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(I$1,'KC Consumables'!$1:$1,0)),"")
+    J45 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(J$1,'KC Consumables'!$1:$1,0)),"")
+    K45 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(K$1,'KC Consumables'!$1:$1,0)),"")
+    L45 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(L$1,'KC Consumables'!$1:$1,0)),"")
+    M45 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(M$1,'KC Consumables'!$1:$1,0)),"")
+    N45 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(N$1,'KC Consumables'!$1:$1,0)),"")
+    O45 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(O$1,'KC Consumables'!$1:$1,0)),"")
+    P45 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(P$1,'KC Consumables'!$1:$1,0)),"")
+    Q45 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(Q$1,'KC Consumables'!$1:$1,0)),"")
+    R45 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(R$1,'KC Consumables'!$1:$1,0)),"")
+    S45 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Consumables'!$182:$182,MATCH(S$1,'KC Consumables'!$1:$1,0)),"")
+
+>>> Row 46: Misc. Reagents
+    Categories: ['misc', 'reagent']
+    C46 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(C$1,'KC Consumables'!$1:$1,0)),"")
+    D46 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(D$1,'KC Consumables'!$1:$1,0)),"")
+    E46 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(E$1,'KC Consumables'!$1:$1,0)),"")
+    F46 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(F$1,'KC Consumables'!$1:$1,0)),"")
+    G46 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(G$1,'KC Consumables'!$1:$1,0)),"")
+    H46 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(H$1,'KC Consumables'!$1:$1,0)),"")
+    I46 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(I$1,'KC Consumables'!$1:$1,0)),"")
+    J46 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(J$1,'KC Consumables'!$1:$1,0)),"")
+    K46 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(K$1,'KC Consumables'!$1:$1,0)),"")
+    L46 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(L$1,'KC Consumables'!$1:$1,0)),"")
+    M46 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(M$1,'KC Consumables'!$1:$1,0)),"")
+    N46 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(N$1,'KC Consumables'!$1:$1,0)),"")
+    O46 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(O$1,'KC Consumables'!$1:$1,0)),"")
+    P46 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(P$1,'KC Consumables'!$1:$1,0)),"")
+    Q46 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(Q$1,'KC Consumables'!$1:$1,0)),"")
+    R46 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(R$1,'KC Consumables'!$1:$1,0)),"")
+    S46 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Consumables'!$184:$184,MATCH(S$1,'KC Consumables'!$1:$1,0)),"")
+
+>>> Row 47: Fuel Oil
+    Categories: ['fuel oil', 'oil']
+    C47 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(C$1,'KC Coal Burn'!$1:$1,0)),"")
+    D47 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(D$1,'KC Coal Burn'!$1:$1,0)),"")
+    E47 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(E$1,'KC Coal Burn'!$1:$1,0)),"")
+    F47 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(F$1,'KC Coal Burn'!$1:$1,0)),"")
+    G47 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(G$1,'KC Coal Burn'!$1:$1,0)),"")
+    H47 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(H$1,'KC Coal Burn'!$1:$1,0)),"")
+    I47 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(I$1,'KC Coal Burn'!$1:$1,0)),"")
+    J47 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(J$1,'KC Coal Burn'!$1:$1,0)),"")
+    K47 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(K$1,'KC Coal Burn'!$1:$1,0)),"")
+    L47 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(L$1,'KC Coal Burn'!$1:$1,0)),"")
+    M47 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(M$1,'KC Coal Burn'!$1:$1,0)),"")
+    N47 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(N$1,'KC Coal Burn'!$1:$1,0)),"")
+    O47 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(O$1,'KC Coal Burn'!$1:$1,0)),"")
+    P47 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(P$1,'KC Coal Burn'!$1:$1,0)),"")
+    Q47 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(Q$1,'KC Coal Burn'!$1:$1,0)),"")
+    R47 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(R$1,'KC Coal Burn'!$1:$1,0)),"")
+    S47 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Coal Burn'!$128:$128,MATCH(S$1,'KC Coal Burn'!$1:$1,0)),"")
+
+>>> Row 48: Labor & Handling
+    Categories: ['labor', 'handling']
+    C48 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(C$1,'KC Coal Burn'!$1:$1,0)),"")
+    D48 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(D$1,'KC Coal Burn'!$1:$1,0)),"")
+    E48 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(E$1,'KC Coal Burn'!$1:$1,0)),"")
+    F48 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(F$1,'KC Coal Burn'!$1:$1,0)),"")
+    G48 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(G$1,'KC Coal Burn'!$1:$1,0)),"")
+    H48 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(H$1,'KC Coal Burn'!$1:$1,0)),"")
+    I48 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(I$1,'KC Coal Burn'!$1:$1,0)),"")
+    J48 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(J$1,'KC Coal Burn'!$1:$1,0)),"")
+    K48 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(K$1,'KC Coal Burn'!$1:$1,0)),"")
+    L48 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(L$1,'KC Coal Burn'!$1:$1,0)),"")
+    M48 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(M$1,'KC Coal Burn'!$1:$1,0)),"")
+    N48 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(N$1,'KC Coal Burn'!$1:$1,0)),"")
+    O48 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(O$1,'KC Coal Burn'!$1:$1,0)),"")
+    P48 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(P$1,'KC Coal Burn'!$1:$1,0)),"")
+    Q48 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(Q$1,'KC Coal Burn'!$1:$1,0)),"")
+    R48 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(R$1,'KC Coal Burn'!$1:$1,0)),"")
+    S48 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",INDEX('KC Coal Burn'!$131:$131,MATCH(S$1,'KC Coal Burn'!$1:$1,0)),"")
+
+>>> Row 49: KC Temporary Coal Storage
+    Categories: ['storage', 'temporary coal']
+    C49 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!C$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    D49 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!D$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    E49 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!E$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    F49 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!F$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    G49 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!G$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    H49 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!H$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    I49 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!I$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    J49 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!J$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    K49 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!K$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    L49 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!L$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    M49 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!M$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    N49 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!N$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    O49 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",SUM(C49:N49),"")
+    P49 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!P$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    Q49 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!Q$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    R49 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!R$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+    S49 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",_xlfn.IFNA(INDEX('KC Forecast Inputs'!$B$217:$AK$217,MATCH('SYS Cost Detail'!S$1,'KC Forecast Inputs'!$B$216:$AK$216,0)),0),"")
+
+>>> Row 64: Projected Allowance Cost
+    Categories: ['allowance']
+    C64 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C12+C38,"")
+    D64 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D12+D38,"")
+    E64 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E12+E38,"")
+    F64 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F12+F38,"")
+    G64 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G12+G38,"")
+    H64 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H12+H38,"")
+    I64 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I12+I38,"")
+    J64 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J12+J38,"")
+    K64 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K12+K38,"")
+    L64 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L12+L38,"")
+    M64 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M12+M38,"")
+    N64 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N12+N38,"")
+    O64 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O12+O38,"")
+    P64 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P12+P38,"")
+    Q64 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q12+Q38,"")
+    R64 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R12+R38,"")
+    S64 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S12+S38,"")
+
+>>> Row 65: Projected CO2 Tax
+    Categories: ['co2']
+    C65 (='KC Forecast Inputs'!B221): FORMULA = =C13+C39
+    D65 (='KC Forecast Inputs'!C221): FORMULA = =D13+D39
+    E65 (='KC Forecast Inputs'!D221): FORMULA = =E13+E39
+    F65 (='KC Forecast Inputs'!E221): FORMULA = =F13+F39
+    G65 (='KC Forecast Inputs'!F221): FORMULA = =G13+G39
+    H65 (='KC Forecast Inputs'!G221): FORMULA = =H13+H39
+    I65 (='KC Forecast Inputs'!H221): FORMULA = =I13+I39
+    J65 (='KC Forecast Inputs'!I221): FORMULA = =J13+J39
+    K65 (='KC Forecast Inputs'!J221): FORMULA = =K13+K39
+    L65 (='KC Forecast Inputs'!K221): FORMULA = =L13+L39
+    M65 (='KC Forecast Inputs'!L221): FORMULA = =M13+M39
+    N65 (='KC Forecast Inputs'!M221): FORMULA = =N13+N39
+    O65 (='KC Forecast Inputs'!N221): FORMULA = =O13+O39
+    P65 (='KC Forecast Inputs'!O221): FORMULA = =P13+P39
+    Q65 (='KC Forecast Inputs'!P221): FORMULA = =Q13+Q39
+    R65 (='KC Forecast Inputs'!Q221): FORMULA = =R13+R39
+    S65 (='KC Forecast Inputs'!R221): FORMULA = =S13+S39
+
+>>> Row 67: Urea
+    Categories: ['urea']
+    C67 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C15+C41,"")
+    D67 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D15+D41,"")
+    E67 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E15+E41,"")
+    F67 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F15+F41,"")
+    G67 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G15+G41,"")
+    H67 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H15+H41,"")
+    I67 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I15+I41,"")
+    J67 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J15+J41,"")
+    K67 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K15+K41,"")
+    L67 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L15+L41,"")
+    M67 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M15+M41,"")
+    N67 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N15+N41,"")
+    O67 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O15+O41,"")
+    P67 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P15+P41,"")
+    Q67 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q15+Q41,"")
+    R67 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R15+R41,"")
+    S67 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S15+S41,"")
+
+>>> Row 68: Limestone
+    Categories: ['limestone']
+    C68 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C16+C42,"")
+    D68 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D16+D42,"")
+    E68 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E16+E42,"")
+    F68 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F16+F42,"")
+    G68 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G16+G42,"")
+    H68 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H16+H42,"")
+    I68 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I16+I42,"")
+    J68 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J16+J42,"")
+    K68 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K16+K42,"")
+    L68 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L16+L42,"")
+    M68 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M16+M42,"")
+    N68 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N16+N42,"")
+    O68 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O16+O42,"")
+    P68 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P16+P42,"")
+    Q68 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q16+Q42,"")
+    R68 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R16+R42,"")
+    S68 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S16+S42,"")
+
+>>> Row 69: Hydrated Lime / Trona
+    Categories: ['hydrated lime']
+    C69 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C17+C43,"")
+    D69 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D17+D43,"")
+    E69 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E17+E43,"")
+    F69 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F17+F43,"")
+    G69 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G17+G43,"")
+    H69 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H17+H43,"")
+    I69 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I17+I43,"")
+    J69 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J17+J43,"")
+    K69 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K17+K43,"")
+    L69 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L17+L43,"")
+    M69 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M17+M43,"")
+    N69 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N17+N43,"")
+    O69 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O17+O43,"")
+    P69 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P17+P43,"")
+    Q69 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q17+Q43,"")
+    R69 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R17+R43,"")
+    S69 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S17+S43,"")
+
+>>> Row 70: Bioreactor Reagent and Support
+    Categories: ['bioreactor', 'reagent']
+    C70 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C18+C44,"")
+    D70 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D18+D44,"")
+    E70 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E18+E44,"")
+    F70 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F18+F44,"")
+    G70 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G18+G44,"")
+    H70 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H18+H44,"")
+    I70 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I18+I44,"")
+    J70 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J18+J44,"")
+    K70 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K18+K44,"")
+    L70 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L18+L44,"")
+    M70 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M18+M44,"")
+    N70 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N18+N44,"")
+    O70 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O18+O44,"")
+    P70 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P18+P44,"")
+    Q70 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q18+Q44,"")
+    R70 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R18+R44,"")
+    S70 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S18+S44,"")
+
+>>> Row 71: WWTP Reagent
+    Categories: ['wwtp', 'reagent']
+    C71 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C19+C45,"")
+    D71 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D19+D45,"")
+    E71 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E19+E45,"")
+    F71 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F19+F45,"")
+    G71 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G19+G45,"")
+    H71 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H19+H45,"")
+    I71 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I19+I45,"")
+    J71 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J19+J45,"")
+    K71 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K19+K45,"")
+    L71 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L19+L45,"")
+    M71 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M19+M45,"")
+    N71 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N19+N45,"")
+    O71 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O19+O45,"")
+    P71 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P19+P45,"")
+    Q71 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q19+Q45,"")
+    R71 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R19+R45,"")
+    S71 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S19+S45,"")
+
+>>> Row 72: Misc. Reagents
+    Categories: ['misc', 'reagent']
+    C72 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C20+C46,"")
+    D72 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D20+D46,"")
+    E72 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E20+E46,"")
+    F72 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F20+F46,"")
+    G72 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G20+G46,"")
+    H72 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H20+H46,"")
+    I72 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I20+I46,"")
+    J72 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J20+J46,"")
+    K72 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K20+K46,"")
+    L72 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L20+L46,"")
+    M72 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M20+M46,"")
+    N72 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N20+N46,"")
+    O72 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O20+O46,"")
+    P72 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P20+P46,"")
+    Q72 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q20+Q46,"")
+    R72 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R20+R46,"")
+    S72 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S20+S46,"")
+
+>>> Row 73: Fuel Oil
+    Categories: ['fuel oil', 'oil']
+    C73 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C21+C47,"")
+    D73 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D21+D47,"")
+    E73 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E21+E47,"")
+    F73 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F21+F47,"")
+    G73 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G21+G47,"")
+    H73 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H21+H47,"")
+    I73 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I21+I47,"")
+    J73 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J21+J47,"")
+    K73 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K21+K47,"")
+    L73 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L21+L47,"")
+    M73 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M21+M47,"")
+    N73 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N21+N47,"")
+    O73 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O21+O47,"")
+    P73 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P21+P47,"")
+    Q73 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q21+Q47,"")
+    R73 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R21+R47,"")
+    S73 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S21+S47,"")
+
+>>> Row 74: Labor & Handling
+    Categories: ['labor', 'handling']
+    C74 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C22+C48,"")
+    D74 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D22+D48,"")
+    E74 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E22+E48,"")
+    F74 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F22+F48,"")
+    G74 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G22+G48,"")
+    H74 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H22+H48,"")
+    I74 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I22+I48,"")
+    J74 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J22+J48,"")
+    K74 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K22+K48,"")
+    L74 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L22+L48,"")
+    M74 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M22+M48,"")
+    N74 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N22+N48,"")
+    O74 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O22+O48,"")
+    P74 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P22+P48,"")
+    Q74 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q22+Q48,"")
+    R74 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R22+R48,"")
+    S74 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S22+S48,"")
+
+>>> Row 75: Temporary Coal Storage and Storage Transportation Expense
+    Categories: ['storage', 'temporary coal']
+    C75 (='KC Forecast Inputs'!B221): FORMULA = =IF(C$1<>"",C23+C49,"")
+    D75 (='KC Forecast Inputs'!C221): FORMULA = =IF(D$1<>"",D23+D49,"")
+    E75 (='KC Forecast Inputs'!D221): FORMULA = =IF(E$1<>"",E23+E49,"")
+    F75 (='KC Forecast Inputs'!E221): FORMULA = =IF(F$1<>"",F23+F49,"")
+    G75 (='KC Forecast Inputs'!F221): FORMULA = =IF(G$1<>"",G23+G49,"")
+    H75 (='KC Forecast Inputs'!G221): FORMULA = =IF(H$1<>"",H23+H49,"")
+    I75 (='KC Forecast Inputs'!H221): FORMULA = =IF(I$1<>"",I23+I49,"")
+    J75 (='KC Forecast Inputs'!I221): FORMULA = =IF(J$1<>"",J23+J49,"")
+    K75 (='KC Forecast Inputs'!J221): FORMULA = =IF(K$1<>"",K23+K49,"")
+    L75 (='KC Forecast Inputs'!K221): FORMULA = =IF(L$1<>"",L23+L49,"")
+    M75 (='KC Forecast Inputs'!L221): FORMULA = =IF(M$1<>"",M23+M49,"")
+    N75 (='KC Forecast Inputs'!M221): FORMULA = =IF(N$1<>"",N23+N49,"")
+    O75 (='KC Forecast Inputs'!N221): FORMULA = =IF(O$1<>"",O23+O49,"")
+    P75 (='KC Forecast Inputs'!O221): FORMULA = =IF(P$1<>"",P23+P49,"")
+    Q75 (='KC Forecast Inputs'!P221): FORMULA = =IF(Q$1<>"",Q23+Q49,"")
+    R75 (='KC Forecast Inputs'!Q221): FORMULA = =IF(R$1<>"",R23+R49,"")
+    S75 (='KC Forecast Inputs'!R221): FORMULA = =IF(S$1<>"",S23+S49,"")
+
+------------------------------------------------------------
+SHEET: Coal Cost Analysis
+Size: 98 rows x 39 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+
+------------------------------------------------------------
+SHEET: OVEC Forward Spreads
+Size: 33 rows x 96 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: Dark Spread
+       Row   3: AEP-Dayton Hub (ATC, $/MWh)
+       Row   4: AEP-Dayton Hub (Peak, $/MWh)
+       Row   6: Kyger Creek Delivered Coal Cost ($/ton)
+       Row   7: Kyger Creek Heat Rate (Reaized)
+       Row   8: Kyger Creek Coal Quality
+       Row   9: Fuel Cost ($/MWh)
+       Row  13: Clifty Creek Delivered Coal Cost ($/ton)
+       Row  14: Clifty Creek Heat Rate (Reaized)
+       Row  15: Clifty Creek Coal Quality
+       Row  16: Fuel Cost ($/MWh)
+       Row  18: Kyger Creek Dark Spread (ATC)
+       Row  19: Kyger Creek Dark Spread (Peak)
+       Row  20: Clifty Creek Dark Spread (ATC)
+       Row  21: Clifty Creek Dark Spread (Peak)
+       Row  22: Spark Spreak (Peak)
+       Row  25: Spark Spread
+       Row  27: AEP-Dayton Hub (Peak, $/MWh)
+       Row  28: Natural Gas (Henry Hub, $/mmbtu)
+       Row  29: Fuel Cost ($/MWh)
+       Row  31: Spark Spreak @ 7,000 Btu/kWh
+       Row  33: Implied Market Heat Rate
+
+Column Headers (Row 1):
+       Col A: Dark Spread
+
+------------------------------------------------------------
+SHEET: KC Generation
+Size: 80 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+       Row   4: Net Maximum Capacity Per Unit - MW
+       Row   6: MWH Available:
+       Row   7: Kyger Unit 1
+       Row   8: Kyger Unit 2
+       Row   9: Kyger Unit 3
+       Row  10: Kyger Unit 4
+       Row  11: Kyger Unit 5
+       Row  13: Plant Total (Before FGD Aux)
+       Row  14: FGD Auxiliary Load - MW
+       Row  15: FGD Auxiliary Load - MWH
+   *** Row  16: Bioreactor Aux Load (MW / day)
+   *** Row  17: Bioreactor Aux Load - MWh
+       Row  18: Plant Total (Less FGD Aux)
+       Row  19: Aux Load as % of Total Generation
+       Row  20: Reserve:
+       Row  21: System Regulating Reserve - MW/H
+       Row  22: Kyger Reserve Carrying Percentage %
+       Row  23: Kyger Plant Reserve - MWH
+       Row  24: Placeholder For Clifty Calculation
+       Row  25: Placeholder For Clifty Calculation
+       Row  27: Lack of Sales - MWH
+       Row  28: Use Factor - %
+       Row  29: Lack of Sales - MWH
+       Row  31: 15 kV Generation - MWh
+       Row  32: Kyger Unit 1
+       Row  33: Kyger Unit 2
+       Row  34: Kyger Unit 3
+       Row  35: Kyger Unit 4
+       Row  36: Kyger Unit 5
+       Row  38: Plant
+       Row  39: Kyger Total (Less FGD Aux)
+       Row  41: Losses
+       Row  42: GSU XF Losses - %
+       Row  43: GSU XF Losses - MWH
+       Row  44: Internal Losses - %
+       Row  45: Internal Losses - MWH
+       Row  47: Billable Generation - 345 kV
+       Row  49: Net Capacity Factor
+       Row  50: Kyger Unit 1
+       Row  51: Kyger Unit 2
+       Row  52: Kyger Unit 3
+       Row  53: Kyger Unit 4
+       Row  54: Kyger Unit 5
+       Row  56: Plant Net Capacity Factor
+       Row  58: Estimating tool for NHR adj to SUF
+       Row  59: Full Load - Net MW
+       Row  60: Min Load - Net MW
+       Row  61: % Full Load
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 16: Bioreactor Aux Load (MW / day)
+    Categories: ['bioreactor']
+    C16 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): VALUE = 6
+    D16 (=EDATE(C1,1)): VALUE = 6
+    E16 (=EDATE(D1,1)): VALUE = 6
+    F16 (=EDATE(E1,1)): VALUE = 6
+    G16 (=EDATE(F1,1)): VALUE = 6
+    H16 (=EDATE(G1,1)): VALUE = 6
+    I16 (=EDATE(H1,1)): VALUE = 6
+    J16 (=EDATE(I1,1)): VALUE = 6
+    K16 (=EDATE(J1,1)): VALUE = 6
+    L16 (=EDATE(K1,1)): VALUE = 6
+    M16 (=EDATE(L1,1)): VALUE = 6
+    N16 (=EDATE(M1,1)): VALUE = 6
+    O16 (=EDATE(N1,1)): VALUE = 6
+    P16 (=EDATE(O1,1)): VALUE = 6
+    Q16 (=EDATE(P1,1)): VALUE = 6
+    R16 (=EDATE(Q1,1)): VALUE = 6
+    S16 (=EDATE(R1,1)): VALUE = 6
+
+>>> Row 17: Bioreactor Aux Load - MWh
+    Categories: ['bioreactor']
+    C17 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =C2*C16
+    D17 (=EDATE(C1,1)): FORMULA = =D2*D16
+    E17 (=EDATE(D1,1)): FORMULA = =E2*E16
+    F17 (=EDATE(E1,1)): FORMULA = =F2*F16
+    G17 (=EDATE(F1,1)): FORMULA = =G2*G16
+    H17 (=EDATE(G1,1)): FORMULA = =H2*H16
+    I17 (=EDATE(H1,1)): FORMULA = =I2*I16
+    J17 (=EDATE(I1,1)): FORMULA = =J2*J16
+    K17 (=EDATE(J1,1)): FORMULA = =K2*K16
+    L17 (=EDATE(K1,1)): FORMULA = =L2*L16
+    M17 (=EDATE(L1,1)): FORMULA = =M2*M16
+    N17 (=EDATE(M1,1)): FORMULA = =N2*N16
+    O17 (=EDATE(N1,1)): FORMULA = =O2*O16
+    P17 (=EDATE(O1,1)): FORMULA = =P2*P16
+    Q17 (=EDATE(P1,1)): FORMULA = =Q2*Q16
+    R17 (=EDATE(Q1,1)): FORMULA = =R2*R16
+    S17 (=EDATE(R1,1)): FORMULA = =S2*S16
+
+>>> Row 74: Allowance Calculations
+    Categories: ['allowance']
+
+>>> Row 79: Use factor without Nox Allowance
+    Categories: ['allowance']
+    C79 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(C$1,'Use Factor Input'!$8:$8,0))
+    D79 (=EDATE(C1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(D$1,'Use Factor Input'!$8:$8,0))
+    E79 (=EDATE(D1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(E$1,'Use Factor Input'!$8:$8,0))
+    F79 (=EDATE(E1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(F$1,'Use Factor Input'!$8:$8,0))
+    G79 (=EDATE(F1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(G$1,'Use Factor Input'!$8:$8,0))
+    H79 (=EDATE(G1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(H$1,'Use Factor Input'!$8:$8,0))
+    I79 (=EDATE(H1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(I$1,'Use Factor Input'!$8:$8,0))
+    J79 (=EDATE(I1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(J$1,'Use Factor Input'!$8:$8,0))
+    K79 (=EDATE(J1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(K$1,'Use Factor Input'!$8:$8,0))
+    L79 (=EDATE(K1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(L$1,'Use Factor Input'!$8:$8,0))
+    M79 (=EDATE(L1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(M$1,'Use Factor Input'!$8:$8,0))
+    N79 (=EDATE(M1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(N$1,'Use Factor Input'!$8:$8,0))
+    O79 (=EDATE(N1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(O$1,'Use Factor Input'!$8:$8,0))
+    P79 (=EDATE(O1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(P$1,'Use Factor Input'!$8:$8,0))
+    Q79 (=EDATE(P1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(Q$1,'Use Factor Input'!$8:$8,0))
+    R79 (=EDATE(Q1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(R$1,'Use Factor Input'!$8:$8,0))
+    S79 (=EDATE(R1,1)): FORMULA = =INDEX('Use Factor Input'!$4:$4,MATCH(S$1,'Use Factor Input'!$8:$8,0))
+
+>>> Row 80: Use factor with Nox Allowance
+    Categories: ['allowance']
+    C80 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(C$1,'Use Factor Input'!$8:$8,0))
+    D80 (=EDATE(C1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(D$1,'Use Factor Input'!$8:$8,0))
+    E80 (=EDATE(D1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(E$1,'Use Factor Input'!$8:$8,0))
+    F80 (=EDATE(E1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(F$1,'Use Factor Input'!$8:$8,0))
+    G80 (=EDATE(F1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(G$1,'Use Factor Input'!$8:$8,0))
+    H80 (=EDATE(G1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(H$1,'Use Factor Input'!$8:$8,0))
+    I80 (=EDATE(H1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(I$1,'Use Factor Input'!$8:$8,0))
+    J80 (=EDATE(I1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(J$1,'Use Factor Input'!$8:$8,0))
+    K80 (=EDATE(J1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(K$1,'Use Factor Input'!$8:$8,0))
+    L80 (=EDATE(K1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(L$1,'Use Factor Input'!$8:$8,0))
+    M80 (=EDATE(L1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(M$1,'Use Factor Input'!$8:$8,0))
+    N80 (=EDATE(M1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(N$1,'Use Factor Input'!$8:$8,0))
+    O80 (=EDATE(N1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(O$1,'Use Factor Input'!$8:$8,0))
+    P80 (=EDATE(O1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(P$1,'Use Factor Input'!$8:$8,0))
+    Q80 (=EDATE(P1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(Q$1,'Use Factor Input'!$8:$8,0))
+    R80 (=EDATE(Q1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(R$1,'Use Factor Input'!$8:$8,0))
+    S80 (=EDATE(R1,1)): FORMULA = =INDEX('Use Factor Input'!$10:$10,MATCH(S$1,'Use Factor Input'!$8:$8,0))
+
+------------------------------------------------------------
+SHEET: KC Stone Supply
+Size: 38 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   3: Limestone
+   *** Row   4: Limestone Suppliers
+       Row   5: Thousand Tons
+       Row  11: Stone $/ton
+       Row  17: Barge $/ton
+       Row  23: Total Delivered Cost
+       Row  33: Circuit Breaker:
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 3: Limestone
+    Categories: ['limestone']
+    C3 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =YEAR(C$1)
+    D3 (=EDATE(C1,1)): FORMULA = =YEAR(D$1)
+    E3 (=EDATE(D1,1)): FORMULA = =YEAR(E$1)
+    F3 (=EDATE(E1,1)): FORMULA = =YEAR(F$1)
+    G3 (=EDATE(F1,1)): FORMULA = =YEAR(G$1)
+    H3 (=EDATE(G1,1)): FORMULA = =YEAR(H$1)
+    I3 (=EDATE(H1,1)): FORMULA = =YEAR(I$1)
+    J3 (=EDATE(I1,1)): FORMULA = =YEAR(J$1)
+    K3 (=EDATE(J1,1)): FORMULA = =YEAR(K$1)
+    L3 (=EDATE(K1,1)): FORMULA = =YEAR(L$1)
+    M3 (=EDATE(L1,1)): FORMULA = =YEAR(M$1)
+    N3 (=EDATE(M1,1)): FORMULA = =YEAR(N$1)
+    O3 (=EDATE(N1,1)): FORMULA = =YEAR(O$1)
+    P3 (=EDATE(O1,1)): FORMULA = =YEAR(P$1)
+    Q3 (=EDATE(P1,1)): FORMULA = =YEAR(Q$1)
+    R3 (=EDATE(Q1,1)): FORMULA = =YEAR(R$1)
+    S3 (=EDATE(R1,1)): FORMULA = =YEAR(S$1)
+
+>>> Row 4: Limestone Suppliers
+    Categories: ['limestone']
+    B4 (Col 2): VALUE = Days Supply
+    C4 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(C$1,'KC Consumables'!$1:$1,0))
+    D4 (=EDATE(C1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(D$1,'KC Consumables'!$1:$1,0))
+    E4 (=EDATE(D1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(E$1,'KC Consumables'!$1:$1,0))
+    F4 (=EDATE(E1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(F$1,'KC Consumables'!$1:$1,0))
+    G4 (=EDATE(F1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(G$1,'KC Consumables'!$1:$1,0))
+    H4 (=EDATE(G1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(H$1,'KC Consumables'!$1:$1,0))
+    I4 (=EDATE(H1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(I$1,'KC Consumables'!$1:$1,0))
+    J4 (=EDATE(I1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(J$1,'KC Consumables'!$1:$1,0))
+    K4 (=EDATE(J1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(K$1,'KC Consumables'!$1:$1,0))
+    L4 (=EDATE(K1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(L$1,'KC Consumables'!$1:$1,0))
+    M4 (=EDATE(L1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(M$1,'KC Consumables'!$1:$1,0))
+    N4 (=EDATE(M1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(N$1,'KC Consumables'!$1:$1,0))
+    O4 (=EDATE(N1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(O$1,'KC Consumables'!$1:$1,0))
+    P4 (=EDATE(O1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(P$1,'KC Consumables'!$1:$1,0))
+    Q4 (=EDATE(P1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(Q$1,'KC Consumables'!$1:$1,0))
+    R4 (=EDATE(Q1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(R$1,'KC Consumables'!$1:$1,0))
+    S4 (=EDATE(R1,1)): FORMULA = =INDEX('KC Consumables'!$49:$49,MATCH(S$1,'KC Consumables'!$1:$1,0))
+
+------------------------------------------------------------
+SHEET: KC Consumables
+Size: 187 rows x 97 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+   *** Row   4: Urea
+       Row   5: NOx Removed - lb/mmbtu
+   *** Row   6: lb-urea/lb-NOx Removed
+   *** Row   7: Urea ($/ton)
+   *** Row   9: Urea Tons
+       Row  10: Kyger Unit 1
+       Row  11: Kyger Unit 2
+       Row  12: Kyger Unit 3
+       Row  13: Kyger Unit 4
+       Row  14: Kyger Unit 5
+       Row  16: Plant
+   *** Row  18: Urea Cost - $
+       Row  19: Kyger Unit 1
+       Row  20: Kyger Unit 2
+       Row  21: Kyger Unit 3
+       Row  22: Kyger Unit 4
+       Row  23: Kyger Unit 5
+   *** Row  25: Total Urea Cost
+   *** Row  27: Limestone
+       Row  28: FGD Removal Efficiency (%)
+   *** Row  29: lb-limestone/lb-SO2
+       Row  30: CaCO3 Content (%)
+       Row  31: Moisture (%)
+       Row  32: $/ton
+   *** Row  34: Limestone Tons
+       Row  35: Kyger Unit 1
+       Row  36: Kyger Unit 2
+       Row  37: Kyger Unit 3
+       Row  38: Kyger Unit 4
+       Row  39: Kyger Unit 5
+       Row  41: Plant
+       Row  43: Inventory
+       Row  44: Beginning
+       Row  45: Received
+       Row  46: Available
+       Row  47: Consumed
+       Row  48: Ending
+       Row  49: Days Supply
+       Row  51: Beginning $
+       Row  52: Received $
+       Row  53: Available $
+       Row  54: Consumed $
+       Row  55: Ending $
+       Row  56: $/ton
+   *** Row  58: Limestone Cost - $
+       Row  59: Kyger Unit 1
+       Row  60: Kyger Unit 2
+       Row  61: Kyger Unit 3
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 4: Urea
+    Categories: ['urea']
+
+>>> Row 6: lb-urea/lb-NOx Removed
+    Categories: ['urea']
+    C6 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    D6 (=EDATE(C1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    E6 (=EDATE(D1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    F6 (=EDATE(E1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    G6 (=EDATE(F1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    H6 (=EDATE(G1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    I6 (=EDATE(H1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    J6 (=EDATE(I1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    K6 (=EDATE(J1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    L6 (=EDATE(K1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    M6 (=EDATE(L1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    N6 (=EDATE(M1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    O6 (=EDATE(N1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    P6 (=EDATE(O1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    Q6 (=EDATE(P1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    R6 (=EDATE(Q1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+    S6 (=EDATE(R1,1)): FORMULA = ='KC Forecast Inputs'!$B$314
+
+>>> Row 7: Urea ($/ton)
+    Categories: ['urea']
+    C7 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!C$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    D7 (=EDATE(C1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!D$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    E7 (=EDATE(D1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!E$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    F7 (=EDATE(E1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!F$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    G7 (=EDATE(F1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!G$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    H7 (=EDATE(G1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!H$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    I7 (=EDATE(H1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!I$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    J7 (=EDATE(I1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!J$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    K7 (=EDATE(J1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!K$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    L7 (=EDATE(K1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!L$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    M7 (=EDATE(L1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!M$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    N7 (=EDATE(M1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!N$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    O7 (=EDATE(N1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!O$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    P7 (=EDATE(O1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!P$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    Q7 (=EDATE(P1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!Q$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    R7 (=EDATE(Q1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!R$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+    S7 (=EDATE(R1,1)): FORMULA = =ROUND(INDEX('KC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('KC Consumables'!S$1),'KC Forecast Inputs'!$B$311:$T$311,0)),2)
+
+>>> Row 9: Urea Tons
+    Categories: ['urea']
+
+>>> Row 18: Urea Cost - $
+    Categories: ['urea']
+
+>>> Row 25: Total Urea Cost
+    Categories: ['urea']
+    C25 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C19:C24),0)
+    D25 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D19:D24),0)
+    E25 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E19:E24),0)
+    F25 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F19:F24),0)
+    G25 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G19:G24),0)
+    H25 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H19:H24),0)
+    I25 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I19:I24),0)
+    J25 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J19:J24),0)
+    K25 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K19:K24),0)
+    L25 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L19:L24),0)
+    M25 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M19:M24),0)
+    N25 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N19:N24),0)
+    O25 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O19:O24),0)
+    P25 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P19:P24),0)
+    Q25 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q19:Q24),0)
+    R25 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R19:R24),0)
+    S25 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S19:S24),0)
+
+>>> Row 27: Limestone
+    Categories: ['limestone']
+
+>>> Row 29: lb-limestone/lb-SO2
+    Categories: ['limestone']
+    C29 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    D29 (=EDATE(C1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    E29 (=EDATE(D1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    F29 (=EDATE(E1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    G29 (=EDATE(F1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    H29 (=EDATE(G1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    I29 (=EDATE(H1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    J29 (=EDATE(I1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    K29 (=EDATE(J1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    L29 (=EDATE(K1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    M29 (=EDATE(L1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    N29 (=EDATE(M1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    O29 (=EDATE(N1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    P29 (=EDATE(O1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    Q29 (=EDATE(P1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    R29 (=EDATE(Q1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+    S29 (=EDATE(R1,1)): FORMULA = ='KC Forecast Inputs'!$B$319
+
+>>> Row 34: Limestone Tons
+    Categories: ['limestone']
+
+>>> Row 58: Limestone Cost - $
+    Categories: ['limestone']
+
+>>> Row 65: Total Limestone Cost
+    Categories: ['limestone']
+    C65 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C59:C64),0)
+    D65 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D59:D64),0)
+    E65 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E59:E64),0)
+    F65 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F59:F64),0)
+    G65 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G59:G64),0)
+    H65 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H59:H64),0)
+    I65 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I59:I64),0)
+    J65 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J59:J64),0)
+    K65 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K59:K64),0)
+    L65 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L59:L64),0)
+    M65 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M59:M64),0)
+    N65 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N59:N64),0)
+    O65 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O59:O64),0)
+    P65 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P59:P64),0)
+    Q65 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q59:Q64),0)
+    R65 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R59:R64),0)
+    S65 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S59:S64),0)
+
+>>> Row 67: Hydrated Lime
+    Categories: ['hydrated lime']
+
+>>> Row 77: Hydrated Lime Cost - $
+    Categories: ['hydrated lime']
+
+>>> Row 84: Total Hydrated Lime Cost
+    Categories: ['hydrated lime']
+    C84 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C78:C83),0)
+    D84 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D78:D83),0)
+    E84 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E78:E83),0)
+    F84 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F78:F83),0)
+    G84 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G78:G83),0)
+    H84 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H78:H83),0)
+    I84 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I78:I83),0)
+    J84 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J78:J83),0)
+    K84 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K78:K83),0)
+    L84 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L78:L83),0)
+    M84 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M78:M83),0)
+    N84 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N78:N83),0)
+    O84 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O78:O83),0)
+    P84 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P78:P83),0)
+    Q84 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q78:Q83),0)
+    R84 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R78:R83),0)
+    S84 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S78:S83),0)
+
+------------------------------------------------------------
+SHEET: KC Byproducts
+Size: 58 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+       Row   4: Ash Sales & Disposal
+       Row   5: Coal Ash Content - %
+       Row   6: Ash Produced - Tons
+       Row   7: Fly Ash - %
+       Row   9: Fly Ash - Tons
+       Row  10: % Fly Ash Sold
+       Row  11: Fly Ash Sales - Tons
+       Row  12: Fly Ash to Pond - Tons
+       Row  13: Fly Ash Sales Rate - $/ton
+       Row  14: Fly Ash Revenue - $
+       Row  15: Fly Ash Disposal Cost - $/ton
+       Row  16: Fly Ash Disposal Cost - $
+       Row  18: Bottom Ash - Tons
+       Row  19: % Bottom Ash Sold
+       Row  20: Bottom Ash Sold - Tons
+       Row  21: Bottom Ash Disposed - Tons
+       Row  22: Bottom Ash Revenue - $/ton
+       Row  23: Bottom Ash Revenue - $
+       Row  24: Bottom Ash Disposal Cost - $/ton
+       Row  25: Bottom Ash Disposal Cost - $
+       Row  27: Total Ash Cost/Revenue - $
+       Row  30: Gypsum
+       Row  31: Moisture Estimate:
+       Row  33: Gypsum Wet Tons
+       Row  34: Kyger Unit 1
+       Row  35: Kyger Unit 2
+       Row  36: Kyger Unit 3
+       Row  37: Kyger Unit 4
+       Row  38: Kyger Unit 5
+       Row  40: Total Gypsum Production
+       Row  42: % Gypsum Sold
+       Row  43: Gypsum Sales - Tons
+       Row  44: Gypsum Sales- $/Ton
+       Row  45: Gypsum Sales- $
+       Row  46: Gypsum Pad-to-pad cost ($/ton)
+       Row  47: Gypsum Pad-to-pad cost ($)
+       Row  49: Gypsum Disposal- Tons
+       Row  50: Gypsum Disposal - $/ton
+       Row  51: Gypsum Disposal - $
+       Row  53: Gypsum Net Cost - $
+   *** Row  55: Misc. Byproduct Expenses
+       Row  58: Byproduct Cost Less Sales
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 55: Misc. Byproduct Expenses
+    Categories: ['misc']
+    C55 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(C$1),'KC Forecast Inputs'!$406:$406,0))
+    D55 (=EDATE(C1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(D$1),'KC Forecast Inputs'!$406:$406,0))
+    E55 (=EDATE(D1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(E$1),'KC Forecast Inputs'!$406:$406,0))
+    F55 (=EDATE(E1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(F$1),'KC Forecast Inputs'!$406:$406,0))
+    G55 (=EDATE(F1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(G$1),'KC Forecast Inputs'!$406:$406,0))
+    H55 (=EDATE(G1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(H$1),'KC Forecast Inputs'!$406:$406,0))
+    I55 (=EDATE(H1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(I$1),'KC Forecast Inputs'!$406:$406,0))
+    J55 (=EDATE(I1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(J$1),'KC Forecast Inputs'!$406:$406,0))
+    K55 (=EDATE(J1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(K$1),'KC Forecast Inputs'!$406:$406,0))
+    L55 (=EDATE(K1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(L$1),'KC Forecast Inputs'!$406:$406,0))
+    M55 (=EDATE(L1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(M$1),'KC Forecast Inputs'!$406:$406,0))
+    N55 (=EDATE(M1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(N$1),'KC Forecast Inputs'!$406:$406,0))
+    O55 (=EDATE(N1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(O$1),'KC Forecast Inputs'!$406:$406,0))
+    P55 (=EDATE(O1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(P$1),'KC Forecast Inputs'!$406:$406,0))
+    Q55 (=EDATE(P1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(Q$1),'KC Forecast Inputs'!$406:$406,0))
+    R55 (=EDATE(Q1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(R$1),'KC Forecast Inputs'!$406:$406,0))
+    S55 (=EDATE(R1,1)): FORMULA = =INDEX('KC Forecast Inputs'!$417:$417,MATCH(YEAR(S$1),'KC Forecast Inputs'!$406:$406,0))
+
+------------------------------------------------------------
+SHEET: CC Generation
+Size: 80 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+       Row   4: Net Maximum Capacity Per Unit - MW
+       Row   6: MWH Available:
+       Row   7: Clifty Unit 1
+       Row   8: Clifty Unit 2
+       Row   9: Clifty Unit 3
+       Row  10: Clifty Unit 4
+       Row  11: Clifty Unit 5
+       Row  12: Clifty Unit 6
+       Row  13: Plant Total (Before FGD Aux)
+       Row  14: FGD Auxiliary Load - MW
+       Row  15: FGD Auxiliary Load - MWH
+   *** Row  16: Bioreactor Aux Load (MW / day)
+   *** Row  17: Bioreactor Aux Load - MWh
+       Row  18: Plant Total (Less FGD Aux)
+       Row  19: Aux Load as % of Total Generation
+       Row  20: Reserve:
+       Row  21: System Regulating Reserve - MW/H
+       Row  22: Clifty Reserve Carrying Percentage %
+       Row  23: Clifty Plant Reserve - MWH
+       Row  24: Unit 6 Reserve - MWH
+       Row  25: Clifty Units 1-5 Reserve - MWH
+       Row  27: Lack of Sales - MWH
+       Row  28: Use Factor - %
+       Row  29: Lack of Sales - MWH
+       Row  31: 15 kV Generation - MWh
+       Row  32: Clifty Unit 1
+       Row  33: Clifty Unit 2
+       Row  34: Clifty Unit 3
+       Row  35: Clifty Unit 4
+       Row  36: Clifty Unit 5
+       Row  37: Clifty Unit 6
+       Row  38: Plant
+       Row  39: Clifty Total (Less FGD Aux)
+       Row  41: Losses
+       Row  42: GSU XF Losses - %
+       Row  43: GSU XF Losses - MWH
+       Row  44: Internal Losses - %
+       Row  45: Internal Losses - MWH
+       Row  47: Billable Generation - 345 kV
+       Row  49: Net Capacity Factor
+       Row  50: Clifty Unit 1
+       Row  51: Clifty Unit 2
+       Row  52: Clifty Unit 3
+       Row  53: Clifty Unit 4
+       Row  54: Clifty Unit 5
+       Row  55: Clifty Unit 6
+       Row  56: Plant Net Capacity Factor
+       Row  58: Estimating tool for NHR adj to SUF
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 16: Bioreactor Aux Load (MW / day)
+    Categories: ['bioreactor']
+    C16 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): VALUE = 6
+    D16 (=EDATE(C1,1)): VALUE = 6
+    E16 (=EDATE(D1,1)): VALUE = 6
+    F16 (=EDATE(E1,1)): VALUE = 6
+    G16 (=EDATE(F1,1)): VALUE = 6
+    H16 (=EDATE(G1,1)): VALUE = 6
+    I16 (=EDATE(H1,1)): VALUE = 6
+    J16 (=EDATE(I1,1)): VALUE = 6
+    K16 (=EDATE(J1,1)): VALUE = 6
+    L16 (=EDATE(K1,1)): VALUE = 6
+    M16 (=EDATE(L1,1)): VALUE = 6
+    N16 (=EDATE(M1,1)): VALUE = 6
+    O16 (=EDATE(N1,1)): VALUE = 6
+    P16 (=EDATE(O1,1)): VALUE = 6
+    Q16 (=EDATE(P1,1)): VALUE = 6
+    R16 (=EDATE(Q1,1)): VALUE = 6
+    S16 (=EDATE(R1,1)): VALUE = 6
+
+>>> Row 17: Bioreactor Aux Load - MWh
+    Categories: ['bioreactor']
+    C17 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =C2*C16
+    D17 (=EDATE(C1,1)): FORMULA = =D2*D16
+    E17 (=EDATE(D1,1)): FORMULA = =E2*E16
+    F17 (=EDATE(E1,1)): FORMULA = =F2*F16
+    G17 (=EDATE(F1,1)): FORMULA = =G2*G16
+    H17 (=EDATE(G1,1)): FORMULA = =H2*H16
+    I17 (=EDATE(H1,1)): FORMULA = =I2*I16
+    J17 (=EDATE(I1,1)): FORMULA = =J2*J16
+    K17 (=EDATE(J1,1)): FORMULA = =K2*K16
+    L17 (=EDATE(K1,1)): FORMULA = =L2*L16
+    M17 (=EDATE(L1,1)): FORMULA = =M2*M16
+    N17 (=EDATE(M1,1)): FORMULA = =N2*N16
+    O17 (=EDATE(N1,1)): FORMULA = =O2*O16
+    P17 (=EDATE(O1,1)): FORMULA = =P2*P16
+    Q17 (=EDATE(P1,1)): FORMULA = =Q2*Q16
+    R17 (=EDATE(Q1,1)): FORMULA = =R2*R16
+    S17 (=EDATE(R1,1)): FORMULA = =S2*S16
+
+>>> Row 74: Allowance Calculations
+    Categories: ['allowance']
+
+>>> Row 79: Use factor without Nox Allowance
+    Categories: ['allowance']
+    C79 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(C$1,'Use Factor Input'!$8:$8,0))
+    D79 (=EDATE(C1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(D$1,'Use Factor Input'!$8:$8,0))
+    E79 (=EDATE(D1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(E$1,'Use Factor Input'!$8:$8,0))
+    F79 (=EDATE(E1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(F$1,'Use Factor Input'!$8:$8,0))
+    G79 (=EDATE(F1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(G$1,'Use Factor Input'!$8:$8,0))
+    H79 (=EDATE(G1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(H$1,'Use Factor Input'!$8:$8,0))
+    I79 (=EDATE(H1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(I$1,'Use Factor Input'!$8:$8,0))
+    J79 (=EDATE(I1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(J$1,'Use Factor Input'!$8:$8,0))
+    K79 (=EDATE(J1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(K$1,'Use Factor Input'!$8:$8,0))
+    L79 (=EDATE(K1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(L$1,'Use Factor Input'!$8:$8,0))
+    M79 (=EDATE(L1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(M$1,'Use Factor Input'!$8:$8,0))
+    N79 (=EDATE(M1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(N$1,'Use Factor Input'!$8:$8,0))
+    O79 (=EDATE(N1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(O$1,'Use Factor Input'!$8:$8,0))
+    P79 (=EDATE(O1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(P$1,'Use Factor Input'!$8:$8,0))
+    Q79 (=EDATE(P1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(Q$1,'Use Factor Input'!$8:$8,0))
+    R79 (=EDATE(Q1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(R$1,'Use Factor Input'!$8:$8,0))
+    S79 (=EDATE(R1,1)): FORMULA = =INDEX('Use Factor Input'!$3:$3,MATCH(S$1,'Use Factor Input'!$8:$8,0))
+
+>>> Row 80: Use factor with Nox Allowance
+    Categories: ['allowance']
+    C80 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(C$1,'Use Factor Input'!$8:$8,0))
+    D80 (=EDATE(C1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(D$1,'Use Factor Input'!$8:$8,0))
+    E80 (=EDATE(D1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(E$1,'Use Factor Input'!$8:$8,0))
+    F80 (=EDATE(E1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(F$1,'Use Factor Input'!$8:$8,0))
+    G80 (=EDATE(F1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(G$1,'Use Factor Input'!$8:$8,0))
+    H80 (=EDATE(G1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(H$1,'Use Factor Input'!$8:$8,0))
+    I80 (=EDATE(H1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(I$1,'Use Factor Input'!$8:$8,0))
+    J80 (=EDATE(I1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(J$1,'Use Factor Input'!$8:$8,0))
+    K80 (=EDATE(J1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(K$1,'Use Factor Input'!$8:$8,0))
+    L80 (=EDATE(K1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(L$1,'Use Factor Input'!$8:$8,0))
+    M80 (=EDATE(L1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(M$1,'Use Factor Input'!$8:$8,0))
+    N80 (=EDATE(M1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(N$1,'Use Factor Input'!$8:$8,0))
+    O80 (=EDATE(N1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(O$1,'Use Factor Input'!$8:$8,0))
+    P80 (=EDATE(O1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(P$1,'Use Factor Input'!$8:$8,0))
+    Q80 (=EDATE(P1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(Q$1,'Use Factor Input'!$8:$8,0))
+    R80 (=EDATE(Q1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(R$1,'Use Factor Input'!$8:$8,0))
+    S80 (=EDATE(R1,1)): FORMULA = =INDEX('Use Factor Input'!$9:$9,MATCH(S$1,'Use Factor Input'!$8:$8,0))
+
+------------------------------------------------------------
+SHEET: CC Stone Supply
+Size: 38 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   3: Limestone
+   *** Row   4: Limestone Suppliers
+       Row   5: Thousand Tons
+       Row  11: Stone $/ton
+       Row  17: Barge $/ton
+       Row  23: Total Delivered Cost
+       Row  33: Circuit Breaker:
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 3: Limestone
+    Categories: ['limestone']
+    C3 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =YEAR(C$1)
+    D3 (=EDATE(C1,1)): FORMULA = =YEAR(D$1)
+    E3 (=EDATE(D1,1)): FORMULA = =YEAR(E$1)
+    F3 (=EDATE(E1,1)): FORMULA = =YEAR(F$1)
+    G3 (=EDATE(F1,1)): FORMULA = =YEAR(G$1)
+    H3 (=EDATE(G1,1)): FORMULA = =YEAR(H$1)
+    I3 (=EDATE(H1,1)): FORMULA = =YEAR(I$1)
+    J3 (=EDATE(I1,1)): FORMULA = =YEAR(J$1)
+    K3 (=EDATE(J1,1)): FORMULA = =YEAR(K$1)
+    L3 (=EDATE(K1,1)): FORMULA = =YEAR(L$1)
+    M3 (=EDATE(L1,1)): FORMULA = =YEAR(M$1)
+    N3 (=EDATE(M1,1)): FORMULA = =YEAR(N$1)
+    O3 (=EDATE(N1,1)): FORMULA = =YEAR(O$1)
+    P3 (=EDATE(O1,1)): FORMULA = =YEAR(P$1)
+    Q3 (=EDATE(P1,1)): FORMULA = =YEAR(Q$1)
+    R3 (=EDATE(Q1,1)): FORMULA = =YEAR(R$1)
+    S3 (=EDATE(R1,1)): FORMULA = =YEAR(S$1)
+
+>>> Row 4: Limestone Suppliers
+    Categories: ['limestone']
+    B4 (Col 2): VALUE = Days Supply
+    C4 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(C$1,'CC Consumables'!$1:$1,0))
+    D4 (=EDATE(C1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(D$1,'CC Consumables'!$1:$1,0))
+    E4 (=EDATE(D1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(E$1,'CC Consumables'!$1:$1,0))
+    F4 (=EDATE(E1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(F$1,'CC Consumables'!$1:$1,0))
+    G4 (=EDATE(F1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(G$1,'CC Consumables'!$1:$1,0))
+    H4 (=EDATE(G1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(H$1,'CC Consumables'!$1:$1,0))
+    I4 (=EDATE(H1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(I$1,'CC Consumables'!$1:$1,0))
+    J4 (=EDATE(I1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(J$1,'CC Consumables'!$1:$1,0))
+    K4 (=EDATE(J1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(K$1,'CC Consumables'!$1:$1,0))
+    L4 (=EDATE(K1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(L$1,'CC Consumables'!$1:$1,0))
+    M4 (=EDATE(L1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(M$1,'CC Consumables'!$1:$1,0))
+    N4 (=EDATE(M1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(N$1,'CC Consumables'!$1:$1,0))
+    O4 (=EDATE(N1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(O$1,'CC Consumables'!$1:$1,0))
+    P4 (=EDATE(O1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(P$1,'CC Consumables'!$1:$1,0))
+    Q4 (=EDATE(P1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(Q$1,'CC Consumables'!$1:$1,0))
+    R4 (=EDATE(Q1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(R$1,'CC Consumables'!$1:$1,0))
+    S4 (=EDATE(R1,1)): FORMULA = =INDEX('CC Consumables'!$49:$49,MATCH(S$1,'CC Consumables'!$1:$1,0))
+
+------------------------------------------------------------
+SHEET: CC Consumables
+Size: 186 rows x 97 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+   *** Row   4: Urea
+       Row   5: NOx Removed - lb/mmbtu
+   *** Row   6: lb-urea/lb-NOx Removed
+   *** Row   7: Urea ($/ton)
+   *** Row   9: Urea Tons
+       Row  10: Clifty Unit 1
+       Row  11: Clifty Unit 2
+       Row  12: Clifty Unit 3
+       Row  13: Clifty Unit 4
+       Row  14: Clifty Unit 5
+       Row  15: Clifty Unit 6
+       Row  16: Plant
+   *** Row  18: Urea Cost - $
+       Row  19: Clifty Unit 1
+       Row  20: Clifty Unit 2
+       Row  21: Clifty Unit 3
+       Row  22: Clifty Unit 4
+       Row  23: Clifty Unit 5
+       Row  24: Clifty Unit 6
+   *** Row  25: Total Urea Cost
+   *** Row  27: Limestone
+       Row  28: FGD Removal Efficiency (%)
+   *** Row  29: lb-limestone/lb-SO2
+       Row  30: CaCO3 Content (%)
+       Row  31: Moisture (%)
+       Row  32: $/ton
+   *** Row  34: Limestone Tons
+       Row  35: Clifty Unit 1
+       Row  36: Clifty Unit 2
+       Row  37: Clifty Unit 3
+       Row  38: Clifty Unit 4
+       Row  39: Clifty Unit 5
+       Row  40: Clifty Unit 6
+       Row  41: Plant
+       Row  43: Inventory
+       Row  44: Beginning
+       Row  45: Received
+       Row  46: Available
+       Row  47: Consumed
+       Row  48: Ending
+       Row  49: Days Supply
+       Row  51: Beginning $
+       Row  52: Received $
+       Row  53: Available $
+       Row  54: Consumed $
+       Row  55: Ending $
+       Row  56: $/ton
+   *** Row  58: Limestone Cost - $
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 4: Urea
+    Categories: ['urea']
+
+>>> Row 6: lb-urea/lb-NOx Removed
+    Categories: ['urea']
+    C6 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    D6 (=EDATE(C1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    E6 (=EDATE(D1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    F6 (=EDATE(E1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    G6 (=EDATE(F1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    H6 (=EDATE(G1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    I6 (=EDATE(H1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    J6 (=EDATE(I1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    K6 (=EDATE(J1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    L6 (=EDATE(K1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    M6 (=EDATE(L1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    N6 (=EDATE(M1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    O6 (=EDATE(N1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    P6 (=EDATE(O1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    Q6 (=EDATE(P1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    R6 (=EDATE(Q1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+    S6 (=EDATE(R1,1)): FORMULA = ='CC Forecast Inputs'!$B$314
+
+>>> Row 7: Urea ($/ton)
+    Categories: ['urea']
+    C7 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!C$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    D7 (=EDATE(C1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!D$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    E7 (=EDATE(D1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!E$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    F7 (=EDATE(E1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!F$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    G7 (=EDATE(F1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!G$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    H7 (=EDATE(G1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!H$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    I7 (=EDATE(H1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!I$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    J7 (=EDATE(I1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!J$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    K7 (=EDATE(J1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!K$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    L7 (=EDATE(K1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!L$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    M7 (=EDATE(L1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!M$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    N7 (=EDATE(M1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!N$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    O7 (=EDATE(N1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!O$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    P7 (=EDATE(O1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!P$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    Q7 (=EDATE(P1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!Q$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    R7 (=EDATE(Q1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!R$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    S7 (=EDATE(R1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$312:$T$312,MATCH(YEAR('CC Consumables'!S$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+
+>>> Row 9: Urea Tons
+    Categories: ['urea']
+
+>>> Row 18: Urea Cost - $
+    Categories: ['urea']
+
+>>> Row 25: Total Urea Cost
+    Categories: ['urea']
+    C25 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C19:C24),0)
+    D25 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D19:D24),0)
+    E25 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E19:E24),0)
+    F25 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F19:F24),0)
+    G25 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G19:G24),0)
+    H25 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H19:H24),0)
+    I25 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I19:I24),0)
+    J25 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J19:J24),0)
+    K25 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K19:K24),0)
+    L25 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L19:L24),0)
+    M25 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M19:M24),0)
+    N25 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N19:N24),0)
+    O25 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O19:O24),0)
+    P25 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P19:P24),0)
+    Q25 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q19:Q24),0)
+    R25 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R19:R24),0)
+    S25 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S19:S24),0)
+
+>>> Row 27: Limestone
+    Categories: ['limestone']
+
+>>> Row 29: lb-limestone/lb-SO2
+    Categories: ['limestone']
+    C29 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    D29 (=EDATE(C1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    E29 (=EDATE(D1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    F29 (=EDATE(E1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    G29 (=EDATE(F1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    H29 (=EDATE(G1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    I29 (=EDATE(H1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    J29 (=EDATE(I1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    K29 (=EDATE(J1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    L29 (=EDATE(K1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    M29 (=EDATE(L1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    N29 (=EDATE(M1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    O29 (=EDATE(N1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    P29 (=EDATE(O1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    Q29 (=EDATE(P1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    R29 (=EDATE(Q1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+    S29 (=EDATE(R1,1)): FORMULA = ='CC Forecast Inputs'!$B$319
+
+>>> Row 34: Limestone Tons
+    Categories: ['limestone']
+
+>>> Row 58: Limestone Cost - $
+    Categories: ['limestone']
+
+>>> Row 65: Total Limestone Cost
+    Categories: ['limestone']
+    C65 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C59:C64),0)
+    D65 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D59:D64),0)
+    E65 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E59:E64),0)
+    F65 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F59:F64),0)
+    G65 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G59:G64),0)
+    H65 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H59:H64),0)
+    I65 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I59:I64),0)
+    J65 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J59:J64),0)
+    K65 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K59:K64),0)
+    L65 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L59:L64),0)
+    M65 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M59:M64),0)
+    N65 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N59:N64),0)
+    O65 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O59:O64),0)
+    P65 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P59:P64),0)
+    Q65 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q59:Q64),0)
+    R65 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R59:R64),0)
+    S65 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S59:S64),0)
+
+>>> Row 67: Hydrated Lime
+    Categories: ['hydrated lime']
+
+>>> Row 68: Hydrated Lime Tons
+    Categories: ['hydrated lime']
+
+>>> Row 77: Hydrated Lime Cost - $
+    Categories: ['hydrated lime']
+
+>>> Row 84: Total Hydrated Lime Cost
+    Categories: ['hydrated lime']
+    C84 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(SUM(C78:C83),0)
+    D84 (=EDATE(C1,1)): FORMULA = =ROUND(SUM(D78:D83),0)
+    E84 (=EDATE(D1,1)): FORMULA = =ROUND(SUM(E78:E83),0)
+    F84 (=EDATE(E1,1)): FORMULA = =ROUND(SUM(F78:F83),0)
+    G84 (=EDATE(F1,1)): FORMULA = =ROUND(SUM(G78:G83),0)
+    H84 (=EDATE(G1,1)): FORMULA = =ROUND(SUM(H78:H83),0)
+    I84 (=EDATE(H1,1)): FORMULA = =ROUND(SUM(I78:I83),0)
+    J84 (=EDATE(I1,1)): FORMULA = =ROUND(SUM(J78:J83),0)
+    K84 (=EDATE(J1,1)): FORMULA = =ROUND(SUM(K78:K83),0)
+    L84 (=EDATE(K1,1)): FORMULA = =ROUND(SUM(L78:L83),0)
+    M84 (=EDATE(L1,1)): FORMULA = =ROUND(SUM(M78:M83),0)
+    N84 (=EDATE(M1,1)): FORMULA = =ROUND(SUM(N78:N83),0)
+    O84 (=EDATE(N1,1)): FORMULA = =ROUND(SUM(O78:O83),0)
+    P84 (=EDATE(O1,1)): FORMULA = =ROUND(SUM(P78:P83),0)
+    Q84 (=EDATE(P1,1)): FORMULA = =ROUND(SUM(Q78:Q83),0)
+    R84 (=EDATE(Q1,1)): FORMULA = =ROUND(SUM(R78:R83),0)
+    S84 (=EDATE(R1,1)): FORMULA = =ROUND(SUM(S78:S83),0)
+
+>>> Row 86: Hydrated Lime $/ton
+    Categories: ['hydrated lime']
+    C86 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!C$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    D86 (=EDATE(C1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!D$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    E86 (=EDATE(D1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!E$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    F86 (=EDATE(E1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!F$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    G86 (=EDATE(F1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!G$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    H86 (=EDATE(G1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!H$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    I86 (=EDATE(H1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!I$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    J86 (=EDATE(I1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!J$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    K86 (=EDATE(J1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!K$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    L86 (=EDATE(K1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!L$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    M86 (=EDATE(L1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!M$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    N86 (=EDATE(M1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!N$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    O86 (=EDATE(N1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!O$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    P86 (=EDATE(O1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!P$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    Q86 (=EDATE(P1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!Q$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    R86 (=EDATE(Q1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!R$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+    S86 (=EDATE(R1,1)): FORMULA = =ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MATCH(YEAR('CC Consumables'!S$1),'CC Forecast Inputs'!$B$311:$T$311,0)),2)
+
+------------------------------------------------------------
+SHEET: CC Byproducts
+Size: 58 rows x 92 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   2: Days in Period
+       Row   3: Year
+       Row   4: Ash Sales & Disposal
+       Row   5: Coal Ash Content - %
+       Row   6: Ash Produced - Tons
+       Row   7: Fly Ash - %
+       Row   9: Fly Ash - Tons
+       Row  10: % Fly Ash Sold
+       Row  11: Fly Ash Sales - Tons
+       Row  12: Fly Ash to Pond - Tons
+       Row  13: Fly Ash Sales Rate - $/ton
+       Row  14: Fly Ash Revenue - $
+       Row  15: Fly Ash Disposal Cost - $/ton
+       Row  16: Fly Ash Disposal Cost - $
+       Row  18: Bottom Ash - Tons
+       Row  19: % Bottom Ash Sold
+       Row  20: Bottom Ash Sold - Tons
+       Row  21: Bottom Ash Disposed - Tons
+       Row  22: Bottom Ash Revenue - $/ton
+       Row  23: Bottom Ash Revenue - $
+       Row  24: Bottom Ash Disposal Cost - $/ton
+       Row  25: Bottom Ash Disposal Cost - $
+       Row  27: Total Ash Cost/Revenue - $
+       Row  30: Gypsum
+       Row  31: Moisture Estimate:
+       Row  33: Gypsum Wet Tons
+       Row  34: Clifty Unit 1
+       Row  35: Clifty Unit 2
+       Row  36: Clifty Unit 3
+       Row  37: Clifty Unit 4
+       Row  38: Clifty Unit 5
+       Row  39: Clifty Unit 6
+       Row  40: Total Gypsum Production
+       Row  42: % Gypsum Sold
+       Row  43: Gypsum Sales - Tons
+       Row  44: Gypsum Sales- $/Ton
+       Row  45: Gypsum Sales- $
+       Row  46: Gypsum Pad-to-pad cost ($/ton)
+       Row  47: Gypsum Pad-to-pad cost ($)
+       Row  49: Gypsum Disposal- Tons
+       Row  50: Gypsum Disposal - $/ton
+       Row  51: Gypsum Disposal - $
+       Row  53: Gypsum Net Cost - $
+   *** Row  55: Misc. Byproduct Expenses
+       Row  58: Byproduct Cost Less Sales
+
+Column Headers (Row 1):
+       Col C: =DATE(YEAR(asOfDate),MONTH(asOfDate),1)
+       Col D: =EDATE(C1,1)
+       Col E: =EDATE(D1,1)
+       Col F: =EDATE(E1,1)
+       Col G: =EDATE(F1,1)
+       Col H: =EDATE(G1,1)
+       Col I: =EDATE(H1,1)
+       Col J: =EDATE(I1,1)
+       Col K: =EDATE(J1,1)
+       Col L: =EDATE(K1,1)
+       Col M: =EDATE(L1,1)
+       Col N: =EDATE(M1,1)
+       Col O: =EDATE(N1,1)
+       Col P: =EDATE(O1,1)
+       Col Q: =EDATE(P1,1)
+       Col R: =EDATE(Q1,1)
+       Col S: =EDATE(R1,1)
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 55: Misc. Byproduct Expenses
+    Categories: ['misc']
+    C55 (=DATE(YEAR(asOfDate),MONTH(asOfDate),1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(C$1),'CC Forecast Inputs'!$406:$406,0))
+    D55 (=EDATE(C1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(D$1),'CC Forecast Inputs'!$406:$406,0))
+    E55 (=EDATE(D1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(E$1),'CC Forecast Inputs'!$406:$406,0))
+    F55 (=EDATE(E1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(F$1),'CC Forecast Inputs'!$406:$406,0))
+    G55 (=EDATE(F1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(G$1),'CC Forecast Inputs'!$406:$406,0))
+    H55 (=EDATE(G1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(H$1),'CC Forecast Inputs'!$406:$406,0))
+    I55 (=EDATE(H1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(I$1),'CC Forecast Inputs'!$406:$406,0))
+    J55 (=EDATE(I1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(J$1),'CC Forecast Inputs'!$406:$406,0))
+    K55 (=EDATE(J1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(K$1),'CC Forecast Inputs'!$406:$406,0))
+    L55 (=EDATE(K1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(L$1),'CC Forecast Inputs'!$406:$406,0))
+    M55 (=EDATE(L1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(M$1),'CC Forecast Inputs'!$406:$406,0))
+    N55 (=EDATE(M1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(N$1),'CC Forecast Inputs'!$406:$406,0))
+    O55 (=EDATE(N1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(O$1),'CC Forecast Inputs'!$406:$406,0))
+    P55 (=EDATE(O1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(P$1),'CC Forecast Inputs'!$406:$406,0))
+    Q55 (=EDATE(P1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(Q$1),'CC Forecast Inputs'!$406:$406,0))
+    R55 (=EDATE(Q1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(R$1),'CC Forecast Inputs'!$406:$406,0))
+    S55 (=EDATE(R1,1)): FORMULA = =INDEX('CC Forecast Inputs'!$417:$417,MATCH(YEAR(S$1),'CC Forecast Inputs'!$406:$406,0))
+
+------------------------------------------------------------
+SHEET: Component Costs
+Size: 86 rows x 58 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row   1: Hourly Offer O&M Adder ($/MWh)
+       Row   2: Kyger Creek
+       Row   3: Clifty Creek
+       Row   4: VOM Inflation Rate
+       Row   6: Date / Time
+       Row   7: =asOfDate
+       Row   8: =EDATE(A7,1)
+       Row   9: =EDATE(A8,1)
+       Row  10: =EDATE(A9,1)
+       Row  11: =EDATE(A10,1)
+       Row  12: =EDATE(A11,1)
+       Row  13: =EDATE(A12,1)
+       Row  14: =EDATE(A13,1)
+       Row  15: =EDATE(A14,1)
+       Row  16: =EDATE(A15,1)
+       Row  17: =EDATE(A16,1)
+       Row  18: =EDATE(A17,1)
+       Row  19: =EDATE(A18,1)
+       Row  20: =EDATE(A19,1)
+       Row  21: =EDATE(A20,1)
+       Row  22: =EDATE(A21,1)
+       Row  23: =EDATE(A22,1)
+       Row  24: =EDATE(A23,1)
+       Row  25: =EDATE(A24,1)
+       Row  26: =EDATE(A25,1)
+       Row  27: =EDATE(A26,1)
+       Row  28: =EDATE(A27,1)
+       Row  29: =EDATE(A28,1)
+       Row  30: =EDATE(A29,1)
+       Row  31: =EDATE(A30,1)
+       Row  32: =EDATE(A31,1)
+       Row  33: =EDATE(A32,1)
+       Row  34: =EDATE(A33,1)
+       Row  35: =EDATE(A34,1)
+       Row  36: =EDATE(A35,1)
+       Row  37: =EDATE(A36,1)
+       Row  38: =EDATE(A37,1)
+       Row  39: =EDATE(A38,1)
+       Row  40: =EDATE(A39,1)
+       Row  41: =EDATE(A40,1)
+       Row  42: =EDATE(A41,1)
+       Row  43: =EDATE(A42,1)
+       Row  44: =EDATE(A43,1)
+       Row  45: =EDATE(A44,1)
+       Row  46: =EDATE(A45,1)
+       Row  47: =EDATE(A46,1)
+       Row  48: =EDATE(A47,1)
+       Row  49: =EDATE(A48,1)
+       Row  50: =EDATE(A49,1)
+       Row  51: =EDATE(A50,1)
+
+Column Headers (Row 1):
+       Col A: Hourly Offer O&M Adder ($/MWh)
+       Col E: Include Market Allowance Cost in Calculations and Reporting
+       Col I: =nox_allowance_rate
+
+------------------------------------------------------------
+SHEET: Use Factor Input
+Size: 67 rows x 94 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   1: UseFactors Without NOx Allowance Cost
+       Row   2: Plant
+       Row   3: Clifty Creek
+       Row   4: Kyger Creek
+   *** Row   7: UseFactors With NOx Allowance Cost
+       Row   8: Plant
+       Row   9: Clifty Creek
+       Row  10: Kyger Creek
+       Row  12: CC MTD
+       Row  13: KC MTD
+       Row  17: Scenario 1 (Baseline)
+   *** Row  18: UseFactors Without NOx Allowance Cost
+       Row  19: Plant
+       Row  20: Clifty Creek
+       Row  21: Kyger Creek
+       Row  30: Scenario 2 (Preliminary Forecast, HH Gas)
+   *** Row  31: UseFactors Without NOx Allowance Cost
+       Row  32: Plant
+       Row  33: Clifty Creek
+       Row  34: Kyger Creek
+       Row  43: Scenario 3 (EGT&S Scenario)
+   *** Row  44: UseFactors Without NOx Allowance Cost
+       Row  45: Plant
+       Row  46: Clifty Creek
+       Row  47: Kyger Creek
+       Row  57: RESET VALUES for UF Building (100%)
+   *** Row  58: UseFactors Without NOx Allowance Cost
+       Row  59: Plant
+       Row  60: Clifty Creek
+       Row  61: Kyger Creek
+   *** Row  64: UseFactors With NOx Allowance Cost
+       Row  65: Plant
+       Row  66: Clifty Creek
+       Row  67: Kyger Creek
+
+Column Headers (Row 1):
+       Col A: UseFactors Without NOx Allowance Cost
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 1: UseFactors Without NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 7: UseFactors With NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 18: UseFactors Without NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 31: UseFactors Without NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 44: UseFactors Without NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 58: UseFactors Without NOx Allowance Cost
+    Categories: ['allowance']
+
+>>> Row 64: UseFactors With NOx Allowance Cost
+    Categories: ['allowance']
+
+================================================================================
+FILE: 2025 Kyger Forecast.xlsx
+================================================================================
+
+Sheets found: ['Help', 'BUDGET', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'DeptSummary', 'FcastAct', 'Var Rpt', 'CHECKS', 'SUBMIT', 'RPTDATA', 'COMBINED', 'ACTUALS', 'SUPPORT']
+
+------------------------------------------------------------
+SHEET: BUDGET
+Size: 1102 rows x 29 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+       Row  10: BUDGET
+       Row  11: Kyger
+       Row  12: Kyger
+       Row  13: Kyger
+       Row  14: Kyger
+       Row  15: Kyger
+       Row  16: Kyger
+       Row  17: Kyger
+       Row  18: Kyger
+       Row  19: Kyger
+       Row  20: Kyger
+       Row  21: Kyger
+       Row  22: Kyger
+       Row  23: Kyger
+       Row  24: Kyger
+       Row  25: Kyger
+       Row  26: Kyger
+       Row  27: Kyger
+       Row  28: Kyger
+       Row  29: Kyger
+       Row  30: Kyger
+       Row  31: Kyger
+       Row  32: Kyger
+       Row  33: Kyger
+       Row  34: Kyger
+       Row  35: Kyger
+       Row  36: Kyger
+       Row  37: Kyger
+       Row  38: Kyger
+       Row  39: Kyger
+       Row  40: Kyger
+       Row  41: Kyger
+       Row  42: Kyger
+       Row  43: Kyger
+       Row  44: Kyger
+       Row  45: Kyger
+       Row  46: Kyger
+       Row  47: Kyger
+       Row  48: Kyger
+       Row  49: Kyger
+       Row  50: Kyger
+       Row  51: Kyger
+       Row  52: Kyger
+       Row  53: Kyger
+       Row  54: Kyger
+       Row  55: Kyger
+       Row  56: Kyger
+       Row  57: Kyger
+       Row  58: Kyger
+       Row  59: Kyger
+
+------------------------------------------------------------
+SHEET: FcastAct
+Size: 1187 rows x 76 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   1: =MID(CELL("filename"),SEARCH("[",CELL("filename"))+DeptSummary!Z33, SEARCH("]",CELL("filename"))-SEARCH("[",CELL("filename"))-14) & "Operating Forecast Detail (Non Labor Only)"
+       Row   6: Dept
+   *** Row   8: LABOR
+       Row  12: Dept
+       Row  13: CHEM
+       Row  14: CHEM
+       Row  15: CHEM
+       Row  16: CHEM
+       Row  17: CHEM
+       Row  18: CHEM
+       Row  19: CHEM
+       Row  20: CHEM
+       Row  21: CHEM
+       Row  22: CHEM
+       Row  23: CHEM
+       Row  24: CHEM
+       Row  25: CHEM
+       Row  26: CHEM
+       Row  27: CHEM
+       Row  28: CHEM
+       Row  29: CHEM
+       Row  30: CHEM
+       Row  31: CHEM
+       Row  32: CHEM
+       Row  33: CHEM Total
+       Row  35: ENV
+       Row  36: ENV
+       Row  37: ENV
+       Row  38: ENV
+       Row  39: ENV
+       Row  40: ENV
+       Row  41: ENV
+       Row  42: ENV
+       Row  43: ENV
+       Row  44: ENV
+       Row  45: ENV
+       Row  46: ENV
+       Row  47: ENV
+       Row  48: ENV
+       Row  49: ENV
+       Row  50: ENV
+       Row  51: ENV
+       Row  52: ENV
+       Row  53: ENV
+       Row  54: ENV
+       Row  55: ENV
+       Row  56: ENV
+       Row  57: ENV
+       Row  58: ENV
+       Row  59: ENV
+
+Column Headers (Row 1):
+       Col A: =MID(CELL("filename"),SEARCH("[",CELL("filename"))+DeptSummary!Z33, SEARCH("]",CELL("filename"))-SEARCH("[",CELL("filename"))-14) & "Operating Forecast Detail (Non Labor Only)"
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 1: =MID(CELL("filename"),SEARCH("[",CELL("filename"))+DeptSummary!Z33, SEARCH("]",CELL("filename"))-SEARCH("[",CELL("filename"))-14) & "Operating Forecast Detail (Non Labor Only)"
+    Categories: ['labor']
+
+>>> Row 8: LABOR
+    Categories: ['labor']
+    B8 (Col 2): VALUE = OTHER
+
+------------------------------------------------------------
+SHEET: Var Rpt
+Size: 1205 rows x 38 cols
+------------------------------------------------------------
+
+Row Headers (Column A):
+   *** Row   3: LABOR
+       Row   5: Sum of Nov
+       Row   6: Dept
+       Row   7: CHEM
+       Row   8: CHEM
+       Row   9: CHEM
+       Row  10: CHEM
+       Row  11: CHEM
+       Row  12: CHEM
+       Row  13: CHEM
+       Row  14: CHEM
+       Row  15: CHEM
+       Row  16: CHEM
+       Row  17: CHEM
+       Row  18: CHEM
+       Row  19: CHEM
+       Row  20: CHEM
+       Row  21: CHEM
+       Row  22: CHEM
+       Row  23: CHEM
+       Row  24: CHEM
+       Row  25: CHEM
+       Row  26: CHEM
+       Row  27: CHEM Total
+       Row  29: ENV
+       Row  30: ENV
+       Row  31: ENV
+       Row  32: ENV
+       Row  33: ENV
+       Row  34: ENV
+       Row  35: ENV
+       Row  36: ENV
+       Row  37: ENV
+       Row  38: ENV
+       Row  39: ENV
+       Row  40: ENV
+       Row  41: ENV
+       Row  42: ENV
+       Row  43: ENV
+       Row  44: ENV
+       Row  45: ENV
+       Row  46: ENV
+       Row  47: ENV
+       Row  48: ENV
+       Row  49: ENV
+       Row  50: ENV
+       Row  51: ENV
+       Row  52: ENV
+       Row  53: ENV
+       Row  54: ENV
+
+
+RELEVANT FORMULAS:
+----------------------------------------
+
+>>> Row 3: LABOR
+    Categories: ['labor']
+    B3 (Col 2): VALUE = OTHER

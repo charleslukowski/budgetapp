@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ scenario.name }}</h1>
+    <p>{{ scenario.description or 'No description' }}</p>
+</div>
+
+<!-- Scenario Info -->
+<div class="grid grid-4" style="margin-bottom: 1.5rem;">
+    <div class="card stat-card">
+        <div class="stat-label">Type</div>
+        <div style="margin-top: 0.5rem;">
+            {% if scenario.scenario_type.value == 'budget' %}
+            <span class="badge badge-budget" style="font-size: 1rem;">Budget</span>
+            {% elif scenario.scenario_type.value == 'internal_forecast' %}
+            <span class="badge badge-internal" style="font-size: 1rem;">Internal</span>
+            {% else %}
+            <span class="badge badge-external" style="font-size: 1rem;">External</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-label">Status</div>
+        <div style="margin-top: 0.5rem;">
+            <span class="badge badge-{{ scenario.status.value }}" style="font-size: 1rem;">{{ scenario.status.value|title }}</span>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-label">Version</div>
+        <div class="stat-value">{{ scenario.version }}</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-label">Last Updated</div>
+        <div style="font-size: 1.1rem; font-weight: 500; margin-top: 0.5rem;">
+            {{ scenario.updated_at.strftime('%Y-%m-%d') if scenario.updated_at else 'Never' }}
+        </div>
+    </div>
+</div>
+
+<!-- Actions Bar -->
+<div class="card">
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+        <a href="/api/reports/sponsor/{{ scenario.id }}?years=2" class="btn btn-success">Export 2-Year Report</a>
+        <a href="/api/reports/sponsor/{{ scenario.id }}?years=5" class="btn btn-outline">Export 5-Year</a>
+        <a href="/api/reports/sponsor/{{ scenario.id }}?years=15" class="btn btn-outline">Export 15-Year</a>
+        <div style="margin-left: auto;">
+            {% if not scenario.is_locked %}
+            <button class="btn btn-primary" onclick="lockScenario()">Lock Scenario</button>
+            {% else %}
+            <span style="color: var(--text-light);">Scenario is locked</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Cost Categories by Section -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Cost Categories</h2>
+    </div>
+    
+    {% set sections = ['fuel', 'operating', 'non_operating', 'capital'] %}
+    {% set section_names = {'fuel': 'Fuel Costs', 'operating': 'Operating Costs', 'non_operating': 'Non-Operating Costs', 'capital': 'Capital Costs'} %}
+    
+    {% for section in sections %}
+    <div style="margin-bottom: 1.5rem;">
+        <h3 style="color: var(--primary); margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg); border-radius: 6px;">
+            {{ section_names[section] }}
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th style="text-align: right;">Year 1 ($)</th>
+                    <th style="text-align: right;">Year 2 ($)</th>
+                    <th style="text-align: right;">$/MWhr</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories if cat.section.value == section %}
+                <tr>
+                    <td>{{ cat.name }}</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                </tr>
+                {% endfor %}
+                <tr style="background: #e2efda; font-weight: bold;">
+                    <td>{{ section_names[section] }} Total</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                    <td style="text-align: right;">-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    
+    <p style="color: var(--text-light); text-align: center; padding: 1rem;">
+        Import forecast data or use the API to populate cost values.
+    </p>
+</div>
+
+<!-- Plants Summary -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">By Plant</h2>
+    </div>
+    <div class="grid grid-2">
+        {% for plant in plants %}
+        <div class="card plant-card">
+            <h3>{{ plant.name }}</h3>
+            <p class="plant-capacity">{{ plant.capacity_mw }} MW</p>
+            <p class="plant-units">{{ plant.unit_count }} x {{ plant.unit_capacity_mw }} MW units</p>
+            <hr style="margin: 1rem 0; border: none; border-top: 1px solid var(--border);">
+            <p style="color: var(--text-light);">No forecast data loaded for this plant.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+async function lockScenario() {
+    if (!confirm('Are you sure you want to lock this scenario? This will prevent further edits.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/scenarios/{{ scenario.id }}/lock', {
+            method: 'PUT'
+        });
+        
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert('Error locking scenario');
+        }
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+}
+</script>
+{% endblock %}
+

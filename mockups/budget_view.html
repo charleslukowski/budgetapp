@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget View - PLANNED-01 | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="monthly_summary.html">Summary</a>
+            <a href="department_input.html">Forecast Input</a>
+            <a href="budget_view.html" class="active">Budget</a>
+            <a href="variance_explanation.html">Variance</a>
+            <a href="funding_changes.html">Funding Changes</a>
+        </div>
+        <div class="nav-right">
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Dept Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="monthly_summary.html" class="back-link">&larr; Back</a>
+                <h1>Kyger Creek <span class="subtitle">2025 Budget</span></h1>
+                <div class="breadcrumb">
+                    <strong>PLANNED-01</strong> &mdash; Unit 1 Planned Outage
+                    <span class="readonly-badge">Read Only</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary">Export</button>
+            </div>
+        </header>
+
+        <!-- Budget Summary -->
+        <div class="budget-summary">
+            <div class="summary-item">
+                <span class="label">Original Budget</span>
+                <span class="value">$620,000</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Amendments</span>
+                <span class="value amendment">+$15,000</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Reallocations</span>
+                <span class="value reallocation">-$8,000</span>
+            </div>
+            <div class="summary-item highlight">
+                <span class="label">Adjusted Budget</span>
+                <span class="value">$627,000</span>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-left">
+                <input type="text" class="search-input" placeholder="Search account or description...">
+            </div>
+        </div>
+
+        <!-- Data Grid -->
+        <div class="grid-container">
+            <table class="data-grid readonly-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-account">Account</th>
+                        <th class="sticky-col col-acctdesc">Acct Desc</th>
+                        <th class="sticky-col col-desc">Description</th>
+                        <th class="month-col align-right">Jan</th>
+                        <th class="month-col align-right">Feb</th>
+                        <th class="month-col align-right">Mar</th>
+                        <th class="month-col align-right">Apr</th>
+                        <th class="month-col align-right">May</th>
+                        <th class="month-col align-right">Jun</th>
+                        <th class="month-col align-right">Jul</th>
+                        <th class="month-col align-right">Aug</th>
+                        <th class="month-col align-right">Sep</th>
+                        <th class="month-col align-right">Oct</th>
+                        <th class="month-col align-right">Nov</th>
+                        <th class="month-col align-right">Dec</th>
+                        <th class="total-col align-right">Original</th>
+                        <th class="adjusted-col align-right">Adjusted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-126-4</td>
+                        <td class="sticky-col col-acctdesc">PULVERIZER</td>
+                        <td class="sticky-col col-desc">PULV TEMP & PRESS. SYSTEMS INSPECT - MATS</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">1,400</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">1,400</td>
+                        <td class="adjusted-col">1,400</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-152-4</td>
+                        <td class="sticky-col col-acctdesc">BURNER PIPE</td>
+                        <td class="sticky-col col-desc">BURNER SHUT OFF DAMPER INSPECT & REPAIR</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">7,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">7,000</td>
+                        <td class="adjusted-col">7,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">ID FAN INSPECT MECH</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">1,500</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">1,500</td>
+                        <td class="adjusted-col">1,500</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">PRECIP. INSPECT & REPAIR (Parts)</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">15,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">15,000</td>
+                        <td class="adjusted-col">15,000</td>
+                    </tr>
+                    <tr class="has-amendment">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR INSPECT & CLEAN</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">78,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">24,000</td>
+                        <td class="readonly-cell">68,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">170,000</td>
+                        <td class="adjusted-col amended">185,000 <span class="change-indicator">+15K</span></td>
+                    </tr>
+                    <tr class="has-reallocation">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR LAYER 3 - LEVEL 5 (CATALYST CHANGE)</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">175,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">175,000</td>
+                        <td class="adjusted-col reallocated">167,000 <span class="change-indicator">-8K</span></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-203-4</td>
+                        <td class="sticky-col col-acctdesc">AIR PREHEATERS</td>
+                        <td class="sticky-col col-desc">AIR PREHEATER INSPECT/REPAIR MATERIAL</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">2,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">2,000</td>
+                        <td class="adjusted-col">2,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-203-4</td>
+                        <td class="sticky-col col-acctdesc">AIR PREHEATERS</td>
+                        <td class="sticky-col col-desc">AIR PREHEATER WASH</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">8,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">12,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">20,000</td>
+                        <td class="adjusted-col">20,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-205-4</td>
+                        <td class="sticky-col col-acctdesc">OVERFIRE AIR</td>
+                        <td class="sticky-col col-desc">OVERFIRE AIR DAMPERS - MATS</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">5,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">5,000</td>
+                        <td class="adjusted-col">5,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-206-4</td>
+                        <td class="sticky-col col-acctdesc">AIR&GAS DUCT</td>
+                        <td class="sticky-col col-desc">SCR INLET DUCT CLEANING & STRUCTURAL</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">30,000</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="readonly-cell">0</td>
+                        <td class="total-col">30,000</td>
+                        <td class="adjusted-col">30,000</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="totals-row">
+                        <td class="sticky-col col-account">DEPARTMENT TOTAL</td>
+                        <td class="sticky-col col-acctdesc"></td>
+                        <td class="sticky-col col-desc"></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>86,000</td>
+                        <td>175,000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>53,000</td>
+                        <td>112,900</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="total-col">$620,000</td>
+                        <td class="adjusted-col">$627,000</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">10 line items &bull; 2 with adjustments</span>
+            </div>
+            <div class="footer-right">
+                <span class="dept-nav">
+                    <a href="#">&larr; UNPLANNED</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">PLANNED-02 &rarr;</a>
+                </span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+

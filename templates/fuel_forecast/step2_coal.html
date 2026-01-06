@@ -1,0 +1,452 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Step 2: Coal Position</h2>
+        <p>Update coal inventory, pricing, blend, and transportation settings.</p>
+        {% if has_prior and base_scenario_name %}
+        <div class="prior-indicator">
+            Rolling forward from: <strong>{{ base_scenario_name }}</strong>
+        </div>
+        {% endif %}
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/2">
+        <div class="step-card-body">
+            <!-- Inventory Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Beginning Inventory
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inventory_beginning_kc">Kyger Creek (KC)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="inventory_beginning_kc" id="inventory_beginning_kc" 
+                                   class="form-control" 
+                                   value="{{ inventory_beginning_kc }}"
+                                   step="1000" min="0">
+                            <span class="unit">tons</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inventory_beginning_cc">Clifty Creek (CC)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="inventory_beginning_cc" id="inventory_beginning_cc" 
+                                   class="form-control" 
+                                   value="{{ inventory_beginning_cc }}"
+                                   step="1000" min="0">
+                            <span class="unit">tons</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inventory_target_days">Target Inventory Level</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="inventory_target_days" id="inventory_target_days" 
+                                   class="form-control" 
+                                   value="{{ inventory_target_days }}"
+                                   step="5" min="0" max="120">
+                            <span class="unit">days</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contracted_deliveries_tons">Contracted Deliveries (Monthly Avg)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="contracted_deliveries_tons" id="contracted_deliveries_tons" 
+                                   class="form-control" 
+                                   value="{{ contracted_deliveries_tons }}"
+                                   step="1000" min="0">
+                            <span class="unit">tons</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coal Prices Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Coal Prices (FOB Mine)
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    Base prices for contracted coal. For monthly variations, use advanced settings.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coal_price_eastern">Eastern (NAPP)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_price_eastern" id="coal_price_eastern" 
+                                   class="form-control {% if has_prior and prior.coal_price_eastern and prior.coal_price_eastern != coal_price_eastern %}changed{% endif %}" 
+                                   value="{{ coal_price_eastern }}"
+                                   step="0.50" min="0" max="200">
+                            <span class="unit">$/ton</span>
+                        </div>
+                        {% if has_prior and prior.coal_price_eastern %}
+                        <span class="prior-value">Prior: ${{ "%.2f"|format(prior.coal_price_eastern) }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="coal_price_ilb">Illinois Basin (ILB)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_price_ilb" id="coal_price_ilb" 
+                                   class="form-control {% if has_prior and prior.coal_price_ilb and prior.coal_price_ilb != coal_price_ilb %}changed{% endif %}" 
+                                   value="{{ coal_price_ilb }}"
+                                   step="0.50" min="0" max="200">
+                            <span class="unit">$/ton</span>
+                        </div>
+                        {% if has_prior and prior.coal_price_ilb %}
+                        <span class="prior-value">Prior: ${{ "%.2f"|format(prior.coal_price_ilb) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coal_price_prb">Powder River Basin (PRB)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_price_prb" id="coal_price_prb" 
+                                   class="form-control" 
+                                   value="{{ coal_price_prb }}"
+                                   step="0.25" min="0" max="100">
+                            <span class="unit">$/ton</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- Calculated blended price display -->
+                        <label>Blended Price (calculated)</label>
+                        <div style="padding: 10px 12px; background: #f3f4f6; border-radius: 6px; font-family: 'JetBrains Mono', monospace;">
+                            $<span id="blended_price">{{ "%.2f"|format(blended_price) }}</span>/ton
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Monthly Price Pattern - Interactive Curve Editor -->
+                <div class="monthly-pattern-section">
+                    <details class="curve-editor-details">
+                        <summary style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                            <span style="font-size: 13px; font-weight: 500; color: #374151;">
+                                📈 Monthly Price Profile
+                            </span>
+                            <span style="font-size: 12px; color: #6b7280;">Click to customize</span>
+                        </summary>
+                        
+                        <div style="padding: 16px; background: #f9fafb; border-radius: 8px; margin-top: 8px;">
+                            <div id="coal_price_curve"
+                                 data-curve-editor
+                                 data-base-value="{{ coal_price_eastern }}"
+                                 data-unit=""
+                                 data-input-prefix="coal_price_month_"
+                                 data-min-multiplier="0.8"
+                                 data-max-multiplier="1.2"
+                                 data-width="360"
+                                 data-height="180">
+                            </div>
+                            <p style="font-size: 11px; color: #9ca3af; margin-top: 8px;">
+                                Drag points to adjust monthly prices. Values are multipliers of the base Eastern coal price.
+                            </p>
+                        </div>
+                    </details>
+                    
+                    <!-- Simple sparkline preview (always visible) -->
+                    <div class="sparkline-container" id="price_sparkline" style="margin-top: 8px;">
+                        <!-- Sparkline bars generated by JS -->
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-top: 4px;">
+                        <span>Jan</span>
+                        <span>Mar</span>
+                        <span>Jun</span>
+                        <span>Sep</span>
+                        <span>Dec</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Coal Blend Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Coal Blend Mix
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    Percentages should total 100%. Blend affects heat rate and delivered cost.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coal_blend_eastern_pct">Eastern %</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_blend_eastern_pct" id="coal_blend_eastern_pct" 
+                                   class="form-control blend-input" 
+                                   value="{{ coal_blend_eastern_pct }}"
+                                   step="5" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="coal_blend_ilb_pct">ILB %</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_blend_ilb_pct" id="coal_blend_ilb_pct" 
+                                   class="form-control blend-input" 
+                                   value="{{ coal_blend_ilb_pct }}"
+                                   step="5" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="coal_blend_prb_pct">PRB %</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_blend_prb_pct" id="coal_blend_prb_pct" 
+                                   class="form-control blend-input" 
+                                   value="{{ coal_blend_prb_pct }}"
+                                   step="5" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="blend-warning" style="display: none; padding: 8px 12px; background: #fef3c7; border-radius: 6px; font-size: 13px; color: #92400e; margin-top: 8px;">
+                    ⚠️ Blend percentages should total 100%
+                </div>
+            </div>
+            
+            <!-- Coal Quality Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Coal Quality (BTU Content)
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="coal_btu_eastern">Eastern BTU/lb</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_btu_eastern" id="coal_btu_eastern" 
+                                   class="form-control" 
+                                   value="{{ coal_btu_eastern }}"
+                                   step="50" min="10000" max="15000">
+                            <span class="unit">BTU/lb</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="coal_btu_ilb">ILB BTU/lb</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="coal_btu_ilb" id="coal_btu_ilb" 
+                                   class="form-control" 
+                                   value="{{ coal_btu_ilb }}"
+                                   step="50" min="10000" max="13000">
+                            <span class="unit">BTU/lb</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transportation Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Transportation Rates
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="barge_rate_ohio">Ohio River Barge</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="barge_rate_ohio" id="barge_rate_ohio" 
+                                   class="form-control" 
+                                   value="{{ barge_rate_ohio }}"
+                                   step="0.25" min="0" max="20">
+                            <span class="unit">$/ton</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="barge_rate_upper_ohio">Upper Ohio Barge</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="barge_rate_upper_ohio" id="barge_rate_upper_ohio" 
+                                   class="form-control" 
+                                   value="{{ barge_rate_upper_ohio }}"
+                                   step="0.25" min="0" max="25">
+                            <span class="unit">$/ton</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rail_rate_prb">PRB Rail Rate</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="rail_rate_prb" id="rail_rate_prb" 
+                                   class="form-control" 
+                                   value="{{ rail_rate_prb }}"
+                                   step="1.00" min="0" max="60">
+                            <span class="unit">$/ton</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- Calculated delivered cost -->
+                        <label>Delivered Cost (calculated)</label>
+                        <div style="padding: 10px 12px; background: #f3f4f6; border-radius: 6px; font-family: 'JetBrains Mono', monospace;">
+                            $<span id="delivered_cost">{{ "%.2f"|format(delivered_cost) }}</span>/ton
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-actions">
+            <a href="/fuel-forecast/{{ session_id }}/step/1" class="btn btn-secondary">
+                ← Back to Start
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Continue to Generation →
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+.prior-indicator {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #e8eef5;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1e3a5f;
+}
+
+.prior-value {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.form-control.changed {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.change-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #f59e0b;
+    border-radius: 50%;
+    margin-left: 6px;
+}
+
+.monthly-pattern-section {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.pattern-select {
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+    cursor: pointer;
+}
+
+.sparkline-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 40px;
+    padding: 8px 0;
+}
+
+.sparkline-bar {
+    flex: 1;
+    background: linear-gradient(to top, #2d4a6f, #4a6a8f);
+    border-radius: 2px;
+    min-height: 4px;
+    transition: height 0.3s ease;
+}
+
+.sparkline-bar:hover {
+    background: linear-gradient(to top, #1e3a5f, #2d4a6f);
+}
+</style>
+
+<script>
+// Blend percentage validation
+document.querySelectorAll('.blend-input').forEach(input => {
+    input.addEventListener('change', function() {
+        const eastern = parseFloat(document.getElementById('coal_blend_eastern_pct').value) || 0;
+        const ilb = parseFloat(document.getElementById('coal_blend_ilb_pct').value) || 0;
+        const prb = parseFloat(document.getElementById('coal_blend_prb_pct').value) || 0;
+        const total = eastern + ilb + prb;
+        
+        const warning = document.getElementById('blend-warning');
+        if (Math.abs(total - 100) > 0.01) {
+            warning.style.display = 'block';
+            warning.textContent = '⚠️ Blend percentages total ' + total.toFixed(0) + '% (should be 100%)';
+        } else {
+            warning.style.display = 'none';
+        }
+        
+        // Update blended price
+        updateBlendedPrice();
+    });
+});
+
+function updateBlendedPrice() {
+    const eastern = parseFloat(document.getElementById('coal_blend_eastern_pct').value) || 0;
+    const ilb = parseFloat(document.getElementById('coal_blend_ilb_pct').value) || 0;
+    const prb = parseFloat(document.getElementById('coal_blend_prb_pct').value) || 0;
+    const total = eastern + ilb + prb;
+    
+    if (total > 0) {
+        const priceEastern = parseFloat(document.getElementById('coal_price_eastern').value) || 0;
+        const priceIlb = parseFloat(document.getElementById('coal_price_ilb').value) || 0;
+        const pricePrb = parseFloat(document.getElementById('coal_price_prb').value) || 0;
+        
+        const blended = (priceEastern * eastern + priceIlb * ilb + pricePrb * prb) / total;
+        document.getElementById('blended_price').textContent = blended.toFixed(2);
+        
+        // Update delivered cost
+        const bargeRate = parseFloat(document.getElementById('barge_rate_ohio').value) || 0;
+        document.getElementById('delivered_cost').textContent = (blended + bargeRate).toFixed(2);
+    }
+}
+
+// Price change handlers
+document.querySelectorAll('#coal_price_eastern, #coal_price_ilb, #coal_price_prb, #barge_rate_ohio').forEach(input => {
+    input.addEventListener('change', updateBlendedPrice);
+});
+
+// Monthly pattern sparkline
+const patterns = {
+    flat: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    seasonal: [0.9, 0.85, 0.8, 0.85, 0.9, 1, 1.1, 1.15, 1, 0.9, 0.95, 1],
+    quarterly: [0.92, 0.94, 0.96, 0.98, 1.0, 1.02, 1.04, 1.06, 1.08, 1.1, 1.12, 1.14]
+};
+
+function updatePricePattern() {
+    const pattern = document.getElementById('price_pattern').value;
+    const container = document.getElementById('price_sparkline');
+    const multipliers = patterns[pattern];
+    const basePrice = parseFloat(document.getElementById('coal_price_eastern').value) || 55;
+    
+    // Generate sparkline bars
+    let html = '';
+    const maxMultiplier = Math.max(...multipliers);
+    
+    for (let i = 0; i < 12; i++) {
+        const height = (multipliers[i] / maxMultiplier) * 100;
+        const price = (basePrice * multipliers[i]).toFixed(2);
+        html += `<div class="sparkline-bar" style="height: ${height}%;" title="Month ${i+1}: $${price}"></div>`;
+    }
+    
+    container.innerHTML = html;
+}
+
+// Initialize sparkline on load
+document.addEventListener('DOMContentLoaded', function() {
+    updatePricePattern();
+});
+
+// Update sparkline when base price changes
+document.getElementById('coal_price_eastern').addEventListener('change', updatePricePattern);
+</script>
+
+<!-- Curve Editor for monthly patterns -->
+<script src="/static/curve_editor.js"></script>
+{% endblock %}

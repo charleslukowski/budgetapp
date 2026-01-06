@@ -1,0 +1,5 @@
+byproduct_code,byproduct_name,unit_of_measure,disposition,gl_account_prefix
+FLYASH,Fly Ash,tons,Sale,401-10-350-501-200
+BOTTOMASH,Bottom Ash,tons,Sale,401-10-350-501-200
+GYPSUM,Gypsum,tons,Sale,401-10-350-501-207
+

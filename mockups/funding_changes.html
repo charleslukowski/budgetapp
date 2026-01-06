@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding Changes | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="monthly_summary.html">Summary</a>
+            <a href="department_input.html">Forecast Input</a>
+            <a href="budget_view.html">Budget</a>
+            <a href="variance_explanation.html">Variance</a>
+            <a href="funding_changes.html" class="active">Funding Changes</a>
+        </div>
+        <div class="nav-right">
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Dept Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>Kyger Creek <span class="subtitle">2025 Funding Changes</span></h1>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary">Export</button>
+                <button class="btn btn-primary">+ New Change</button>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <div class="funding-summary">
+            <div class="summary-item">
+                <span class="label">Original Budget</span>
+                <span class="value">$8,760,000</span>
+            </div>
+            <div class="summary-item amendment-total">
+                <span class="label">Total Amendments</span>
+                <span class="value">+$125,000</span>
+            </div>
+            <div class="summary-item reallocation-total">
+                <span class="label">Net Reallocations</span>
+                <span class="value">$0</span>
+            </div>
+            <div class="summary-item highlight">
+                <span class="label">Current Budget</span>
+                <span class="value">$8,885,000</span>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-left">
+                <select class="filter-select">
+                    <option>All Departments</option>
+                    <option>PLANNED-01</option>
+                    <option>PLANNED-02</option>
+                    <option>UNPLANNED</option>
+                    <option>OUTAGE</option>
+                    <option>MAINT</option>
+                    <option>OPER</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Types</option>
+                    <option>Amendment</option>
+                    <option>Reallocation</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Time</option>
+                    <option>Last 30 days</option>
+                    <option>Last 90 days</option>
+                    <option>This Year</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Changes List -->
+        <div class="grid-container">
+            <table class="data-grid changes-grid">
+                <thead>
+                    <tr>
+                        <th class="date-col">Date</th>
+                        <th class="type-col">Type</th>
+                        <th class="dept-col">Department</th>
+                        <th class="account-col">From Account</th>
+                        <th class="account-col">To Account</th>
+                        <th class="amount-col align-right">Amount</th>
+                        <th class="reason-col">Reason</th>
+                        <th class="approved-col">Approved By</th>
+                        <th class="status-col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="amendment-row">
+                        <td class="date-col">Nov 15, 2025</td>
+                        <td class="type-col"><span class="type-badge amendment">Amendment</span></td>
+                        <td class="dept-col">UNPLANNED</td>
+                        <td class="account-col">—</td>
+                        <td class="account-col">003-1-20-401-20-320-512-180-4</td>
+                        <td class="amount-col amendment-amount">+$50,000</td>
+                        <td class="reason-col">Emergency precipitator repair - Unit 2 forced outage</td>
+                        <td class="approved-col">J. Smith (Plant Mgr)</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                    </tr>
+                    <tr class="reallocation-row">
+                        <td class="date-col">Nov 10, 2025</td>
+                        <td class="type-col"><span class="type-badge reallocation">Reallocation</span></td>
+                        <td class="dept-col">PLANNED-01</td>
+                        <td class="account-col">003-1-20-401-20-320-512-186-4</td>
+                        <td class="account-col">003-1-20-401-20-320-512-180-4</td>
+                        <td class="amount-col">$8,000</td>
+                        <td class="reason-col">Move funds from SCR to precipitator - scope change</td>
+                        <td class="approved-col">M. Johnson (Budget Mgr)</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                    </tr>
+                    <tr class="amendment-row">
+                        <td class="date-col">Oct 28, 2025</td>
+                        <td class="type-col"><span class="type-badge amendment">Amendment</span></td>
+                        <td class="dept-col">OUTAGE</td>
+                        <td class="account-col">—</td>
+                        <td class="account-col">003-1-20-401-20-320-512-203-4</td>
+                        <td class="amount-col amendment-amount">+$75,000</td>
+                        <td class="reason-col">Air preheater basket replacement - inspection findings</td>
+                        <td class="approved-col">J. Smith (Plant Mgr)</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                    </tr>
+                    <tr class="reallocation-row">
+                        <td class="date-col">Oct 15, 2025</td>
+                        <td class="type-col"><span class="type-badge reallocation">Reallocation</span></td>
+                        <td class="dept-col">MAINT</td>
+                        <td class="account-col">003-1-20-401-20-320-512-126-4</td>
+                        <td class="account-col">003-1-20-401-20-320-512-152-4</td>
+                        <td class="amount-col">$12,000</td>
+                        <td class="reason-col">Pulverizer savings to burner maintenance</td>
+                        <td class="approved-col">M. Johnson (Budget Mgr)</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                    </tr>
+                    <tr class="reallocation-row">
+                        <td class="date-col">Sep 20, 2025</td>
+                        <td class="type-col"><span class="type-badge reallocation">Reallocation</span></td>
+                        <td class="dept-col">OPER</td>
+                        <td class="account-col">003-1-20-401-20-320-512-205-4</td>
+                        <td class="account-col">003-1-20-401-20-320-512-206-4</td>
+                        <td class="amount-col">$5,500</td>
+                        <td class="reason-col">Overfire air to duct damper - priority shift</td>
+                        <td class="approved-col">M. Johnson (Budget Mgr)</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                    </tr>
+                    <tr class="amendment-row pending-row">
+                        <td class="date-col">Dec 18, 2025</td>
+                        <td class="type-col"><span class="type-badge amendment">Amendment</span></td>
+                        <td class="dept-col">UNPLANNED</td>
+                        <td class="account-col">—</td>
+                        <td class="account-col">003-1-20-401-20-320-512-186-4</td>
+                        <td class="amount-col amendment-amount">+$35,000</td>
+                        <td class="reason-col">SCR catalyst spot replacement - ammonia slip issue</td>
+                        <td class="approved-col">—</td>
+                        <td class="status-col"><span class="status-badge pending">Pending</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">6 changes &bull; 1 pending approval</span>
+            </div>
+            <div class="footer-right">
+                <span class="last-updated">Last updated: Dec 23, 2025</span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+

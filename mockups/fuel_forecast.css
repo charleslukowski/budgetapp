@@ -1,0 +1,695 @@
+/* =============================================================================
+   OVEC Budget System - Fuel Forecast Workflow Styles
+   ============================================================================= */
+
+/* CSS Variables for Workflow */
+:root {
+    --step-pending-bg: rgba(255, 255, 255, 0.1);
+    --step-pending-border: rgba(255, 255, 255, 0.3);
+    --step-pending-text: rgba(255, 255, 255, 0.5);
+    
+    /* Navy theme to match operating budget pages */
+    --step-active-bg: #2d4a6f;
+    --step-active-border: #4a6a8f;
+    --step-active-text: #ffffff;
+    --step-active-glow: rgba(45, 74, 111, 0.5);
+    
+    --step-done-bg: #059669;
+    --step-done-border: #10b981;
+    --step-done-text: #ffffff;
+    
+    --step-changed-bg: #d97706;
+    --step-changed-border: #f59e0b;
+    --step-changed-text: #ffffff;
+    
+    /* Primary colors - Navy theme */
+    --color-primary: #1e3a5f;
+    --color-primary-dark: #152a45;
+    --color-primary-light: #2d4a6f;
+    --color-primary-bg: #f0f4f8;
+}
+
+/* =============================================================================
+   Workflow Header
+   ============================================================================= */
+
+.workflow-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 24px;
+    position: sticky;
+    top: 56px; /* Below main nav */
+    z-index: 100;
+}
+
+.workflow-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.workflow-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.workflow-title .icon {
+    font-size: 18px;
+}
+
+.workflow-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.workflow-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* =============================================================================
+   Step Navigation
+   ============================================================================= */
+
+.step-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    min-width: 120px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.step.clickable {
+    cursor: pointer;
+}
+
+.step.clickable:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+}
+
+.step:not(.clickable) {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Step number circle */
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Pending state */
+.step.pending .step-number {
+    background: var(--step-pending-bg);
+    border: 2px solid var(--step-pending-border);
+    color: var(--step-pending-text);
+}
+
+/* Active state */
+.step.active .step-number {
+    background: var(--step-active-bg);
+    border: 2px solid var(--step-active-border);
+    color: var(--step-active-text);
+    box-shadow: 0 0 16px var(--step-active-glow);
+    animation: pulse-active 2s ease-in-out infinite;
+}
+
+@keyframes pulse-active {
+    0%, 100% {
+        box-shadow: 0 0 8px var(--step-active-glow);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--step-active-glow);
+    }
+}
+
+/* Done state */
+.step.done .step-number {
+    background: var(--step-done-bg);
+    border: 2px solid var(--step-done-border);
+    color: var(--step-done-text);
+}
+
+.step.done .step-number::after {
+    content: "✓";
+}
+
+.step.done .step-number span {
+    display: none;
+}
+
+/* Changed state */
+.step.changed .step-number {
+    background: var(--step-changed-bg);
+    border: 2px solid var(--step-changed-border);
+    color: var(--step-changed-text);
+    animation: pulse-changed 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-changed {
+    0%, 100% {
+        box-shadow: 0 0 4px rgba(217, 119, 6, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 12px rgba(217, 119, 6, 0.5);
+    }
+}
+
+/* Step labels */
+.step-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.step.active .step-label {
+    color: white;
+    font-weight: 600;
+}
+
+.step.done .step-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.step.changed .step-label {
+    color: #fbbf24;
+}
+
+/* Connector lines between steps */
+.step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    right: -4px;
+    width: 8px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease;
+}
+
+.step.done:not(:last-child)::after {
+    background: var(--step-done-border);
+}
+
+/* =============================================================================
+   Step Content Area
+   ============================================================================= */
+
+.step-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.step-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+}
+
+.step-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.step-card-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.step-card-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.step-card-body {
+    padding: 24px;
+}
+
+/* =============================================================================
+   Form Elements
+   ============================================================================= */
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+}
+
+.form-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-section-title .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.badge-optional {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-changed {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-required {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #111827;
+    transition: all 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-control:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Input with unit suffix */
+.input-with-unit {
+    position: relative;
+}
+
+.input-with-unit .form-control {
+    padding-right: 60px;
+}
+
+.input-with-unit .unit {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #6b7280;
+    pointer-events: none;
+}
+
+/* =============================================================================
+   Option Cards (Radio/Checkbox groups)
+   ============================================================================= */
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-card {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: white;
+}
+
+.option-card:hover {
+    border-color: #3b82f6;
+    background: #f8fafc;
+}
+
+.option-card.selected {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.option-card input[type="radio"],
+.option-card input[type="checkbox"] {
+    margin-right: 12px;
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    accent-color: #2563eb;
+}
+
+.option-card-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.option-card-content p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* =============================================================================
+   Keep Prior Toggle
+   ============================================================================= */
+
+.keep-prior-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+}
+
+.keep-prior-toggle:hover {
+    background: #dcfce7;
+}
+
+.keep-prior-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #059669;
+}
+
+.keep-prior-toggle label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #166534;
+    cursor: pointer;
+}
+
+.keep-prior-toggle .prior-value {
+    margin-left: auto;
+    font-size: 13px;
+    color: #6b7280;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* =============================================================================
+   Step Actions / Button Bar
+   ============================================================================= */
+
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.btn-success {
+    background: #059669;
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    background: #047857;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-warning {
+    background: #d97706;
+    color: white;
+}
+
+.btn-warning:hover:not(:disabled) {
+    background: #b45309;
+}
+
+/* =============================================================================
+   Summary Tables
+   ============================================================================= */
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.summary-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-table td {
+    font-size: 14px;
+    color: #111827;
+}
+
+.summary-table .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.summary-table .changed {
+    color: #d97706;
+    background: #fef3c7;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.summary-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* =============================================================================
+   Results Display (Step 5)
+   ============================================================================= */
+
+.results-hero {
+    padding: 24px;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.results-hero .primary-stat {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.results-hero .secondary-stat {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.results-hero .stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+/* =============================================================================
+   Responsive Adjustments
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .step-nav {
+        gap: 4px;
+        padding: 12px 0;
+    }
+    
+    .step {
+        min-width: auto;
+        padding: 8px 10px;
+    }
+    
+    .step-label {
+        font-size: 10px;
+    }
+    
+    .step-number {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .workflow-meta {
+        display: none;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .step-content {
+        padding: 16px;
+    }
+}
+
+/* =============================================================================
+   Utility Classes
+   ============================================================================= */
+
+.text-muted {
+    color: #6b7280;
+}
+
+.text-small {
+    font-size: 13px;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.hidden {
+    display: none !important;
+}
+

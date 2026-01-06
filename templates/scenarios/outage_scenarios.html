@@ -1,0 +1,588 @@
+{% extends "base.html" %}
+
+{% block title %}Outage Scenario Modeling - OVEC{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="/static/styles.css">
+
+<style>
+.outage-scenarios-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.outage-scenarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.outage-scenarios-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #1e3a5f;
+}
+
+.scenario-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0;
+}
+
+.scenario-tab {
+    padding: 12px 20px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.scenario-tab:hover {
+    background: #f0f4f8;
+}
+
+.scenario-tab.active {
+    background: white;
+    color: #1e3a5f;
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+
+.scenario-tab .badge {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.scenario-tab .badge.base {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.scenario-tab .badge.variant {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.scenario-tab .badge.adverse {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.scenario-content {
+    background: white;
+    border-radius: 0 12px 12px 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+}
+
+.scenario-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-metric {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.summary-metric .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+
+.summary-metric .value.adverse {
+    color: #dc2626;
+}
+
+.summary-metric .value.favorable {
+    color: #10b981;
+}
+
+.summary-metric .label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.summary-metric .delta {
+    font-size: 12px;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.summary-metric .delta.up {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.summary-metric .delta.down {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.outage-matrix-mini {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.outage-matrix-mini table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.outage-matrix-mini th,
+.outage-matrix-mini td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.outage-matrix-mini th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+}
+
+.outage-matrix-mini td.has-outage {
+    background: #fef3c7;
+    font-weight: 600;
+    color: #b45309;
+}
+
+.outage-matrix-mini td.major-outage {
+    background: #fee2e2;
+    font-weight: 600;
+    color: #dc2626;
+}
+
+.scenario-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.impact-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+}
+
+.impact-table th,
+.impact-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.impact-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+}
+
+.impact-table td.value {
+    text-align: right;
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.new-scenario-card {
+    padding: 40px;
+    text-align: center;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.new-scenario-card:hover {
+    border-color: #2d6a4f;
+    background: #f0f9f6;
+}
+
+.new-scenario-card h3 {
+    margin: 12px 0 4px 0;
+    color: #374151;
+}
+
+.new-scenario-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+</style>
+
+<div class="outage-scenarios-container">
+    <div class="outage-scenarios-header">
+        <h1>Outage Scenario Modeling</h1>
+        
+        <div class="header-actions">
+            <select id="year-select" class="form-control" style="width: 120px;">
+                <option value="2024">2024</option>
+                <option value="2025" selected>2025</option>
+                <option value="2026">2026</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Scenario Tabs -->
+    <div class="scenario-tabs">
+        <div class="scenario-tab active" data-scenario="base">
+            Base Case
+            <span class="badge base">Current</span>
+        </div>
+        <div class="scenario-tab" data-scenario="extended">
+            Extended Outage
+            <span class="badge adverse">+$2.1M</span>
+        </div>
+        <div class="scenario-tab" data-scenario="best">
+            Best Case
+            <span class="badge variant">-$1.5M</span>
+        </div>
+        <div class="scenario-tab" onclick="createNewScenario()">
+            + New Scenario
+        </div>
+    </div>
+    
+    <!-- Base Case Content -->
+    <div class="scenario-content" id="content-base">
+        <div class="scenario-summary">
+            <div class="summary-metric">
+                <div class="value">96.2%</div>
+                <div class="label">System Availability</div>
+            </div>
+            <div class="summary-metric">
+                <div class="value">5.1%</div>
+                <div class="label">Weighted EFOR</div>
+            </div>
+            <div class="summary-metric">
+                <div class="value">84</div>
+                <div class="label">Total Outage Days</div>
+            </div>
+            <div class="summary-metric">
+                <div class="value">$172.4M</div>
+                <div class="label">Annual Fuel Cost</div>
+            </div>
+        </div>
+        
+        <h3>Kyger Creek Outage Schedule</h3>
+        <div class="outage-matrix-mini">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Aug</th>
+                        <th>Sep</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Unit 1</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="major-outage">21</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>21</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 2</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="major-outage">21</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>21</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 3</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>0</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 4</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>0</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 5</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>0</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3 style="margin-top: 24px;">Clifty Creek Outage Schedule</h3>
+        <div class="outage-matrix-mini">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>May</th>
+                        <th>Jun</th>
+                        <th>Jul</th>
+                        <th>Aug</th>
+                        <th>Sep</th>
+                        <th>Oct</th>
+                        <th>Nov</th>
+                        <th>Dec</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Unit 1</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="major-outage">21</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>21</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 2</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="major-outage">21</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>21</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unit 3-5</strong></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>0</strong></td>
+                    </tr>
+                    <tr style="background: #fef3c7;">
+                        <td><strong>Unit 6</strong> <small>(no SCR)</small></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td colspan="5" style="background: repeating-linear-gradient(45deg, #fef3c7, #fef3c7 5px, #fde68a 5px, #fde68a 10px); text-align: center; font-style: italic; color: #b45309;">
+                            Curtailed during ozone season
+                        </td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><strong>0</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <table class="impact-table">
+            <thead>
+                <tr>
+                    <th>Impact Category</th>
+                    <th style="text-align: right;">Kyger Creek</th>
+                    <th style="text-align: right;">Clifty Creek</th>
+                    <th style="text-align: right;">System Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Planned Outage Days</td>
+                    <td class="value">42</td>
+                    <td class="value">42</td>
+                    <td class="value">84</td>
+                </tr>
+                <tr>
+                    <td>Lost Generation (MWh)</td>
+                    <td class="value">-206,640</td>
+                    <td class="value">-206,640</td>
+                    <td class="value">-413,280</td>
+                </tr>
+                <tr>
+                    <td>Availability Factor</td>
+                    <td class="value">96.2%</td>
+                    <td class="value">96.2%</td>
+                    <td class="value">96.2%</td>
+                </tr>
+                <tr>
+                    <td>Est. EFOR</td>
+                    <td class="value">5.0%</td>
+                    <td class="value">5.2%</td>
+                    <td class="value">5.1%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="scenario-actions">
+            <button class="btn btn-secondary" onclick="editOutages('base')">Edit Outages</button>
+            <button class="btn btn-secondary" onclick="duplicateScenario('base')">Duplicate Scenario</button>
+            <button class="btn btn-primary" onclick="saveScenario('base')">Save as Named Scenario</button>
+        </div>
+    </div>
+    
+    <div style="margin-top: 24px;">
+        <a href="/scenarios" class="btn btn-secondary">← Back to Scenarios</a>
+        <a href="/scenarios/whatif" class="btn btn-secondary">What-If Analysis</a>
+        <a href="/scenarios/compare" class="btn btn-secondary">Compare Scenarios</a>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.scenario-tab[data-scenario]').forEach(tab => {
+    tab.addEventListener('click', function() {
+        const scenario = this.dataset.scenario;
+        
+        // Update active tab
+        document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // In a real implementation, this would load the scenario data
+        console.log('Loading scenario:', scenario);
+    });
+});
+
+function createNewScenario() {
+    const name = prompt('Enter scenario name:', 'New Outage Scenario');
+    if (name) {
+        alert('Creating new scenario: ' + name);
+        // Would redirect to outage editor with new scenario
+    }
+}
+
+function editOutages(scenario) {
+    // Redirect to outage matrix editor
+    window.location.href = '/fuel-forecast/start'; // Would go to outage step
+}
+
+function duplicateScenario(scenario) {
+    const name = prompt('Enter name for duplicated scenario:', scenario + ' Copy');
+    if (name) {
+        alert('Duplicating scenario as: ' + name);
+    }
+}
+
+function saveScenario(scenario) {
+    const name = prompt('Enter scenario name:', 'Saved Scenario');
+    if (name) {
+        // Would call API to save scenario
+        fetch('/api/scenarios/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: name,
+                year: parseInt(document.getElementById('year-select').value),
+                scenario_type: 'internal_forecast'
+            })
+        }).then(r => r.json()).then(data => {
+            alert('Scenario saved: ' + data.name);
+            window.location.href = '/scenarios';
+        });
+    }
+}
+</script>
+{% endblock %}
+

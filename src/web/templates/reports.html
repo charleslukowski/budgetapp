@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Generate Reports</h1>
+    <p>Create Excel reports for sponsors with configurable time horizons</p>
+</div>
+
+<div class="grid grid-2">
+    <!-- Sponsor Report -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Sponsor Report</h2>
+        </div>
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+            Generate an Excel report with generation, costs, and $/MWhr metrics.
+            Monthly detail for Years 1-2, annual for longer horizons.
+        </p>
+        
+        <form id="sponsorReportForm">
+            <div class="form-group">
+                <label class="form-label">Scenario</label>
+                <select name="scenario_id" class="form-control" required>
+                    <option value="">Select a scenario...</option>
+                    {% for scenario in scenarios %}
+                    <option value="{{ scenario.id }}">{{ scenario.name }} ({{ scenario.scenario_type.value|replace('_', ' ')|title }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Time Horizon (Years)</label>
+                <select name="years" class="form-control">
+                    <option value="1">1 Year</option>
+                    <option value="2" selected>2 Years (Monthly Detail)</option>
+                    <option value="5">5 Years</option>
+                    <option value="10">10 Years</option>
+                    <option value="15">15 Years (Through 2040)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <input type="checkbox" name="include_monthly" checked>
+                    Include monthly breakdown for Years 1-2
+                </label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Generate Excel Report
+            </button>
+        </form>
+    </div>
+    
+    <!-- Comparison Report -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Comparison Report</h2>
+        </div>
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+            Compare multiple scenarios side-by-side (Budget vs Forecast, etc.)
+        </p>
+        
+        <form id="comparisonReportForm">
+            <div class="form-group">
+                <label class="form-label">Select Scenarios to Compare</label>
+                {% for scenario in scenarios %}
+                <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; cursor: pointer;">
+                    <input type="checkbox" name="scenario_ids" value="{{ scenario.id }}">
+                    {{ scenario.name }}
+                </label>
+                {% endfor %}
+            </div>
+            
+            <button type="submit" class="btn btn-outline" style="width: 100%;" disabled>
+                Compare (Coming Soon)
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Report Presets -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Quick Reports</h2>
+    </div>
+    <p style="color: var(--text-light); margin-bottom: 1rem;">
+        Common report configurations requested by sponsors:
+    </p>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        {% for scenario in scenarios[:3] %}
+        <a href="/api/reports/sponsor/{{ scenario.id }}?years=2&include_monthly=true" class="btn btn-outline">
+            {{ scenario.name }} - 2 Year Monthly
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.getElementById('sponsorReportForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const scenarioId = form.scenario_id.value;
+    const years = form.years.value;
+    const includeMonthly = form.include_monthly.checked;
+    
+    if (!scenarioId) {
+        alert('Please select a scenario');
+        return;
+    }
+    
+    // Direct download
+    window.location.href = `/api/reports/sponsor/${scenarioId}?years=${years}&include_monthly=${includeMonthly}`;
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Scenarios - OVEC{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>Forecast Scenarios</h1>
+    </div>
+    <div class="header-right">
+        <a href="/fuel-forecast/start" class="btn btn-primary">+ New Scenario</a>
+        <a href="/scenarios/compare" class="btn btn-secondary">Compare Scenarios</a>
+    </div>
+</header>
+
+{% if scenarios %}
+<div class="scenarios-grid">
+    {% for s in scenarios %}
+    <div class="scenario-card">
+        <div class="scenario-card-header">
+            <div>
+                <h3 class="scenario-name">{{ s.name }}</h3>
+                <div class="scenario-meta">
+                    {{ s.type | replace('_', ' ') | title }} 
+                    • Created {{ s.created_at.strftime('%b %d, %Y') if s.created_at else 'N/A' }}
+                    {% if s.year %} • {{ s.year }}{% endif %}
+                </div>
+            </div>
+            <div class="scenario-badges">
+                <span class="badge {{ s.status }}">{{ s.status }}</span>
+                {% if s.is_locked %}
+                <span class="badge locked">Locked</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if s.summary %}
+        <div class="scenario-card-body">
+            <div class="scenario-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{ "%.0f"|format((s.summary.avg_use_factor_kc or 0.85) * 100) }}%</div>
+                    <div class="stat-label">KC Use Factor</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ "%.0f"|format((s.summary.avg_use_factor_cc or 0.85) * 100) }}%</div>
+                    <div class="stat-label">CC Use Factor</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ "{:,.0f}".format(s.summary.total_outage_days_kc or 0) }}</div>
+                    <div class="stat-label">KC Outage Days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ "{:,.0f}".format(s.summary.total_outage_days_cc or 0) }}</div>
+                    <div class="stat-label">CC Outage Days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${{ "%.0f"|format(s.summary.avg_coal_price or 61) }}</div>
+                    <div class="stat-label">Avg Coal $/ton</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="scenario-card-footer">
+            <div class="scenario-actions">
+                <a href="/api/scenarios/{{ s.id }}/snapshot">View Details</a>
+                <a href="/scenarios/compare?a={{ s.id }}">Compare</a>
+            </div>
+            <div class="scenario-actions">
+                {% if not s.is_locked %}
+                <a href="/fuel-forecast/load/{{ s.id }}" class="primary">Edit</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h3>No Scenarios Yet</h3>
+    <p>Create your first forecast scenario to get started.</p>
+    <a href="/fuel-forecast/start" class="btn btn-primary">Create First Scenario</a>
+</div>
+{% endif %}
+{% endblock %}

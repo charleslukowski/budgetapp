@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="text-align: center; padding: 4rem 2rem;">
+    <h1 style="font-size: 4rem; color: var(--danger); margin-bottom: 1rem;">Error</h1>
+    <p style="font-size: 1.25rem; color: var(--text-light); margin-bottom: 2rem;">{{ message }}</p>
+    <a href="/" class="btn btn-primary">Return to Dashboard</a>
+</div>
+{% endblock %}
+

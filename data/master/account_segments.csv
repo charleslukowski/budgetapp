@@ -1,0 +1,11 @@
+segment_position,segment_name,segment_length,valid_values,description
+1,Company,3,003,OVEC company code
+2,Plant,1,1|2,1=Kyger 2=Clifty
+3,Location,2,10|20|21,10=EO 20=KC 21=CC
+4,FERC Accounting,3,101|107|108|183|154|163|401,101=PlantInService 107=CWIP 108=RWIP 183=PrelimSurvey 154=Inventory 163=StoresHolding 401=Expense
+5,FERC Sub,2,,Depends on FERC: 401-10=Fuel Expense 401-20=Operating Expense
+6,Department,3,,Internal department codes
+7,FERC Detail,3,,FERC Accounting detail codes
+8,FERC SubDetail,3,,Detail codes 
+9,Labor Type,1,4|5,4=NonLabor 5=Labor
+

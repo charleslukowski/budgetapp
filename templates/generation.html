@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Generation - {{ plant_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="header-left">
+        <h1>Generation Dashboard <span class="subtitle">{{ plant_name }}</span></h1>
+    </div>
+    <div class="header-right">
+        <span class="readonly-badge">Use Factor: {{ (use_factor * 100)|round(1) }}%</span>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="system-comparison">
+    <div class="summary-card">
+        <div class="card-label">Annual Net Generation</div>
+        <p class="stat-value large">
+            {{ "{:,.0f}".format(annual.net_delivered_mwh) }}<span class="stat-unit">MWh</span>
+        </p>
+        <div class="stat-detail">
+            Gross Available: {{ "{:,.0f}".format(annual.gross_mwh) }} MWh
+        </div>
+        <div class="capacity-bar">
+            <div class="capacity-fill" style="width: {{ (annual.avg_capacity_factor * 100)|round(1) }}%"></div>
+        </div>
+        <div class="stat-detail">Capacity Factor: {{ (annual.avg_capacity_factor * 100)|round(1) }}%</div>
+    </div>
+    
+    <div class="summary-card">
+        <div class="card-label">Plant Capacity</div>
+        <p class="stat-value large">
+            {{ plant_capacity|round(0)|int }}<span class="stat-unit">MW</span>
+        </p>
+        <div class="stat-detail">{{ units|length }} Units</div>
+        
+        <div class="units-grid">
+            {% for unit in units %}
+            <div class="unit-card {{ 'available' if unit.available else 'unavailable' }}">
+                <div class="unit-number">U{{ unit.unit_number }}</div>
+                <div class="unit-mw">{{ unit.capacity_mw|int }} MW</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Annual Deductions Breakdown -->
+<h2 class="section-title">Generation Deductions (Annual)</h2>
+<div class="deduction-breakdown">
+    <div class="deduction-item">
+        <div class="deduction-label">FGD Auxiliary</div>
+        <div class="deduction-value">-{{ "{:,.0f}".format(annual.fgd_aux_mwh) }} MWh</div>
+    </div>
+    <div class="deduction-item">
+        <div class="deduction-label">GSU Losses</div>
+        <div class="deduction-value">-{{ "{:,.0f}".format(annual.gsu_loss_mwh) }} MWh</div>
+    </div>
+    <div class="deduction-item">
+        <div class="deduction-label">Reserve</div>
+        <div class="deduction-value">-{{ "{:,.0f}".format(annual.reserve_mwh) }} MWh</div>
+    </div>
+    <div class="deduction-item">
+        <div class="deduction-label">Lack of Sales</div>
+        <div class="deduction-value">-{{ "{:,.0f}".format(annual.lack_of_sales_mwh) }} MWh</div>
+    </div>
+</div>
+
+<!-- Monthly Data Table -->
+<h2 class="section-title">Monthly Generation</h2>
+<div class="grid-container" style="overflow-x: auto;">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th></th>
+                {% for m in monthly_data %}
+                <th class="align-right">{{ m.month_name[:3] }}</th>
+                {% endfor %}
+                <th class="align-right total-col">Annual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hours</td>
+                {% for m in monthly_data %}
+                <td class="align-right">{{ "{:,}".format(m.hours) }}</td>
+                {% endfor %}
+                <td class="align-right total-col">{{ "{:,}".format(annual.total_hours) }}</td>
+            </tr>
+            <tr>
+                <td>Gross MWh</td>
+                {% for m in monthly_data %}
+                <td class="align-right">{{ "{:,.0f}".format(m.gross_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right total-col">{{ "{:,.0f}".format(annual.gross_mwh) }}</td>
+            </tr>
+            <tr>
+                <td style="color: #dc2626;">FGD Aux</td>
+                {% for m in monthly_data %}
+                <td class="align-right unfavorable">-{{ "{:,.0f}".format(m.fgd_aux_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right unfavorable total-col">-{{ "{:,.0f}".format(annual.fgd_aux_mwh) }}</td>
+            </tr>
+            <tr>
+                <td style="color: #dc2626;">GSU Loss</td>
+                {% for m in monthly_data %}
+                <td class="align-right unfavorable">-{{ "{:,.0f}".format(m.gsu_loss_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right unfavorable total-col">-{{ "{:,.0f}".format(annual.gsu_loss_mwh) }}</td>
+            </tr>
+            <tr>
+                <td style="color: #dc2626;">Reserve</td>
+                {% for m in monthly_data %}
+                <td class="align-right unfavorable">-{{ "{:,.0f}".format(m.reserve_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right unfavorable total-col">-{{ "{:,.0f}".format(annual.reserve_mwh) }}</td>
+            </tr>
+            <tr>
+                <td style="color: #dc2626;">Lack of Sales</td>
+                {% for m in monthly_data %}
+                <td class="align-right unfavorable">-{{ "{:,.0f}".format(m.lack_of_sales_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right unfavorable total-col">-{{ "{:,.0f}".format(annual.lack_of_sales_mwh) }}</td>
+            </tr>
+            <tr class="totals-row">
+                <td><strong>Net MWh</strong></td>
+                {% for m in monthly_data %}
+                <td class="align-right favorable" style="font-weight:600">{{ "{:,.0f}".format(m.net_mwh) }}</td>
+                {% endfor %}
+                <td class="align-right favorable total-col" style="font-weight:600">{{ "{:,.0f}".format(annual.net_delivered_mwh) }}</td>
+            </tr>
+            <tr>
+                <td><strong>Cap Factor</strong></td>
+                {% for m in monthly_data %}
+                <td class="align-right">{{ m.capacity_factor|round(1) }}%</td>
+                {% endfor %}
+                <td class="align-right total-col">{{ (annual.avg_capacity_factor * 100)|round(1) }}%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- System Summary -->
+<h2 class="section-title">System Summary ({{ year }})</h2>
+<div class="system-comparison">
+    <div class="plant-summary">
+        <h3>Kyger Creek</h3>
+        <div class="metric-row">
+            <span class="metric-label">Net Generation</span>
+            <span class="metric-value">{{ "{:,.0f}".format(system.kyger.net_delivered_mwh) }} MWh</span>
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Gross Capacity</span>
+            <span class="metric-value">{{ system.kyger.gross_mwh|round(0)|int }} MWh</span>
+        </div>
+    </div>
+    <div class="plant-summary">
+        <h3>Clifty Creek</h3>
+        <div class="metric-row">
+            <span class="metric-label">Net Generation</span>
+            <span class="metric-value">{{ "{:,.0f}".format(system.clifty.net_delivered_mwh) }} MWh</span>
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Gross Capacity</span>
+            <span class="metric-value">{{ system.clifty.gross_mwh|round(0)|int }} MWh</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

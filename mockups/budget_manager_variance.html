@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance Editor | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="budget_manager_dashboard.html">Dashboard</a>
+            <a href="budget_manager_forecast.html">Forecast</a>
+            <a href="budget_manager_variance.html" class="active">Variance</a>
+            <a href="internal_reallocations.html">Reallocations</a>
+            <a href="corporate_view.html">Corporate</a>
+        </div>
+        <div class="nav-right">
+            <select class="location-select">
+                <option>Kyger Creek</option>
+                <option>Clifty Creek</option>
+            </select>
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Budget Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="budget_manager_dashboard.html" class="back-link">&larr; Dashboard</a>
+                <h1>Kyger Creek <span class="subtitle">Variance Explanation</span></h1>
+            </div>
+            <div class="header-right">
+                <select class="month-picker">
+                    <option>October 2025</option>
+                    <option selected>November 2025</option>
+                </select>
+                <button class="btn btn-secondary">Export All</button>
+                <button class="btn btn-primary">Save All</button>
+                <button class="btn btn-success">Submit All</button>
+            </div>
+        </header>
+
+        <!-- Location Variance Summary -->
+        <div class="location-variance-summary">
+            <div class="summary-row">
+                <div class="summary-item">
+                    <span class="label">Location Forecast</span>
+                    <span class="value">$1,177,000</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Location Actual</span>
+                    <span class="value">$1,195,250</span>
+                </div>
+                <div class="summary-item highlight unfavorable">
+                    <span class="label">Location Variance</span>
+                    <span class="value">+$18,250</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Explained</span>
+                    <span class="value">$15,000</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Unexplained</span>
+                    <span class="value warning">$3,250</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Department Tabs -->
+        <div class="dept-tabs">
+            <div class="tab-group">
+                <span class="tab-group-label">OUTAGE</span>
+                <a href="?dept=PLANNED-01" class="dept-tab active">PLANNED-01 <span class="tab-var favorable">-2.9K</span></a>
+                <a href="?dept=PLANNED-02" class="dept-tab">PLANNED-02 <span class="tab-var unfavorable">+6.5K</span></a>
+                <a href="?dept=UNPLANNED" class="dept-tab has-issue">UNPLANNED <span class="tab-var unfavorable">+8.2K</span></a>
+                <a href="?dept=OUTAGE" class="dept-tab">OUTAGE <span class="tab-var">$0</span></a>
+            </div>
+            <div class="tab-group">
+                <span class="tab-group-label">NON-OUTAGE</span>
+                <a href="?dept=MAINT" class="dept-tab">MAINT <span class="tab-var favorable">-1.6K</span></a>
+                <a href="?dept=OPER" class="dept-tab has-issue">OPER <span class="tab-var unfavorable">+8.2K</span></a>
+                <a href="?dept=ENV" class="dept-tab">ENV <span class="tab-var favorable">-1.8K</span></a>
+                <a href="?dept=CHEM" class="dept-tab">CHEM <span class="tab-var favorable">-0.6K</span></a>
+                <a href="?dept=TECH" class="dept-tab">TECH <span class="tab-var favorable">-0.8K</span></a>
+                <a href="?dept=SAFETY" class="dept-tab">SAFETY <span class="tab-var favorable">-0.2K</span></a>
+            </div>
+            <div class="tab-group">
+                <span class="tab-group-label">LABOR</span>
+                <a href="?dept=LABOR" class="dept-tab">Labor <span class="tab-var unfavorable">+2.5K</span></a>
+                <a href="?dept=BENEFITS" class="dept-tab">Benefits <span class="tab-var unfavorable">+0.75K</span></a>
+            </div>
+        </div>
+
+        <!-- Current Department Variance -->
+        <div class="dept-info-bar">
+            <div class="dept-info-left">
+                <strong>PLANNED-01</strong> &mdash; Unit 1 Planned Outage
+                <span class="dept-status complete">Explained</span>
+            </div>
+            <div class="dept-info-right">
+                <span class="dept-var favorable">Variance: <strong>-$2,900</strong></span>
+            </div>
+        </div>
+
+        <!-- Variance Grid -->
+        <div class="grid-container">
+            <table class="data-grid variance-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-account">Account</th>
+                        <th class="sticky-col col-acctdesc">Acct Desc</th>
+                        <th class="sticky-col col-desc">Description</th>
+                        <th class="num-col align-right">Forecast</th>
+                        <th class="num-col align-right">Actual</th>
+                        <th class="num-col align-right">Variance</th>
+                        <th class="explanation-col">Explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-126-4</td>
+                        <td class="sticky-col col-acctdesc">PULVERIZER</td>
+                        <td class="sticky-col col-desc">PULV TEMP & PRESS. SYSTEMS INSPECT</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col variance-zero">0</td>
+                        <td class="explanation-col">
+                            <span class="no-variance">No variance</span>
+                        </td>
+                    </tr>
+                    <tr class="has-variance favorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">PRECIP. INSPECT & REPAIR (Parts)</td>
+                        <td class="num-col">15,000</td>
+                        <td class="num-col">12,400</td>
+                        <td class="num-col variance-favorable">-2,600</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Parts delivery delayed to December. Will incur cost next month.</textarea>
+                        </td>
+                    </tr>
+                    <tr class="has-variance unfavorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR INSPECT & CLEAN</td>
+                        <td class="num-col">24,000</td>
+                        <td class="num-col">26,200</td>
+                        <td class="num-col variance-unfavorable">+2,200</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Additional cleaning required due to higher ash content. Contractor overtime authorized.</textarea>
+                        </td>
+                    </tr>
+                    <tr class="has-variance favorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-205-4</td>
+                        <td class="sticky-col col-acctdesc">OVERFIRE AIR</td>
+                        <td class="sticky-col col-desc">OVERFIRE AIR DAMPERS - MATS</td>
+                        <td class="num-col">6,000</td>
+                        <td class="num-col">3,500</td>
+                        <td class="num-col variance-favorable">-2,500</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Used refurbished parts from inventory. Permanent savings.</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="totals-row">
+                        <td class="sticky-col col-account">DEPARTMENT TOTAL</td>
+                        <td class="sticky-col col-acctdesc"></td>
+                        <td class="sticky-col col-desc"></td>
+                        <td class="num-col">45,000</td>
+                        <td class="num-col">42,100</td>
+                        <td class="num-col variance-favorable">-2,900</td>
+                        <td class="explanation-col"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Department Summary -->
+        <div class="dept-summary-section">
+            <h3>Department Summary</h3>
+            <textarea class="dept-summary-input" placeholder="Provide overall department variance summary...">November variances driven by timing differences and one-time savings. Parts delay ($2,600) will shift to December. SCR overage ($2,200) was necessary but offset by overfire air savings ($2,500). Net favorable variance of $2,900 expected to hold.</textarea>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">4 line items &bull; 3 with variances &bull; All explained</span>
+            </div>
+            <div class="footer-right">
+                <span class="dept-nav">
+                    <a href="?dept=OUTAGE">&larr; OUTAGE</a>
+                    &nbsp;|&nbsp;
+                    <a href="?dept=PLANNED-02">PLANNED-02 &rarr;</a>
+                </span>
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary">Save Department</button>
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+

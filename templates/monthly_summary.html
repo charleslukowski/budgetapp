@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Monthly Summary | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Monthly Summary</span></h1>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-secondary" onclick="exportData()">Export</button>
+        <button class="btn btn-primary" onclick="location.reload()">Refresh</button>
+    </div>
+</header>
+
+<!-- Legend -->
+<div class="legend-bar">
+    <span class="legend-item"><span class="legend-dot actual"></span> Actual</span>
+    <span class="legend-item"><span class="legend-dot forecast"></span> Forecast</span>
+    <span class="legend-item"><span class="legend-dot current"></span> Current Month</span>
+    <span class="legend-item favorable">Green = Under Budget</span>
+    <span class="legend-item unfavorable">Red = Over Budget</span>
+</div>
+
+<!-- Summary Grid -->
+<div class="grid-container summary-grid">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="sticky-col col-dept">Department</th>
+                {% for m in range(1, 13) %}
+                    {% if m < current_month %}
+                    <th class="month-col actual-col align-right">{{ month_names[m] }}</th>
+                    {% elif m == current_month %}
+                    <th class="month-col current-fcst-col align-right">{{ month_names[m] }} Fcst</th>
+                    <th class="month-col current-act-col align-right">{{ month_names[m] }} Act</th>
+                    <th class="month-col current-var-col align-right">{{ month_names[m] }} Var</th>
+                    {% else %}
+                    <th class="month-col forecast-col align-right">{{ month_names[m] }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th class="projection-col align-right">YE Proj</th>
+                <th class="budget-col align-right">Budget</th>
+                <th class="variance-col align-right">Proj Var</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group_name, group_depts in grouped_departments.items() %}
+            <!-- {{ group_name }} GROUP -->
+            <tr class="group-header">
+                <td class="sticky-col col-dept" colspan="17">{{ group_name }}</td>
+            </tr>
+            {% for dept in group_depts %}
+            <tr>
+                <td class="sticky-col col-dept">
+                    <a href="/forecast/{{ plant_code }}/{{ dept.dept_code }}">{{ dept.dept_code }}</a>
+                </td>
+                {% for m in range(1, 13) %}
+                    {% set month_data = dept.months[m - 1] if dept.months|length > m - 1 else {} %}
+                    {% set actual = month_data.actual|default(0) %}
+                    {% if m < current_month %}
+                    <td class="actual-cell">{{ "{:,.0f}".format(actual) }}</td>
+                    {% elif m == current_month %}
+                    <td class="current-fcst-cell">{{ "{:,.0f}".format(month_data.forecast|default(0)) }}</td>
+                    <td class="current-act-cell">{{ "{:,.0f}".format(actual) }}</td>
+                    {% set var = actual - month_data.forecast|default(0) %}
+                    <td class="current-var-cell {% if var < 0 %}favorable{% elif var > 0 %}unfavorable{% endif %}">
+                        {{ "{:+,.0f}".format(var) if var != 0 else "0" }}
+                    </td>
+                    {% else %}
+                    <td class="forecast-cell">{{ "{:,.0f}".format(month_data.forecast|default(0)) }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td class="projection-cell">{{ "{:,.0f}".format(dept.year_end_projection) }}</td>
+                <td class="budget-cell">{{ "{:,.0f}".format(dept.ytd_budget) }}</td>
+                {% set proj_var = dept.year_end_projection - dept.ytd_budget %}
+                <td class="variance-cell {% if proj_var < 0 %}favorable{% elif proj_var > 0 %}unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(proj_var) if proj_var != 0 else "0" }}
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- {{ group_name }} Subtotal -->
+            <tr class="subtotal-row">
+                <td class="sticky-col col-dept">{{ group_name }} Subtotal</td>
+                {% for m in range(1, 13) %}
+                    {% set group_total = namespace(value=0) %}
+                    {% for dept in group_depts %}
+                        {% set month_data = dept.months[m - 1] if dept.months|length > m - 1 else {} %}
+                        {% set group_total.value = group_total.value + month_data.actual|default(0)|float %}
+                    {% endfor %}
+                    {% if m < current_month %}
+                    <td class="actual-cell">{{ "{:,.0f}".format(group_total.value) }}</td>
+                    {% elif m == current_month %}
+                    <td class="current-fcst-cell">0</td>
+                    <td class="current-act-cell">{{ "{:,.0f}".format(group_total.value) }}</td>
+                    <td class="current-var-cell">0</td>
+                    {% else %}
+                    <td class="forecast-cell">0</td>
+                    {% endif %}
+                {% endfor %}
+                {% set group_ye_proj = namespace(value=0) %}
+                {% set group_budget = namespace(value=0) %}
+                {% for dept in group_depts %}
+                    {% set group_ye_proj.value = group_ye_proj.value + dept.year_end_projection|float %}
+                    {% set group_budget.value = group_budget.value + dept.ytd_budget|float %}
+                {% endfor %}
+                <td class="projection-cell">{{ "{:,.0f}".format(group_ye_proj.value) }}</td>
+                <td class="budget-cell">{{ "{:,.0f}".format(group_budget.value) }}</td>
+                {% set grp_var = group_ye_proj.value - group_budget.value %}
+                <td class="variance-cell {% if grp_var < 0 %}favorable{% elif grp_var > 0 %}unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(grp_var) if grp_var != 0 else "0" }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="totals-row">
+                <td class="sticky-col col-dept">PLANT TOTAL</td>
+                {% for m in range(1, 13) %}
+                    {% set month_total = namespace(value=0) %}
+                    {% for group_name, group_depts in grouped_departments.items() %}
+                        {% for dept in group_depts %}
+                            {% set month_data = dept.months[m - 1] if dept.months|length > m - 1 else {} %}
+                            {% set month_total.value = month_total.value + month_data.actual|default(0)|float %}
+                        {% endfor %}
+                    {% endfor %}
+                    {% if m < current_month %}
+                    <td class="actual-cell">{{ "{:,.0f}".format(month_total.value) }}</td>
+                    {% elif m == current_month %}
+                    <td class="current-fcst-cell">0</td>
+                    <td class="current-act-cell">{{ "{:,.0f}".format(month_total.value) }}</td>
+                    <td class="current-var-cell">0</td>
+                    {% else %}
+                    <td class="forecast-cell">0</td>
+                    {% endif %}
+                {% endfor %}
+                <td class="projection-cell">{{ "{:,.0f}".format(plant_total.year_end_projection) }}</td>
+                <td class="budget-cell">{{ "{:,.0f}".format(plant_total.budget) }}</td>
+                {% set total_var = plant_total.year_end_projection - plant_total.budget %}
+                <td class="variance-cell {% if total_var < 0 %}favorable{% elif total_var > 0 %}unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(total_var) if total_var != 0 else "0" }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ department_count }} departments &bull; {{ group_count }} groups &bull; As of {{ month_names[current_month] }} {{ year }}</span>
+    </div>
+    <div class="footer-right">
+        <span class="last-updated">Last updated: {{ last_updated }}</span>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function exportData() {
+    window.location.href = '/api/export/summary/{{ plant_code }}/{{ year }}';
+}
+</script>
+{% endblock %}
+

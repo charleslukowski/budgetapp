@@ -1,0 +1,99 @@
+{#
+Curve Editor Component
+
+Usage:
+{% with 
+    editor_id="coal_price_curve",
+    editor_title="Monthly Coal Price Pattern",
+    base_value=55.00,
+    unit="$",
+    input_prefix="coal_price_month_",
+    min_multiplier=0.8,
+    max_multiplier=1.2
+%}
+    {% include 'components/curve_editor.html' %}
+{% endwith %}
+
+Required Context:
+- editor_id: Unique ID for this editor instance
+- editor_title: Display title
+- base_value: Base value that multipliers are applied to
+- unit: Unit suffix for display (e.g., "$", "%")
+- input_prefix: Prefix for hidden input names (will add 1-12)
+
+Optional Context:
+- min_multiplier: Minimum multiplier (default 0.5)
+- max_multiplier: Maximum multiplier (default 1.5)
+- width: Chart width in pixels (default 100%)
+- height: Chart height in pixels (default 200)
+- initial_values: Array of 12 initial values
+#}
+
+<div class="curve-editor-wrapper" id="{{ editor_id }}_wrapper">
+    <div class="curve-editor-header">
+        <span class="curve-editor-title">{{ editor_title }}</span>
+        <span class="curve-editor-base">Base: {{ base_value }}{{ unit }}</span>
+    </div>
+    
+    <div id="{{ editor_id }}" 
+         data-curve-editor
+         data-base-value="{{ base_value }}"
+         data-unit="{{ unit }}"
+         data-input-prefix="{{ input_prefix }}"
+         data-min-multiplier="{{ min_multiplier|default(0.8) }}"
+         data-max-multiplier="{{ max_multiplier|default(1.2) }}"
+         data-width="{{ width|default(400) }}"
+         data-height="{{ height|default(200) }}">
+    </div>
+    
+    {% if help_text %}
+    <div class="curve-editor-help">
+        {{ help_text }}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.curve-editor-wrapper {
+    margin-bottom: 20px;
+}
+
+.curve-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.curve-editor-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.curve-editor-base {
+    font-size: 12px;
+    color: #6b7280;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.curve-editor-help {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .curve-editor-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .curve-editor-wrapper [data-curve-editor] {
+        overflow-x: auto;
+    }
+}
+</style>
+

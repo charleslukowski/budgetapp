@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Approval | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Budget Approval</span></h1>
+        <span class="manager-badge">Budget Manager View</span>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-secondary" onclick="exportSummary()">Export Summary</button>
+        <button class="btn btn-primary" onclick="location.reload()">Refresh</button>
+    </div>
+</header>
+
+<!-- Budget Summary -->
+<div class="budget-summary">
+    <div class="summary-item">
+        <span class="label">Submissions</span>
+        <span class="value">{{ submissions|length }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Pending Review</span>
+        <span class="value pending">{{ status_counts.submitted|default(0) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Approved</span>
+        <span class="value approved">{{ status_counts.approved|default(0) }}</span>
+    </div>
+    <div class="summary-item highlight">
+        <span class="label">Total Budget</span>
+        <span class="value">${{ "{:,.0f}".format(total_budget) }}</span>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+    <div class="filter-group">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search departments...">
+    </div>
+    <div class="filter-group">
+        <select id="statusFilter" class="form-input">
+            <option value="">All Statuses</option>
+            <option value="draft">Draft</option>
+            <option value="submitted">Submitted</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+        </select>
+    </div>
+</div>
+
+<!-- Submissions Grid -->
+<div class="grid-container">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="sticky-col col-dept">Department</th>
+                <th class="status-col">Status</th>
+                {% for key, name in month_names.items() %}
+                <th class="align-right month-col">{{ name }}</th>
+                {% endfor %}
+                <th class="total-col align-right">Total</th>
+                <th>Submitted</th>
+                <th class="action-col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sub in submissions %}
+            <tr data-submission-id="{{ sub.id }}" data-status="{{ sub.status }}">
+                <td class="sticky-col col-dept">
+                    <a href="/budget-entry/{{ plant_code }}?year={{ year }}&dept={{ sub.dept_code }}" class="dept-link">
+                        {{ sub.dept_code }}
+                    </a>
+                </td>
+                <td class="status-col">
+                    <span class="status-badge status-{{ sub.status }}">{{ sub.status|title }}</span>
+                </td>
+                {% for i in range(12) %}
+                <td class="align-right month-col">${{ "{:,.0f}".format(sub.months[i]|default(0)) }}</td>
+                {% endfor %}
+                <td class="total-col align-right">${{ "{:,.0f}".format(sub.total_budget) }}</td>
+                <td>{{ sub.submitted_by|default('-') }}</td>
+                <td class="action-col">
+                    {% if sub.status == 'submitted' %}
+                    <button class="btn btn-sm btn-success" onclick="approveBudget({{ sub.id }}, '{{ sub.dept_code }}')">Approve</button>
+                    <button class="btn btn-sm btn-danger" onclick="rejectBudget({{ sub.id }}, '{{ sub.dept_code }}')">Reject</button>
+                    {% elif sub.status == 'approved' %}
+                    <span class="approved-check">✓ Approved</span>
+                    {% elif sub.status == 'rejected' %}
+                    <span class="rejected-x">✗ Rejected</span>
+                    {% else %}
+                    <span class="draft-label">Not submitted</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="totals-row">
+                <td class="sticky-col col-dept">TOTAL</td>
+                <td class="status-col"></td>
+                {% for i in range(12) %}
+                <td class="align-right month-col">${{ "{:,.0f}".format(totals.months[i]|default(0)) }}</td>
+                {% endfor %}
+                <td class="total-col align-right">${{ "{:,.0f}".format(total_budget) }}</td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Rejection Modal -->
+<div class="modal" id="rejectModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Reject Budget - <span id="rejectDeptName"></span></h3>
+            <button class="btn-close" onclick="hideModal('rejectModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Reason for Rejection</label>
+                <textarea id="rejectionReason" class="form-input" rows="4" 
+                          placeholder="Please provide a reason for rejection..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="hideModal('rejectModal')">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmReject()">Reject Budget</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ submissions|length }} departments &bull; {{ year }} Budget Cycle</span>
+    </div>
+    <div class="footer-right">
+        <span class="last-updated">Last updated: {{ last_updated }}</span>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const plantCode = '{{ plant_code }}';
+const year = {{ year }};
+let pendingRejectId = null;
+
+async function approveBudget(submissionId, deptCode) {
+    if (!confirm(`Approve budget for ${deptCode}? This will copy the budget to forecast.`)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/budget-entry/submissions/${submissionId}/approve`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                approved_by: 'Budget Manager'
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`Budget for ${deptCode} approved and copied to forecast!`);
+            location.reload();
+        } else {
+            alert('Error approving: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+function rejectBudget(submissionId, deptCode) {
+    pendingRejectId = submissionId;
+    document.getElementById('rejectDeptName').textContent = deptCode;
+    document.getElementById('rejectionReason').value = '';
+    document.getElementById('rejectModal').style.display = 'flex';
+}
+
+async function confirmReject() {
+    const reason = document.getElementById('rejectionReason').value.trim();
+    
+    if (!reason) {
+        alert('Please provide a reason for rejection.');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/budget-entry/submissions/${pendingRejectId}/reject`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                approved_by: 'Budget Manager',
+                rejection_reason: reason
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Budget rejected. Department will be notified.');
+            hideModal('rejectModal');
+            location.reload();
+        } else {
+            alert('Error rejecting: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+function hideModal(id) {
+    document.getElementById(id).style.display = 'none';
+    pendingRejectId = null;
+}
+
+function exportSummary() {
+    window.location.href = `/api/export/budget/${plantCode}/${year}`;
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    filterTable();
+});
+
+// Status filter
+document.getElementById('statusFilter').addEventListener('change', function(e) {
+    filterTable();
+});
+
+function filterTable() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const statusFilter = document.getElementById('statusFilter').value;
+    const rows = document.querySelectorAll('tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const status = row.dataset.status;
+        
+        const matchesSearch = text.includes(searchTerm);
+        const matchesStatus = !statusFilter || status === statusFilter;
+        
+        row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+    });
+}
+
+// Close modal on outside click
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+        pendingRejectId = null;
+    }
+}
+</script>
+{% endblock %}
+

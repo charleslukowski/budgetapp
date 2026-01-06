@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Variance Analysis | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Variance Analysis</span></h1>
+    </div>
+    <div class="header-right">
+        <select class="month-picker" id="monthSelect" onchange="changeMonth(this.value)">
+            {% for m in range(1, 13) %}
+            <option value="{{ m }}" {% if m == current_month %}selected{% endif %}>
+                Through {{ month_names[m] }} {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-secondary" onclick="exportVariance()">Export</button>
+        <button class="btn btn-primary" onclick="location.reload()">Refresh</button>
+    </div>
+</header>
+
+<!-- Variance Summary -->
+<div class="variance-summary">
+    <div class="summary-item">
+        <span class="label">YTD Actual</span>
+        <span class="value">${{ "{:,.0f}".format(total_actual) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">YTD Budget</span>
+        <span class="value">${{ "{:,.0f}".format(total_budget) }}</span>
+    </div>
+    <div class="summary-item {% if is_total_favorable %}favorable{% else %}unfavorable{% endif %}">
+        <span class="label">Total Variance</span>
+        <span class="value">${{ "{:+,.0f}".format(total_variance) }}</span>
+    </div>
+    <div class="summary-item {% if is_total_favorable %}favorable{% else %}unfavorable{% endif %}">
+        <span class="label">Variance %</span>
+        <span class="value">{{ "{:+.1f}".format(total_variance_pct) }}%</span>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+    <div class="filter-left">
+        <input type="text" class="search-input" placeholder="Search departments..." id="searchInput">
+        <select class="filter-select" id="varianceFilter">
+            <option value="">All Variances</option>
+            <option value="favorable">Favorable Only</option>
+            <option value="unfavorable">Unfavorable Only</option>
+            <option value="significant">Significant (>$10K)</option>
+        </select>
+    </div>
+</div>
+
+<!-- Variance Grid -->
+<div class="grid-container variance-grid">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="sticky-col col-dept">Department</th>
+                <th class="num-col align-right">YTD Actual</th>
+                <th class="num-col align-right">YTD Budget</th>
+                <th class="num-col align-right">Variance $</th>
+                <th class="num-col align-right">Variance %</th>
+                <th class="num-col align-right">Annual Budget</th>
+                <th class="explanation-col">Explanation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in variance_lines %}
+            <tr class="has-variance {% if line.is_favorable %}favorable-row{% else %}unfavorable-row{% endif %}"
+                data-variance="{{ 'favorable' if line.is_favorable else 'unfavorable' }}"
+                data-amount="{{ line.variance|abs }}">
+                <td class="sticky-col col-dept">
+                    <a href="/forecast/{{ plant_code }}/{{ line.dept_code }}">{{ line.dept_code }}</a>
+                </td>
+                <td class="num-col align-right">{{ "{:,.0f}".format(line.ytd_actual) }}</td>
+                <td class="num-col align-right">{{ "{:,.0f}".format(line.ytd_budget) }}</td>
+                <td class="num-col align-right {% if line.is_favorable %}variance-favorable{% else %}variance-unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(line.variance) }}
+                </td>
+                <td class="num-col align-right {% if line.is_favorable %}variance-favorable{% else %}variance-unfavorable{% endif %}">
+                    {{ "{:+.1f}".format(line.variance_pct) }}%
+                </td>
+                <td class="num-col align-right">{{ "{:,.0f}".format(line.annual_budget) }}</td>
+                <td class="explanation-col">
+                    {% if line.variance|abs > 5000 %}
+                    <textarea class="explanation-input" 
+                              placeholder="Enter variance explanation..."
+                              data-dept="{{ line.dept_code }}"></textarea>
+                    {% else %}
+                    <span class="no-variance">Within tolerance</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="totals-row">
+                <td class="sticky-col col-dept">TOTAL</td>
+                <td class="num-col align-right">{{ "{:,.0f}".format(total_actual) }}</td>
+                <td class="num-col align-right">{{ "{:,.0f}".format(total_budget) }}</td>
+                <td class="num-col align-right {% if is_total_favorable %}variance-favorable{% else %}variance-unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(total_variance) }}
+                </td>
+                <td class="num-col align-right {% if is_total_favorable %}variance-favorable{% else %}variance-unfavorable{% endif %}">
+                    {{ "{:+.1f}".format(total_variance_pct) }}%
+                </td>
+                <td class="num-col align-right"></td>
+                <td class="explanation-col"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Department Summary Section -->
+<div class="dept-summary-section">
+    <h3>Overall Variance Summary</h3>
+    <textarea class="dept-summary-input" 
+              placeholder="Enter overall summary of variances for the period..."></textarea>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ department_count }} departments &bull; Through {{ month_names[current_month] }} {{ year }}</span>
+    </div>
+    <div class="footer-right">
+        <button class="btn btn-success" onclick="saveExplanations()">Save Explanations</button>
+        <span class="last-updated">Last updated: {{ last_updated }}</span>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function changeMonth(month) {
+    window.location.href = '/variance/{{ plant_code }}?year={{ year }}&month=' + month;
+}
+
+function exportVariance() {
+    window.location.href = '/api/export/variance/{{ plant_code }}/{{ year }}?month={{ current_month }}';
+}
+
+async function saveExplanations() {
+    const explanations = [];
+    
+    // Collect explanations from textareas
+    document.querySelectorAll('.explanation-input').forEach(textarea => {
+        const deptCode = textarea.dataset.dept;
+        const explanation = textarea.value.trim();
+        
+        if (explanation) {
+            explanations.push({
+                dept_code: deptCode,
+                period_month: 0,  // YTD
+                explanation: explanation
+            });
+        }
+    });
+    
+    if (explanations.length === 0) {
+        alert('No explanations to save.');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/variance/explanations/{{ plant_code }}/{{ year }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: '{{ plant_code }}',
+                year: {{ year }},
+                explanations: explanations
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`Saved ${result.count} explanations successfully!`);
+        } else {
+            alert('Error saving: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error saving explanations: ' + error.message);
+    }
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const rows = document.querySelectorAll('.data-grid tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+    });
+});
+
+// Variance filter
+document.getElementById('varianceFilter').addEventListener('change', function(e) {
+    const filter = e.target.value;
+    const rows = document.querySelectorAll('.data-grid tbody tr');
+    
+    rows.forEach(row => {
+        const variance = row.dataset.variance;
+        const amount = parseFloat(row.dataset.amount) || 0;
+        
+        let show = true;
+        if (filter === 'favorable') show = variance === 'favorable';
+        if (filter === 'unfavorable') show = variance === 'unfavorable';
+        if (filter === 'significant') show = amount > 10000;
+        
+        row.style.display = show ? '' : 'none';
+    });
+});
+</script>
+{% endblock %}
+

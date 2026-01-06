@@ -1,0 +1,13 @@
+unit_id,unit_name,plant_code,nameplate_mw,in_service_date,retirement_date,design_heat_rate_btu_kwh
+KC1,Kyger Unit 1,KC,217,1955-01-01,,10200
+KC2,Kyger Unit 2,KC,217,1955-01-01,,10200
+KC3,Kyger Unit 3,KC,217,1955-01-01,,10200
+KC4,Kyger Unit 4,KC,217,1955-01-01,,10200
+KC5,Kyger Unit 5,KC,217,1955-01-01,,10200
+CC1,Clifty Unit 1,CC,217,1955-01-01,,10200
+CC2,Clifty Unit 2,CC,217,1955-01-01,,10200
+CC3,Clifty Unit 3,CC,217,1955-01-01,,10200
+CC4,Clifty Unit 4,CC,217,1955-01-01,,10200
+CC5,Clifty Unit 5,CC,217,1955-01-01,,10200
+CC6,Clifty Unit 6,CC,217,1955-01-01,,10200
+

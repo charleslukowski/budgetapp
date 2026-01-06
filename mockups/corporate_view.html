@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate View | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Collapse/Expand Controls */
+        .collapse-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--color-gray-100);
+            border: 1px solid var(--color-gray-300);
+            border-radius: var(--radius);
+            font-size: 11px;
+            color: var(--color-gray-600);
+            cursor: pointer;
+            margin-left: 12px;
+        }
+        .collapse-toggle:hover {
+            background: var(--color-gray-200);
+        }
+        .collapse-toggle .icon {
+            font-size: 10px;
+        }
+        
+        /* Month columns that can be collapsed */
+        .month-detail-col {
+            transition: all 0.2s;
+        }
+        .month-detail-col.collapsed {
+            display: none;
+        }
+        
+        /* Column group header */
+        .col-group-header {
+            position: relative;
+        }
+        .col-group-header .expand-btn {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.3);
+            border: none;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 10px;
+            cursor: pointer;
+            color: inherit;
+        }
+        .col-group-header .expand-btn:hover {
+            background: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="budget_manager_dashboard.html">Dashboard</a>
+            <a href="budget_manager_forecast.html">Forecast</a>
+            <a href="budget_manager_variance.html">Variance</a>
+            <a href="internal_reallocations.html">Reallocations</a>
+            <a href="corporate_view.html" class="active">Corporate</a>
+        </div>
+        <div class="nav-right">
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Budget Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>OVEC Summary <span class="subtitle">Operating Forecast vs. Budget</span></h1>
+            </div>
+            <div class="header-right">
+                <button class="collapse-toggle" onclick="toggleMonths()">
+                    <span class="icon" id="toggleIcon">◀</span>
+                    <span id="toggleText">Collapse Months</span>
+                </button>
+                <span class="readonly-badge">Read Only</span>
+                <button class="btn btn-secondary">Export</button>
+            </div>
+        </header>
+
+        <!-- Legend -->
+        <div class="legend-bar">
+            <div class="legend-item"><span class="legend-dot actual"></span> Actual</div>
+            <div class="legend-item"><span class="legend-dot forecast"></span> Forecast</div>
+            <div class="legend-item"><span class="legend-dot variance-fav"></span> Favorable</div>
+            <div class="legend-item"><span class="legend-dot variance-unfav"></span> Unfavorable</div>
+        </div>
+
+        <!-- Corporate Summary Grid -->
+        <div class="grid-container">
+            <table class="data-grid corporate-summary-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-entity">Entity</th>
+                        <th class="sticky-col col-type">Type</th>
+                        <!-- Monthly Actuals - Collapsible -->
+                        <th class="num-col month-detail-col">Jan</th>
+                        <th class="num-col month-detail-col">Feb</th>
+                        <th class="num-col month-detail-col">Mar</th>
+                        <th class="num-col month-detail-col">Apr</th>
+                        <th class="num-col month-detail-col">May</th>
+                        <th class="num-col month-detail-col">Jun</th>
+                        <th class="num-col month-detail-col">Jul</th>
+                        <th class="num-col month-detail-col">Aug</th>
+                        <th class="num-col month-detail-col">Sep</th>
+                        <th class="num-col month-detail-col">Oct</th>
+                        <!-- Current Month - Always Visible -->
+                        <th class="num-col current-fcst-col">Nov Fcst</th>
+                        <th class="num-col current-act-col">Nov Act</th>
+                        <th class="num-col current-var-col">Nov Var</th>
+                        <!-- Future Month -->
+                        <th class="num-col">Dec Fcst</th>
+                        <!-- Totals - Always Visible -->
+                        <th class="num-col total-col">2025 Total</th>
+                        <th class="num-col">2025 Bud</th>
+                        <th class="num-col">2025 Var</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- KYGER GROUP -->
+                    <tr class="group-header-row">
+                        <td colspan="2" class="department-group-header">
+                            <a href="monthly_summary.html?location=kyger" class="group-link">KYGER CREEK</a>
+                        </td>
+                        <td colspan="10" class="department-group-header month-detail-col"></td>
+                        <td colspan="7" class="department-group-header">
+                            <span class="forecast-status complete">Forecast Complete</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">Kyger</td>
+                        <td class="sticky-col col-type">Other</td>
+                        <td class="num-col month-detail-col">594,003</td>
+                        <td class="num-col month-detail-col">936,861</td>
+                        <td class="num-col month-detail-col">344,495</td>
+                        <td class="num-col month-detail-col">590,350</td>
+                        <td class="num-col month-detail-col">779,009</td>
+                        <td class="num-col month-detail-col">881,685</td>
+                        <td class="num-col month-detail-col">726,095</td>
+                        <td class="num-col month-detail-col">42,567</td>
+                        <td class="num-col month-detail-col">126,846</td>
+                        <td class="num-col month-detail-col">708,573</td>
+                        <td class="num-col current-fcst-cell">596,672</td>
+                        <td class="num-col current-act-cell">202,971</td>
+                        <td class="num-col current-var-cell favorable">-393,701</td>
+                        <td class="num-col">473,231</td>
+                        <td class="num-col total-col">6,993,270</td>
+                        <td class="num-col">6,993,270</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">Kyger</td>
+                        <td class="sticky-col col-type">Labor</td>
+                        <td class="num-col month-detail-col">474,817</td>
+                        <td class="num-col month-detail-col">474,278</td>
+                        <td class="num-col month-detail-col">478,936</td>
+                        <td class="num-col month-detail-col">419,570</td>
+                        <td class="num-col month-detail-col">432,944</td>
+                        <td class="num-col month-detail-col">488,984</td>
+                        <td class="num-col month-detail-col">714,746</td>
+                        <td class="num-col month-detail-col">525,919</td>
+                        <td class="num-col month-detail-col">131,732</td>
+                        <td class="num-col month-detail-col">529,731</td>
+                        <td class="num-col current-fcst-cell">614,206</td>
+                        <td class="num-col current-act-cell">80,314</td>
+                        <td class="num-col current-var-cell favorable">-533,892</td>
+                        <td class="num-col">558,773</td>
+                        <td class="num-col total-col">5,646,663</td>
+                        <td class="num-col">5,648,000</td>
+                        <td class="num-col favorable">-1,337</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-entity indent">Kyger</td>
+                        <td class="sticky-col col-type">Total</td>
+                        <td class="num-col month-detail-col">1,068,820</td>
+                        <td class="num-col month-detail-col">1,411,139</td>
+                        <td class="num-col month-detail-col">823,431</td>
+                        <td class="num-col month-detail-col">1,009,920</td>
+                        <td class="num-col month-detail-col">1,211,953</td>
+                        <td class="num-col month-detail-col">1,370,669</td>
+                        <td class="num-col month-detail-col">1,440,841</td>
+                        <td class="num-col month-detail-col">568,486</td>
+                        <td class="num-col month-detail-col">258,578</td>
+                        <td class="num-col month-detail-col">1,238,304</td>
+                        <td class="num-col current-fcst-cell">1,210,878</td>
+                        <td class="num-col current-act-cell">283,285</td>
+                        <td class="num-col current-var-cell favorable">-927,593</td>
+                        <td class="num-col">1,032,004</td>
+                        <td class="num-col total-col">12,639,933</td>
+                        <td class="num-col">12,641,270</td>
+                        <td class="num-col favorable">-1,337</td>
+                    </tr>
+
+                    <!-- CLIFTY GROUP -->
+                    <tr class="group-header-row">
+                        <td colspan="2" class="department-group-header">
+                            <a href="monthly_summary.html?location=clifty" class="group-link">CLIFTY CREEK</a>
+                        </td>
+                        <td colspan="10" class="department-group-header month-detail-col"></td>
+                        <td colspan="7" class="department-group-header">
+                            <span class="forecast-status pending">In Progress</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">Clifty</td>
+                        <td class="sticky-col col-type">Other</td>
+                        <td class="num-col month-detail-col">368,068</td>
+                        <td class="num-col month-detail-col">339,846</td>
+                        <td class="num-col month-detail-col">335,382</td>
+                        <td class="num-col month-detail-col">421,751</td>
+                        <td class="num-col month-detail-col">199,767</td>
+                        <td class="num-col month-detail-col">296,356</td>
+                        <td class="num-col month-detail-col">256,600</td>
+                        <td class="num-col month-detail-col">159,525</td>
+                        <td class="num-col month-detail-col">607,937</td>
+                        <td class="num-col month-detail-col">739,808</td>
+                        <td class="num-col current-fcst-cell">080,856</td>
+                        <td class="num-col current-act-cell">573,692</td>
+                        <td class="num-col current-var-cell unfavorable">+492,836</td>
+                        <td class="num-col">543,494</td>
+                        <td class="num-col total-col">4,540,207</td>
+                        <td class="num-col">4,540,207</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">Clifty</td>
+                        <td class="sticky-col col-type">Labor</td>
+                        <td class="num-col month-detail-col">242,759</td>
+                        <td class="num-col month-detail-col">54,601</td>
+                        <td class="num-col month-detail-col">150,052</td>
+                        <td class="num-col month-detail-col">398,447</td>
+                        <td class="num-col month-detail-col">409,568</td>
+                        <td class="num-col month-detail-col">85,735</td>
+                        <td class="num-col month-detail-col">118,134</td>
+                        <td class="num-col month-detail-col">182,783</td>
+                        <td class="num-col month-detail-col">388,009</td>
+                        <td class="num-col month-detail-col">127,817</td>
+                        <td class="num-col current-fcst-cell">144,843</td>
+                        <td class="num-col current-act-cell">217,921</td>
+                        <td class="num-col current-var-cell unfavorable">+73,078</td>
+                        <td class="num-col">253,001</td>
+                        <td class="num-col total-col">2,495,385</td>
+                        <td class="num-col">2,495,385</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-entity indent">Clifty</td>
+                        <td class="sticky-col col-type">Total</td>
+                        <td class="num-col month-detail-col">610,827</td>
+                        <td class="num-col month-detail-col">394,447</td>
+                        <td class="num-col month-detail-col">485,434</td>
+                        <td class="num-col month-detail-col">820,198</td>
+                        <td class="num-col month-detail-col">609,335</td>
+                        <td class="num-col month-detail-col">382,091</td>
+                        <td class="num-col month-detail-col">374,734</td>
+                        <td class="num-col month-detail-col">342,308</td>
+                        <td class="num-col month-detail-col">995,946</td>
+                        <td class="num-col month-detail-col">867,625</td>
+                        <td class="num-col current-fcst-cell">225,699</td>
+                        <td class="num-col current-act-cell">791,613</td>
+                        <td class="num-col current-var-cell unfavorable">+565,914</td>
+                        <td class="num-col">796,495</td>
+                        <td class="num-col total-col">7,035,592</td>
+                        <td class="num-col">7,035,592</td>
+                        <td class="num-col">0</td>
+                    </tr>
+
+                    <!-- SYSTEM GROUP -->
+                    <tr class="group-header-row">
+                        <td colspan="2" class="department-group-header">SYSTEM</td>
+                        <td colspan="10" class="department-group-header month-detail-col"></td>
+                        <td colspan="7" class="department-group-header"></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">System</td>
+                        <td class="sticky-col col-type">Other</td>
+                        <td class="num-col month-detail-col">612,156</td>
+                        <td class="num-col month-detail-col">228,914</td>
+                        <td class="num-col month-detail-col">734,558</td>
+                        <td class="num-col month-detail-col">682,372</td>
+                        <td class="num-col month-detail-col">963,789</td>
+                        <td class="num-col month-detail-col">545,166</td>
+                        <td class="num-col month-detail-col">151,900</td>
+                        <td class="num-col month-detail-col">79,916</td>
+                        <td class="num-col month-detail-col">343,570</td>
+                        <td class="num-col month-detail-col">189,829</td>
+                        <td class="num-col current-fcst-cell">513,182</td>
+                        <td class="num-col current-act-cell">538,744</td>
+                        <td class="num-col current-var-cell unfavorable">+25,562</td>
+                        <td class="num-col">210,478</td>
+                        <td class="num-col total-col">3,597,962</td>
+                        <td class="num-col">3,597,962</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">System</td>
+                        <td class="sticky-col col-type">Labor</td>
+                        <td class="num-col month-detail-col">69,423</td>
+                        <td class="num-col month-detail-col">86,731</td>
+                        <td class="num-col month-detail-col">58,318</td>
+                        <td class="num-col month-detail-col">99,610</td>
+                        <td class="num-col month-detail-col">76,757</td>
+                        <td class="num-col month-detail-col">70,122</td>
+                        <td class="num-col month-detail-col">10,526</td>
+                        <td class="num-col month-detail-col">57,700</td>
+                        <td class="num-col month-detail-col">65,331</td>
+                        <td class="num-col month-detail-col">84,072</td>
+                        <td class="num-col current-fcst-cell">62,050</td>
+                        <td class="num-col current-act-cell">50,438</td>
+                        <td class="num-col current-var-cell favorable">-11,612</td>
+                        <td class="num-col">82,528</td>
+                        <td class="num-col total-col">559,674</td>
+                        <td class="num-col">559,674</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-entity indent">System</td>
+                        <td class="sticky-col col-type">Total</td>
+                        <td class="num-col month-detail-col">681,579</td>
+                        <td class="num-col month-detail-col">315,645</td>
+                        <td class="num-col month-detail-col">792,876</td>
+                        <td class="num-col month-detail-col">781,982</td>
+                        <td class="num-col month-detail-col">1,040,546</td>
+                        <td class="num-col month-detail-col">615,288</td>
+                        <td class="num-col month-detail-col">162,426</td>
+                        <td class="num-col month-detail-col">137,616</td>
+                        <td class="num-col month-detail-col">408,901</td>
+                        <td class="num-col month-detail-col">273,901</td>
+                        <td class="num-col current-fcst-cell">575,232</td>
+                        <td class="num-col current-act-cell">589,182</td>
+                        <td class="num-col current-var-cell unfavorable">+13,950</td>
+                        <td class="num-col">293,006</td>
+                        <td class="num-col total-col">4,157,636</td>
+                        <td class="num-col">4,157,636</td>
+                        <td class="num-col">0</td>
+                    </tr>
+
+                    <!-- A&G GROUP -->
+                    <tr class="group-header-row">
+                        <td colspan="2" class="department-group-header">A&G (ADMIN & GENERAL)</td>
+                        <td colspan="10" class="department-group-header month-detail-col"></td>
+                        <td colspan="7" class="department-group-header"></td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-entity indent">A&G</td>
+                        <td class="sticky-col col-type">Total</td>
+                        <td class="num-col month-detail-col">181,578</td>
+                        <td class="num-col month-detail-col">715,644</td>
+                        <td class="num-col month-detail-col">292,876</td>
+                        <td class="num-col month-detail-col">181,981</td>
+                        <td class="num-col month-detail-col">540,546</td>
+                        <td class="num-col month-detail-col">115,288</td>
+                        <td class="num-col month-detail-col">762,427</td>
+                        <td class="num-col month-detail-col">637,616</td>
+                        <td class="num-col month-detail-col">508,901</td>
+                        <td class="num-col month-detail-col">773,901</td>
+                        <td class="num-col current-fcst-cell">75,232</td>
+                        <td class="num-col current-act-cell">89,182</td>
+                        <td class="num-col current-var-cell unfavorable">+13,950</td>
+                        <td class="num-col">293,006</td>
+                        <td class="num-col total-col">4,366,110</td>
+                        <td class="num-col">4,366,110</td>
+                        <td class="num-col">0</td>
+                    </tr>
+
+                    <!-- EO GROUP -->
+                    <tr class="group-header-row">
+                        <td colspan="2" class="department-group-header">EO (EXECUTIVE OFFICE)</td>
+                        <td colspan="10" class="department-group-header month-detail-col"></td>
+                        <td colspan="7" class="department-group-header"></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">EO</td>
+                        <td class="sticky-col col-type">Other</td>
+                        <td class="num-col month-detail-col">57,818</td>
+                        <td class="num-col month-detail-col">12,436</td>
+                        <td class="num-col month-detail-col">91,205</td>
+                        <td class="num-col month-detail-col">31,689</td>
+                        <td class="num-col month-detail-col">30,685</td>
+                        <td class="num-col month-detail-col">76,109</td>
+                        <td class="num-col month-detail-col">29,637</td>
+                        <td class="num-col month-detail-col">45,454</td>
+                        <td class="num-col month-detail-col">18,165</td>
+                        <td class="num-col month-detail-col">37,893</td>
+                        <td class="num-col current-fcst-cell">60,804</td>
+                        <td class="num-col current-act-cell">18,642</td>
+                        <td class="num-col current-var-cell favorable">-42,162</td>
+                        <td class="num-col">63,047</td>
+                        <td class="num-col total-col">499,763</td>
+                        <td class="num-col">499,763</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-entity indent">EO</td>
+                        <td class="sticky-col col-type">Labor</td>
+                        <td class="num-col month-detail-col">43,621</td>
+                        <td class="num-col month-detail-col">10,731</td>
+                        <td class="num-col month-detail-col">11,997</td>
+                        <td class="num-col month-detail-col">95,056</td>
+                        <td class="num-col month-detail-col">28,155</td>
+                        <td class="num-col month-detail-col">46,261</td>
+                        <td class="num-col month-detail-col">63,356</td>
+                        <td class="num-col month-detail-col">97,576</td>
+                        <td class="num-col month-detail-col">40,386</td>
+                        <td class="num-col month-detail-col">51,915</td>
+                        <td class="num-col current-fcst-cell">53,382</td>
+                        <td class="num-col current-act-cell">52,631</td>
+                        <td class="num-col current-var-cell favorable">-751</td>
+                        <td class="num-col">62,540</td>
+                        <td class="num-col total-col">370,847</td>
+                        <td class="num-col">370,847</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-entity indent">EO</td>
+                        <td class="sticky-col col-type">Total</td>
+                        <td class="num-col month-detail-col">101,439</td>
+                        <td class="num-col month-detail-col">23,167</td>
+                        <td class="num-col month-detail-col">103,202</td>
+                        <td class="num-col month-detail-col">126,745</td>
+                        <td class="num-col month-detail-col">58,840</td>
+                        <td class="num-col month-detail-col">122,370</td>
+                        <td class="num-col month-detail-col">92,993</td>
+                        <td class="num-col month-detail-col">143,030</td>
+                        <td class="num-col month-detail-col">58,551</td>
+                        <td class="num-col month-detail-col">89,808</td>
+                        <td class="num-col current-fcst-cell">114,186</td>
+                        <td class="num-col current-act-cell">71,273</td>
+                        <td class="num-col current-var-cell favorable">-42,913</td>
+                        <td class="num-col">125,587</td>
+                        <td class="num-col total-col">870,610</td>
+                        <td class="num-col">870,610</td>
+                        <td class="num-col">0</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="grand-total-row">
+                        <td class="sticky-col col-entity">OVEC TOTAL</td>
+                        <td class="sticky-col col-type"></td>
+                        <td class="num-col month-detail-col">2,644,243</td>
+                        <td class="num-col month-detail-col">2,860,042</td>
+                        <td class="num-col month-detail-col">2,497,819</td>
+                        <td class="num-col month-detail-col">2,920,826</td>
+                        <td class="num-col month-detail-col">3,461,220</td>
+                        <td class="num-col month-detail-col">2,605,706</td>
+                        <td class="num-col month-detail-col">2,833,421</td>
+                        <td class="num-col month-detail-col">1,829,056</td>
+                        <td class="num-col month-detail-col">2,230,877</td>
+                        <td class="num-col month-detail-col">3,243,539</td>
+                        <td class="num-col current-fcst-cell">2,201,227</td>
+                        <td class="num-col current-act-cell">1,824,535</td>
+                        <td class="num-col current-var-cell favorable">-376,692</td>
+                        <td class="num-col">2,540,098</td>
+                        <td class="num-col total-col">29,069,881</td>
+                        <td class="num-col">29,071,218</td>
+                        <td class="num-col favorable">-1,337</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">5 entities &bull; 2 locations complete</span>
+            </div>
+            <div class="footer-right">
+                <span class="last-updated">Last updated: Dec 23, 2025</span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        let monthsExpanded = true;
+        
+        function toggleMonths() {
+            monthsExpanded = !monthsExpanded;
+            const monthCols = document.querySelectorAll('.month-detail-col');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const toggleText = document.getElementById('toggleText');
+            
+            monthCols.forEach(col => {
+                if (monthsExpanded) {
+                    col.classList.remove('collapsed');
+                } else {
+                    col.classList.add('collapsed');
+                }
+            });
+            
+            if (monthsExpanded) {
+                toggleIcon.textContent = '◀';
+                toggleText.textContent = 'Collapse Months';
+            } else {
+                toggleIcon.textContent = '▶';
+                toggleText.textContent = 'Expand Months';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+budget_type_code,budget_type_name,is_official,display_order
+BUDGET,Annual Budget,Y,1
+INTERNAL,Internal Forecast,N,2
+EXTERNAL,External Forecast,Y,3
+ACTUAL,Actuals,Y,4
+

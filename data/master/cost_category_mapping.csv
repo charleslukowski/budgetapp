@@ -1,0 +1,18 @@
+ferc_account,ferc_detail_min,ferc_detail_max,location,report_category,notes
+401-10,,,ALL,FUEL-COST,Fuel costs
+401-10,200,299,ALL,FUEL-BYPRODUCT,Byproduct sales (200s = ash/gypsum)
+401-10,500,599,ALL,FUEL-BYPRODUCT,Reagents and disposal (500s)
+401-10,504,504,ALL,FUEL-ALLOWANCE,Allowance costs
+107,,,KC|CC,OP-GEN-CAP,CWIP - Generation Capital
+108,,,KC|CC,OP-GEN-CAP,RWIP - Generation Capital
+107,,,EO,OP-TRANS-CAP,CWIP - T&D Capital
+108,,,EO,OP-TRANS-CAP,RWIP - T&D Capital
+401-20,500,520,KC|CC,OP-GEN-OM,O&M - Generation
+401-20,900,999,KC|CC,OP-GEN-AG,A&G - Generation
+401-20,540,580,EO,OP-TRANS-TD,T&D Operations
+401-20,900,999,EO,OP-TRANS-AG,A&G - Transmission
+,,,ALL,NON-OP-STD,Short Term Debt - MANUAL
+,,,ALL,NON-OP-LTD,Long Term Debt - MANUAL
+,,,ALL,NON-OP-POST,Post Retirement - MANUAL
+,,,ALL,NON-OP-DECOM,Decommission Fund - MANUAL
+,,,KC|CC,OP-GEN-TAX,Taxes - MANUAL

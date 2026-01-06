@@ -1,0 +1,6 @@
+plant_code,plant_name,plant_type,company_id,active
+KC,Kyger Creek,Generation,1,Y
+CC,Clifty Creek,Generation,2,Y
+EO,Electrical Operations,T&D,BOTH,Y
+SYS,Administrative & General,A&G,BOTH,Y
+

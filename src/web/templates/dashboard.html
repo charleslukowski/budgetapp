@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p>OVEC Financial Planning System - Kyger Creek & Clifty Creek</p>
+</div>
+
+<!-- Stats Overview -->
+<div class="grid grid-4">
+    <div class="card stat-card">
+        <div class="stat-value">{{ plants|length }}</div>
+        <div class="stat-label">Power Plants</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value">2,200</div>
+        <div class="stat-label">Total MW Capacity</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value">{{ scenarios|length }}</div>
+        <div class="stat-label">Active Scenarios</div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-value">2040</div>
+        <div class="stat-label">Contract End Year</div>
+    </div>
+</div>
+
+<!-- Plants Section -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Generation Assets</h2>
+    </div>
+    <div class="grid grid-2">
+        {% for plant in plants %}
+        <div class="card plant-card">
+            <h3>{{ plant.name }}</h3>
+            <div class="plant-capacity">{{ plant.capacity_mw }} MW</div>
+            <div class="plant-units">{{ plant.unit_count }} x {{ plant.unit_capacity_mw }} MW units</div>
+            <p style="margin-top: 0.5rem; color: var(--text-light);">
+                Max Annual: {{ "{:,.0f}".format(plant.max_annual_generation_mwh) }} MWh
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Active Scenarios -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Active Scenarios</h2>
+        <a href="/scenarios" class="btn btn-outline">View All</a>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scenario in scenarios[:5] %}
+                <tr>
+                    <td><a href="/scenarios/{{ scenario.id }}">{{ scenario.name }}</a></td>
+                    <td>
+                        {% if scenario.scenario_type.value == 'budget' %}
+                        <span class="badge badge-budget">Budget</span>
+                        {% elif scenario.scenario_type.value == 'internal_forecast' %}
+                        <span class="badge badge-internal">Internal</span>
+                        {% else %}
+                        <span class="badge badge-external">External</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ scenario.status.value }}">{{ scenario.status.value|title }}</span>
+                    </td>
+                    <td>{{ scenario.updated_at.strftime('%Y-%m-%d %H:%M') if scenario.updated_at else 'N/A' }}</td>
+                    <td>
+                        <a href="/scenarios/{{ scenario.id }}" class="btn btn-outline" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Quick Actions</h2>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="/reports" class="btn btn-primary">Generate Sponsor Report</a>
+        <a href="/scenarios" class="btn btn-outline">Manage Scenarios</a>
+        <a href="/api/docs" class="btn btn-outline" target="_blank">API Documentation</a>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Reallocations | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="budget_manager_dashboard.html">Dashboard</a>
+            <a href="budget_manager_forecast.html">Forecast</a>
+            <a href="budget_manager_variance.html">Variance</a>
+            <a href="internal_reallocations.html" class="active">Reallocations</a>
+            <a href="corporate_view.html">Corporate</a>
+        </div>
+        <div class="nav-right">
+            <select class="location-select">
+                <option>Kyger Creek</option>
+                <option>Clifty Creek</option>
+            </select>
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Budget Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>Kyger Creek <span class="subtitle">Internal Reallocations</span></h1>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary">Export</button>
+                <button class="btn btn-primary" onclick="openNewReallocationModal()">+ New Reallocation</button>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <div class="reallocation-summary">
+            <div class="summary-item">
+                <span class="label">Total Reallocations</span>
+                <span class="value">12</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Net Movement</span>
+                <span class="value">$0</span>
+                <span class="subtext">(balanced)</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Pending Approval</span>
+                <span class="value warning">2</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">This Month</span>
+                <span class="value">3</span>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-left">
+                <select class="filter-select">
+                    <option>All Departments</option>
+                    <option>PLANNED-01</option>
+                    <option>PLANNED-02</option>
+                    <option>UNPLANNED</option>
+                    <option>OUTAGE</option>
+                    <option>MAINT</option>
+                    <option>OPER</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Status</option>
+                    <option>Pending</option>
+                    <option>Approved</option>
+                </select>
+                <select class="filter-select">
+                    <option>All Time</option>
+                    <option>This Month</option>
+                    <option>Last 30 days</option>
+                    <option>This Year</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Reallocations Grid -->
+        <div class="grid-container">
+            <table class="data-grid reallocation-grid">
+                <thead>
+                    <tr>
+                        <th class="date-col">Date</th>
+                        <th class="dept-col">From Dept</th>
+                        <th class="account-col">From Account</th>
+                        <th class="dept-col">To Dept</th>
+                        <th class="account-col">To Account</th>
+                        <th class="amount-col align-right">Amount</th>
+                        <th class="reason-col">Reason</th>
+                        <th class="status-col">Status</th>
+                        <th class="actions-col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pending-row">
+                        <td class="date-col">Dec 20, 2025</td>
+                        <td class="dept-col">PLANNED-01</td>
+                        <td class="account-col">003-1-20-401-20-320-512-186-4</td>
+                        <td class="dept-col">UNPLANNED</td>
+                        <td class="account-col">003-1-20-401-20-320-512-180-4</td>
+                        <td class="amount-col">$12,000</td>
+                        <td class="reason-col">Move unused SCR funds to cover precipitator emergency</td>
+                        <td class="status-col"><span class="status-badge pending">Pending</span></td>
+                        <td class="actions-col">
+                            <button class="btn btn-sm btn-success">Approve</button>
+                            <button class="btn btn-sm btn-danger">Reject</button>
+                        </td>
+                    </tr>
+                    <tr class="pending-row">
+                        <td class="date-col">Dec 18, 2025</td>
+                        <td class="dept-col">MAINT</td>
+                        <td class="account-col">003-1-20-401-20-320-512-126-4</td>
+                        <td class="dept-col">OPER</td>
+                        <td class="account-col">003-1-20-401-20-320-512-205-4</td>
+                        <td class="amount-col">$5,000</td>
+                        <td class="reason-col">Pulverizer savings to overfire air dampers</td>
+                        <td class="status-col"><span class="status-badge pending">Pending</span></td>
+                        <td class="actions-col">
+                            <button class="btn btn-sm btn-success">Approve</button>
+                            <button class="btn btn-sm btn-danger">Reject</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="date-col">Nov 15, 2025</td>
+                        <td class="dept-col">PLANNED-01</td>
+                        <td class="account-col">003-1-20-401-20-320-512-186-4</td>
+                        <td class="dept-col">PLANNED-01</td>
+                        <td class="account-col">003-1-20-401-20-320-512-180-4</td>
+                        <td class="amount-col">$8,000</td>
+                        <td class="reason-col">Move funds from SCR to precipitator - scope change</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                        <td class="actions-col">
+                            <button class="btn-icon" title="Edit">✏️</button>
+                            <button class="btn-icon" title="View">👁️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="date-col">Oct 28, 2025</td>
+                        <td class="dept-col">MAINT</td>
+                        <td class="account-col">003-1-20-401-20-320-512-126-4</td>
+                        <td class="dept-col">MAINT</td>
+                        <td class="account-col">003-1-20-401-20-320-512-152-4</td>
+                        <td class="amount-col">$12,000</td>
+                        <td class="reason-col">Pulverizer savings to burner maintenance</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                        <td class="actions-col">
+                            <button class="btn-icon" title="Edit">✏️</button>
+                            <button class="btn-icon" title="View">👁️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="date-col">Sep 20, 2025</td>
+                        <td class="dept-col">OPER</td>
+                        <td class="account-col">003-1-20-401-20-320-512-205-4</td>
+                        <td class="dept-col">OPER</td>
+                        <td class="account-col">003-1-20-401-20-320-512-206-4</td>
+                        <td class="amount-col">$5,500</td>
+                        <td class="reason-col">Overfire air to duct damper - priority shift</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                        <td class="actions-col">
+                            <button class="btn-icon" title="Edit">✏️</button>
+                            <button class="btn-icon" title="View">👁️</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="date-col">Aug 15, 2025</td>
+                        <td class="dept-col">ENV</td>
+                        <td class="account-col">003-1-20-401-20-320-512-203-4</td>
+                        <td class="dept-col">CHEM</td>
+                        <td class="account-col">003-1-20-401-20-320-512-203-4</td>
+                        <td class="amount-col">$3,500</td>
+                        <td class="reason-col">Air preheater savings to chemistry</td>
+                        <td class="status-col"><span class="status-badge approved">Approved</span></td>
+                        <td class="actions-col">
+                            <button class="btn-icon" title="Edit">✏️</button>
+                            <button class="btn-icon" title="View">👁️</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- New Reallocation Modal -->
+        <div class="modal" id="newReallocationModal">
+            <div class="modal-content modal-lg">
+                <div class="modal-header">
+                    <h3>New Internal Reallocation</h3>
+                    <button class="btn-close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From Department</label>
+                            <select class="form-input">
+                                <option>Select department...</option>
+                                <option>PLANNED-01</option>
+                                <option>PLANNED-02</option>
+                                <option>UNPLANNED</option>
+                                <option>OUTAGE</option>
+                                <option>MAINT</option>
+                                <option>OPER</option>
+                                <option>ENV</option>
+                                <option>CHEM</option>
+                                <option>TECH</option>
+                                <option>SAFETY</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>From Account</label>
+                            <select class="form-input">
+                                <option>Select account...</option>
+                                <option>003-1-20-401-20-320-512-126-4 - PULVERIZER</option>
+                                <option>003-1-20-401-20-320-512-152-4 - BURNER PIPE</option>
+                                <option>003-1-20-401-20-320-512-180-4 - PRECIPITATORS</option>
+                                <option>003-1-20-401-20-320-512-186-4 - SCR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>To Department</label>
+                            <select class="form-input">
+                                <option>Select department...</option>
+                                <option>PLANNED-01</option>
+                                <option>PLANNED-02</option>
+                                <option>UNPLANNED</option>
+                                <option>OUTAGE</option>
+                                <option>MAINT</option>
+                                <option>OPER</option>
+                                <option>ENV</option>
+                                <option>CHEM</option>
+                                <option>TECH</option>
+                                <option>SAFETY</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To Account</label>
+                            <select class="form-input">
+                                <option>Select account...</option>
+                                <option>003-1-20-401-20-320-512-126-4 - PULVERIZER</option>
+                                <option>003-1-20-401-20-320-512-152-4 - BURNER PIPE</option>
+                                <option>003-1-20-401-20-320-512-180-4 - PRECIPITATORS</option>
+                                <option>003-1-20-401-20-320-512-186-4 - SCR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-input" placeholder="$0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Effective Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Reason / Justification</label>
+                        <textarea class="form-input" rows="3" placeholder="Explain why this reallocation is needed..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button class="btn btn-primary">Create Reallocation</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">6 reallocations &bull; 2 pending approval</span>
+            </div>
+            <div class="footer-right">
+                <span class="last-updated">Last updated: Dec 23, 2025</span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function openNewReallocationModal() {
+            document.getElementById('newReallocationModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('newReallocationModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+

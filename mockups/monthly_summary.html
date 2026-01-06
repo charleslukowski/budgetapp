@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Summary | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="monthly_summary.html" class="active">Summary</a>
+            <a href="department_input.html">Forecast Input</a>
+            <a href="budget_view.html">Budget</a>
+            <a href="variance_explanation.html">Variance</a>
+            <a href="funding_changes.html">Funding Changes</a>
+        </div>
+        <div class="nav-right">
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Dept Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <h1>Kyger Creek <span class="subtitle">2025 Monthly Summary</span></h1>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary">Export</button>
+                <button class="btn btn-primary">Refresh</button>
+            </div>
+        </header>
+
+        <!-- Legend -->
+        <div class="legend-bar">
+            <span class="legend-item"><span class="legend-dot actual"></span> Actual</span>
+            <span class="legend-item"><span class="legend-dot forecast"></span> Forecast</span>
+            <span class="legend-item"><span class="legend-dot current"></span> Current Month</span>
+            <span class="legend-item favorable">Green = Under Budget</span>
+            <span class="legend-item unfavorable">Red = Over Budget</span>
+        </div>
+
+        <!-- Summary Grid -->
+        <div class="grid-container summary-grid">
+            <table class="data-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-dept">Department</th>
+                        <th class="month-col actual-col align-right">Jan</th>
+                        <th class="month-col actual-col align-right">Feb</th>
+                        <th class="month-col actual-col align-right">Mar</th>
+                        <th class="month-col actual-col align-right">Apr</th>
+                        <th class="month-col actual-col align-right">May</th>
+                        <th class="month-col actual-col align-right">Jun</th>
+                        <th class="month-col actual-col align-right">Jul</th>
+                        <th class="month-col actual-col align-right">Aug</th>
+                        <th class="month-col actual-col align-right">Sep</th>
+                        <th class="month-col actual-col align-right">Oct</th>
+                        <th class="month-col current-fcst-col align-right">Nov Fcst</th>
+                        <th class="month-col current-act-col align-right">Nov Act</th>
+                        <th class="month-col current-var-col align-right">Nov Var</th>
+                        <th class="month-col forecast-col align-right">Dec</th>
+                        <th class="projection-col align-right">YE Proj</th>
+                        <th class="budget-col align-right">Budget</th>
+                        <th class="variance-col align-right">Proj Var</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- OUTAGE GROUP -->
+                    <tr class="group-header">
+                        <td class="sticky-col col-dept" colspan="17">OUTAGE</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">PLANNED-01</a></td>
+                        <td class="actual-cell">12,500</td>
+                        <td class="actual-cell">8,200</td>
+                        <td class="actual-cell">15,400</td>
+                        <td class="actual-cell">98,000</td>
+                        <td class="actual-cell">175,200</td>
+                        <td class="actual-cell">22,100</td>
+                        <td class="actual-cell">5,600</td>
+                        <td class="actual-cell">3,200</td>
+                        <td class="actual-cell">58,400</td>
+                        <td class="actual-cell">112,300</td>
+                        <td class="current-fcst-cell">45,000</td>
+                        <td class="current-act-cell">42,100</td>
+                        <td class="current-var-cell favorable">-2,900</td>
+                        <td class="forecast-cell">28,000</td>
+                        <td class="projection-cell">581,000</td>
+                        <td class="budget-cell">620,000</td>
+                        <td class="variance-cell favorable">-39,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">PLANNED-02</a></td>
+                        <td class="actual-cell">8,100</td>
+                        <td class="actual-cell">6,500</td>
+                        <td class="actual-cell">9,200</td>
+                        <td class="actual-cell">45,000</td>
+                        <td class="actual-cell">82,300</td>
+                        <td class="actual-cell">12,400</td>
+                        <td class="actual-cell">4,200</td>
+                        <td class="actual-cell">2,800</td>
+                        <td class="actual-cell">31,500</td>
+                        <td class="actual-cell">67,200</td>
+                        <td class="current-fcst-cell">22,000</td>
+                        <td class="current-act-cell">28,500</td>
+                        <td class="current-var-cell unfavorable">+6,500</td>
+                        <td class="forecast-cell">15,000</td>
+                        <td class="projection-cell">334,700</td>
+                        <td class="budget-cell">310,000</td>
+                        <td class="variance-cell unfavorable">+24,700</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">UNPLANNED</a></td>
+                        <td class="actual-cell">45,200</td>
+                        <td class="actual-cell">32,100</td>
+                        <td class="actual-cell">28,500</td>
+                        <td class="actual-cell">52,300</td>
+                        <td class="actual-cell">18,400</td>
+                        <td class="actual-cell">65,200</td>
+                        <td class="actual-cell">42,100</td>
+                        <td class="actual-cell">38,600</td>
+                        <td class="actual-cell">55,800</td>
+                        <td class="actual-cell">72,400</td>
+                        <td class="current-fcst-cell">40,000</td>
+                        <td class="current-act-cell">48,200</td>
+                        <td class="current-var-cell unfavorable">+8,200</td>
+                        <td class="forecast-cell">35,000</td>
+                        <td class="projection-cell">533,800</td>
+                        <td class="budget-cell">480,000</td>
+                        <td class="variance-cell unfavorable">+53,800</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">OUTAGE</a></td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">125,000</td>
+                        <td class="actual-cell">890,000</td>
+                        <td class="actual-cell">450,000</td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">0</td>
+                        <td class="actual-cell">0</td>
+                        <td class="current-fcst-cell">0</td>
+                        <td class="current-act-cell">0</td>
+                        <td class="current-var-cell">0</td>
+                        <td class="forecast-cell">0</td>
+                        <td class="projection-cell">1,465,000</td>
+                        <td class="budget-cell">1,500,000</td>
+                        <td class="variance-cell favorable">-35,000</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-dept">Outage Subtotal</td>
+                        <td class="actual-cell">65,800</td>
+                        <td class="actual-cell">46,800</td>
+                        <td class="actual-cell">178,100</td>
+                        <td class="actual-cell">1,085,300</td>
+                        <td class="actual-cell">725,900</td>
+                        <td class="actual-cell">99,700</td>
+                        <td class="actual-cell">51,900</td>
+                        <td class="actual-cell">44,600</td>
+                        <td class="actual-cell">145,700</td>
+                        <td class="actual-cell">251,900</td>
+                        <td class="current-fcst-cell">107,000</td>
+                        <td class="current-act-cell">118,800</td>
+                        <td class="current-var-cell unfavorable">+11,800</td>
+                        <td class="forecast-cell">78,000</td>
+                        <td class="projection-cell">2,914,500</td>
+                        <td class="budget-cell">2,910,000</td>
+                        <td class="variance-cell unfavorable">+4,500</td>
+                    </tr>
+
+                    <!-- NON-OUTAGE GROUP -->
+                    <tr class="group-header">
+                        <td class="sticky-col col-dept" colspan="17">NON-OUTAGE</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">MAINT</a></td>
+                        <td class="actual-cell">125,400</td>
+                        <td class="actual-cell">118,200</td>
+                        <td class="actual-cell">132,500</td>
+                        <td class="actual-cell">145,800</td>
+                        <td class="actual-cell">138,200</td>
+                        <td class="actual-cell">142,100</td>
+                        <td class="actual-cell">128,500</td>
+                        <td class="actual-cell">135,200</td>
+                        <td class="actual-cell">148,600</td>
+                        <td class="actual-cell">155,300</td>
+                        <td class="current-fcst-cell">140,000</td>
+                        <td class="current-act-cell">138,400</td>
+                        <td class="current-var-cell favorable">-1,600</td>
+                        <td class="forecast-cell">145,000</td>
+                        <td class="projection-cell">1,653,200</td>
+                        <td class="budget-cell">1,680,000</td>
+                        <td class="variance-cell favorable">-26,800</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">OPER</a></td>
+                        <td class="actual-cell">215,600</td>
+                        <td class="actual-cell">198,400</td>
+                        <td class="actual-cell">225,100</td>
+                        <td class="actual-cell">232,500</td>
+                        <td class="actual-cell">218,300</td>
+                        <td class="actual-cell">228,400</td>
+                        <td class="actual-cell">212,800</td>
+                        <td class="actual-cell">235,200</td>
+                        <td class="actual-cell">242,100</td>
+                        <td class="actual-cell">255,800</td>
+                        <td class="current-fcst-cell">240,000</td>
+                        <td class="current-act-cell">248,200</td>
+                        <td class="current-var-cell unfavorable">+8,200</td>
+                        <td class="forecast-cell">245,000</td>
+                        <td class="projection-cell">2,757,400</td>
+                        <td class="budget-cell">2,760,000</td>
+                        <td class="variance-cell favorable">-2,600</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">ENV</a></td>
+                        <td class="actual-cell">42,100</td>
+                        <td class="actual-cell">38,500</td>
+                        <td class="actual-cell">45,200</td>
+                        <td class="actual-cell">48,300</td>
+                        <td class="actual-cell">44,100</td>
+                        <td class="actual-cell">46,800</td>
+                        <td class="actual-cell">41,200</td>
+                        <td class="actual-cell">47,500</td>
+                        <td class="actual-cell">52,100</td>
+                        <td class="actual-cell">55,400</td>
+                        <td class="current-fcst-cell">48,000</td>
+                        <td class="current-act-cell">46,200</td>
+                        <td class="current-var-cell favorable">-1,800</td>
+                        <td class="forecast-cell">50,000</td>
+                        <td class="projection-cell">557,400</td>
+                        <td class="budget-cell">570,000</td>
+                        <td class="variance-cell favorable">-12,600</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">CHEM</a></td>
+                        <td class="actual-cell">18,200</td>
+                        <td class="actual-cell">16,500</td>
+                        <td class="actual-cell">19,800</td>
+                        <td class="actual-cell">21,400</td>
+                        <td class="actual-cell">19,200</td>
+                        <td class="actual-cell">20,100</td>
+                        <td class="actual-cell">17,800</td>
+                        <td class="actual-cell">22,500</td>
+                        <td class="actual-cell">24,100</td>
+                        <td class="actual-cell">26,300</td>
+                        <td class="current-fcst-cell">22,000</td>
+                        <td class="current-act-cell">21,400</td>
+                        <td class="current-var-cell favorable">-600</td>
+                        <td class="forecast-cell">23,000</td>
+                        <td class="projection-cell">250,300</td>
+                        <td class="budget-cell">264,000</td>
+                        <td class="variance-cell favorable">-13,700</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">TECH</a></td>
+                        <td class="actual-cell">32,400</td>
+                        <td class="actual-cell">28,100</td>
+                        <td class="actual-cell">35,200</td>
+                        <td class="actual-cell">38,500</td>
+                        <td class="actual-cell">34,200</td>
+                        <td class="actual-cell">36,100</td>
+                        <td class="actual-cell">31,500</td>
+                        <td class="actual-cell">39,200</td>
+                        <td class="actual-cell">42,100</td>
+                        <td class="actual-cell">45,800</td>
+                        <td class="current-fcst-cell">38,000</td>
+                        <td class="current-act-cell">37,200</td>
+                        <td class="current-var-cell favorable">-800</td>
+                        <td class="forecast-cell">40,000</td>
+                        <td class="projection-cell">440,300</td>
+                        <td class="budget-cell">456,000</td>
+                        <td class="variance-cell favorable">-15,700</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">SAFETY</a></td>
+                        <td class="actual-cell">8,500</td>
+                        <td class="actual-cell">7,200</td>
+                        <td class="actual-cell">9,100</td>
+                        <td class="actual-cell">10,200</td>
+                        <td class="actual-cell">8,800</td>
+                        <td class="actual-cell">9,500</td>
+                        <td class="actual-cell">8,100</td>
+                        <td class="actual-cell">10,800</td>
+                        <td class="actual-cell">11,500</td>
+                        <td class="actual-cell">12,400</td>
+                        <td class="current-fcst-cell">10,000</td>
+                        <td class="current-act-cell">9,800</td>
+                        <td class="current-var-cell favorable">-200</td>
+                        <td class="forecast-cell">10,500</td>
+                        <td class="projection-cell">116,400</td>
+                        <td class="budget-cell">120,000</td>
+                        <td class="variance-cell favorable">-3,600</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-dept">Non-Outage Subtotal</td>
+                        <td class="actual-cell">442,200</td>
+                        <td class="actual-cell">406,900</td>
+                        <td class="actual-cell">466,900</td>
+                        <td class="actual-cell">496,700</td>
+                        <td class="actual-cell">462,800</td>
+                        <td class="actual-cell">483,000</td>
+                        <td class="actual-cell">439,900</td>
+                        <td class="actual-cell">490,400</td>
+                        <td class="actual-cell">520,500</td>
+                        <td class="actual-cell">551,000</td>
+                        <td class="current-fcst-cell">498,000</td>
+                        <td class="current-act-cell">501,200</td>
+                        <td class="current-var-cell unfavorable">+3,200</td>
+                        <td class="forecast-cell">513,500</td>
+                        <td class="projection-cell">5,775,000</td>
+                        <td class="budget-cell">5,850,000</td>
+                        <td class="variance-cell favorable">-75,000</td>
+                    </tr>
+
+                    <!-- LABOR GROUP -->
+                    <tr class="group-header">
+                        <td class="sticky-col col-dept" colspan="17">LABOR</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">Plant Labor</a></td>
+                        <td class="actual-cell">385,000</td>
+                        <td class="actual-cell">392,000</td>
+                        <td class="actual-cell">398,000</td>
+                        <td class="actual-cell">405,000</td>
+                        <td class="actual-cell">410,000</td>
+                        <td class="actual-cell">415,000</td>
+                        <td class="actual-cell">420,000</td>
+                        <td class="actual-cell">425,000</td>
+                        <td class="actual-cell">430,000</td>
+                        <td class="actual-cell">435,000</td>
+                        <td class="current-fcst-cell">440,000</td>
+                        <td class="current-act-cell">442,500</td>
+                        <td class="current-var-cell unfavorable">+2,500</td>
+                        <td class="forecast-cell">445,000</td>
+                        <td class="projection-cell">5,000,000</td>
+                        <td class="budget-cell">4,950,000</td>
+                        <td class="variance-cell unfavorable">+50,000</td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-dept"><a href="department_input.html">Benefits</a></td>
+                        <td class="actual-cell">115,500</td>
+                        <td class="actual-cell">117,600</td>
+                        <td class="actual-cell">119,400</td>
+                        <td class="actual-cell">121,500</td>
+                        <td class="actual-cell">123,000</td>
+                        <td class="actual-cell">124,500</td>
+                        <td class="actual-cell">126,000</td>
+                        <td class="actual-cell">127,500</td>
+                        <td class="actual-cell">129,000</td>
+                        <td class="actual-cell">130,500</td>
+                        <td class="current-fcst-cell">132,000</td>
+                        <td class="current-act-cell">132,750</td>
+                        <td class="current-var-cell unfavorable">+750</td>
+                        <td class="forecast-cell">133,500</td>
+                        <td class="projection-cell">1,500,000</td>
+                        <td class="budget-cell">1,485,000</td>
+                        <td class="variance-cell unfavorable">+15,000</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td class="sticky-col col-dept">Labor Subtotal</td>
+                        <td class="actual-cell">500,500</td>
+                        <td class="actual-cell">509,600</td>
+                        <td class="actual-cell">517,400</td>
+                        <td class="actual-cell">526,500</td>
+                        <td class="actual-cell">533,000</td>
+                        <td class="actual-cell">539,500</td>
+                        <td class="actual-cell">546,000</td>
+                        <td class="actual-cell">552,500</td>
+                        <td class="actual-cell">559,000</td>
+                        <td class="actual-cell">565,500</td>
+                        <td class="current-fcst-cell">572,000</td>
+                        <td class="current-act-cell">575,250</td>
+                        <td class="current-var-cell unfavorable">+3,250</td>
+                        <td class="forecast-cell">578,500</td>
+                        <td class="projection-cell">6,500,000</td>
+                        <td class="budget-cell">6,435,000</td>
+                        <td class="variance-cell unfavorable">+65,000</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="totals-row">
+                        <td class="sticky-col col-dept">PLANT TOTAL</td>
+                        <td class="actual-cell">1,008,500</td>
+                        <td class="actual-cell">963,300</td>
+                        <td class="actual-cell">1,162,400</td>
+                        <td class="actual-cell">2,108,500</td>
+                        <td class="actual-cell">1,721,700</td>
+                        <td class="actual-cell">1,122,200</td>
+                        <td class="actual-cell">1,037,800</td>
+                        <td class="actual-cell">1,087,500</td>
+                        <td class="actual-cell">1,225,200</td>
+                        <td class="actual-cell">1,368,400</td>
+                        <td class="current-fcst-cell">1,177,000</td>
+                        <td class="current-act-cell">1,195,250</td>
+                        <td class="current-var-cell unfavorable">+18,250</td>
+                        <td class="forecast-cell">1,170,000</td>
+                        <td class="projection-cell">15,189,500</td>
+                        <td class="budget-cell">15,195,000</td>
+                        <td class="variance-cell favorable">-5,500</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">12 departments &bull; 3 groups &bull; As of Nov 2025</span>
+            </div>
+            <div class="footer-right">
+                <span class="last-updated">Last updated: Dec 23, 2025 2:45 PM</span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+

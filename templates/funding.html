@@ -1,0 +1,408 @@
+{% extends "base.html" %}
+
+{% block title %}Funding Changes | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Funding Changes</span></h1>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-outline" onclick="showAmendmentModal()">+ New Amendment</button>
+        <button class="btn btn-outline" onclick="showReallocationModal()">+ New Reallocation</button>
+        <button class="btn btn-secondary" onclick="exportChanges()">Export</button>
+    </div>
+</header>
+
+<!-- Funding Summary -->
+<div class="funding-summary">
+    <div class="summary-item">
+        <span class="label">Original Budget</span>
+        <span class="value">${{ "{:,.0f}".format(total_budget) }}</span>
+    </div>
+    <div class="summary-item amendment-total">
+        <span class="label">Amendments</span>
+        <span class="value">${{ "{:+,.0f}".format(amendment_total) }}</span>
+    </div>
+    <div class="summary-item reallocation-total">
+        <span class="label">Reallocations</span>
+        <span class="value">${{ "{:,.0f}".format(reallocation_total) }}</span>
+    </div>
+    <div class="summary-item highlight">
+        <span class="label">Current Budget</span>
+        <span class="value">${{ "{:,.0f}".format(total_budget + amendment_total) }}</span>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+    <div class="filter-left">
+        <input type="text" class="search-input" placeholder="Search changes..." id="searchInput">
+        <select class="filter-select" id="typeFilter">
+            <option value="">All Types</option>
+            <option value="amendment">Amendments</option>
+            <option value="reallocation">Reallocations</option>
+        </select>
+        <select class="filter-select" id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+        </select>
+    </div>
+</div>
+
+<!-- Changes Grid -->
+<div class="grid-container changes-grid">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="date-col">Date</th>
+                <th class="type-col">Type</th>
+                <th class="dept-col">Department</th>
+                <th class="account-col">Account</th>
+                <th class="amount-col align-right">Amount</th>
+                <th class="reason-col">Reason</th>
+                <th class="approved-col">Approved By</th>
+                <th class="status-col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if funding_changes %}
+                {% for change in funding_changes %}
+                <tr class="{% if change.type == 'amendment' %}amendment-row{% else %}reallocation-row{% endif %} {% if change.status == 'pending' %}pending-row{% endif %}">
+                    <td class="date-col">{{ change.date }}</td>
+                    <td class="type-col">
+                        <span class="type-badge {{ change.type }}">{{ change.type|upper }}</span>
+                    </td>
+                    <td class="dept-col">{{ change.department }}</td>
+                    <td class="account-col">{{ change.account }}</td>
+                    <td class="amount-col {% if change.type == 'amendment' %}amendment-amount{% endif %}">
+                        {{ "{:+,.0f}".format(change.amount) }}
+                    </td>
+                    <td class="reason-col">{{ change.reason }}</td>
+                    <td class="approved-col">{{ change.approved_by or '-' }}</td>
+                    <td class="status-col">
+                        <span class="status-badge {{ change.status }}">{{ change.status|upper }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 40px; color: var(--color-gray-500);">
+                        <div style="font-size: 16px; margin-bottom: 8px;">No funding changes recorded</div>
+                        <div style="font-size: 13px;">Use the buttons above to create a new amendment or reallocation</div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Department Budget Summary -->
+<div class="dept-summary-section">
+    <h3>Budget by Department</h3>
+    <div class="grid-container" style="margin-top: 12px;">
+        <table class="data-grid">
+            <thead>
+                <tr>
+                    <th class="col-dept">Department</th>
+                    <th class="align-right">Original Budget</th>
+                    <th class="align-right">Amendments</th>
+                    <th class="align-right">Reallocations</th>
+                    <th class="align-right">Current Budget</th>
+                    <th class="align-right">Line Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dept in departments %}
+                <tr>
+                    <td class="col-dept">
+                        <a href="/budget/{{ plant_code }}?dept={{ dept.dept_code }}">{{ dept.dept_code }}</a>
+                    </td>
+                    <td class="align-right">{{ "{:,.0f}".format(dept.total_budget) }}</td>
+                    <td class="align-right amendment-amount">$0</td>
+                    <td class="align-right">$0</td>
+                    <td class="align-right" style="font-weight: 500;">{{ "{:,.0f}".format(dept.total_budget) }}</td>
+                    <td class="align-right">{{ dept.line_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="totals-row">
+                    <td class="col-dept">TOTAL</td>
+                    <td class="align-right">{{ "{:,.0f}".format(total_budget) }}</td>
+                    <td class="align-right amendment-amount">$0</td>
+                    <td class="align-right">$0</td>
+                    <td class="align-right" style="font-weight: 600;">{{ "{:,.0f}".format(total_budget) }}</td>
+                    <td class="align-right"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ department_count }} departments &bull; {{ funding_changes|length }} changes recorded</span>
+    </div>
+    <div class="footer-right">
+        <span class="last-updated">Last updated: {{ last_updated }}</span>
+    </div>
+</footer>
+
+<!-- Amendment Modal -->
+<div class="modal" id="amendmentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>New Budget Amendment</h3>
+            <button class="btn-close" onclick="hideModal('amendmentModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Department</label>
+                    <select class="form-input" id="amendDept">
+                        <option value="">Select department...</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.dept_code }}">{{ dept.dept_code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Account</label>
+                    <input type="text" class="form-input" id="amendAccount" placeholder="Enter account number...">
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" class="form-input" id="amendAmount" placeholder="Enter amount...">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea class="form-input" id="amendReason" rows="3" placeholder="Enter reason for amendment..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="hideModal('amendmentModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="submitAmendment()">Submit Amendment</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reallocation Modal -->
+<div class="modal" id="reallocationModal">
+    <div class="modal-content modal-lg">
+        <div class="modal-header">
+            <h3>New Budget Reallocation</h3>
+            <button class="btn-close" onclick="hideModal('reallocationModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>From Department</label>
+                    <select class="form-input" id="reallocFromDept">
+                        <option value="">Select department...</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.dept_code }}">{{ dept.dept_code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>From Account</label>
+                    <input type="text" class="form-input" id="reallocFromAccount" placeholder="Enter account...">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>To Department</label>
+                    <select class="form-input" id="reallocToDept">
+                        <option value="">Select department...</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.dept_code }}">{{ dept.dept_code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>To Account</label>
+                    <input type="text" class="form-input" id="reallocToAccount" placeholder="Enter account...">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" class="form-input" id="reallocAmount" placeholder="Enter amount to reallocate...">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea class="form-input" id="reallocReason" rows="3" placeholder="Enter reason for reallocation..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="hideModal('reallocationModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="submitReallocation()">Submit Reallocation</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showAmendmentModal() {
+    document.getElementById('amendmentModal').style.display = 'flex';
+}
+
+function showReallocationModal() {
+    document.getElementById('reallocationModal').style.display = 'flex';
+}
+
+function hideModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+async function submitAmendment() {
+    const department = document.getElementById('amendDept').value;
+    const account = document.getElementById('amendAccount').value;
+    const amount = parseFloat(document.getElementById('amendAmount').value);
+    const reason = document.getElementById('amendReason').value;
+    
+    if (!department || !amount || !reason) {
+        alert('Please fill in all required fields (Department, Amount, Reason).');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/funding/amendments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: '{{ plant_code }}',
+                year: {{ year }},
+                department: department,
+                account: account || null,
+                amount: amount,
+                reason: reason
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Amendment submitted successfully!');
+            hideModal('amendmentModal');
+            location.reload();
+        } else {
+            alert('Error submitting amendment: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+async function submitReallocation() {
+    const fromDept = document.getElementById('reallocFromDept').value;
+    const fromAccount = document.getElementById('reallocFromAccount').value;
+    const toDept = document.getElementById('reallocToDept').value;
+    const toAccount = document.getElementById('reallocToAccount').value;
+    const amount = parseFloat(document.getElementById('reallocAmount').value);
+    const reason = document.getElementById('reallocReason').value;
+    
+    if (!fromDept || !toDept || !amount || !reason) {
+        alert('Please fill in all required fields (From/To Departments, Amount, Reason).');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/funding/reallocations', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: '{{ plant_code }}',
+                year: {{ year }},
+                from_department: fromDept,
+                from_account: fromAccount || null,
+                to_department: toDept,
+                to_account: toAccount || null,
+                amount: amount,
+                reason: reason
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Reallocation submitted successfully!');
+            hideModal('reallocationModal');
+            location.reload();
+        } else {
+            alert('Error submitting reallocation: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+function exportChanges() {
+    window.location.href = '/api/export/funding/{{ plant_code }}/{{ year }}';
+}
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const rows = document.querySelectorAll('.changes-grid tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+    });
+});
+
+// Type filter
+document.getElementById('typeFilter').addEventListener('change', function(e) {
+    filterChanges();
+});
+
+// Status filter
+document.getElementById('statusFilter').addEventListener('change', function(e) {
+    filterChanges();
+});
+
+function filterChanges() {
+    const typeFilter = document.getElementById('typeFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+    const rows = document.querySelectorAll('.changes-grid tbody tr');
+    
+    rows.forEach(row => {
+        const isAmendment = row.classList.contains('amendment-row');
+        const isPending = row.classList.contains('pending-row');
+        
+        let showType = true;
+        let showStatus = true;
+        
+        if (typeFilter === 'amendment') showType = isAmendment;
+        if (typeFilter === 'reallocation') showType = !isAmendment;
+        
+        // Note: Would need data attributes for full status filtering
+        
+        row.style.display = (showType && showStatus) ? '' : 'none';
+    });
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}
+

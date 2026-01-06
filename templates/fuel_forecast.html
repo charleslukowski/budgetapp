@@ -1,0 +1,478 @@
+{% extends "base.html" %}
+
+{% block title %}Fuel Forecast - {{ year }}{% endblock %}
+
+{% block content %}
+{% include "components/fuel_tabs.html" %}
+
+<div class="page-header">
+    <div class="header-left">
+        <h1>Fuel Forecast <span class="subtitle">{{ year }} - {{ year + 4 }}</span></h1>
+    </div>
+    <div class="header-right">
+        <select id="scenario-select" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #d1d9e6; margin-right: 0.5rem;">
+            <option value="">New Scenario</option>
+            {% for scenario in scenarios %}
+            <option value="{{ scenario.id }}">{{ scenario.name }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-primary" onclick="calculateForecast()">Calculate</button>
+        <button class="btn btn-success" onclick="saveForecast()" style="margin-left: 0.5rem;">Save</button>
+    </div>
+</div>
+
+<!-- Summary Bar -->
+<div class="budget-summary">
+    <div class="summary-item highlight">
+        <span class="label">Year 1 Fuel Cost</span>
+        <span class="value" id="summary_y1_cost">-</span>
+    </div>
+    <div class="summary-item highlight">
+        <span class="label">Year 1 $/MWh</span>
+        <span class="value" id="summary_y1_rate">-</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Year 1 MWh</span>
+        <span class="value" id="summary_y1_mwh">-</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">5-Year Total</span>
+        <span class="value" id="summary_5yr_cost">-</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Avg $/MWh (5yr)</span>
+        <span class="value" id="summary_5yr_rate">-</span>
+    </div>
+</div>
+
+<form id="forecastForm">
+<!-- Year 1: Monthly Use Factors -->
+<h2 class="section-title">Year 1 Use Factors ({{ year }}) - Monthly</h2>
+<div class="grid-container" style="overflow-x: auto;">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Plant</th>
+                {% for m in range(1, 13) %}
+                <th class="align-right">{{ month_names[m][:3] }}</th>
+                {% endfor %}
+                <th class="align-right total-col">Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kyger Creek</td>
+                {% for m in range(1, 13) %}
+                <td class="align-right">
+                    <input type="number" name="uf_kc_{{ m }}" value="{{ use_factors_kc[m]|default(85) }}" 
+                           min="0" max="100" step="1" style="width: 50px; text-align: center; padding: 0.25rem;">
+                </td>
+                {% endfor %}
+                <td class="align-right total-col" id="uf_kc_avg">85%</td>
+            </tr>
+            <tr>
+                <td>Clifty Creek</td>
+                {% for m in range(1, 13) %}
+                <td class="align-right">
+                    <input type="number" name="uf_cc_{{ m }}" value="{{ use_factors_cc[m]|default(85) }}" 
+                           min="0" max="100" step="1" style="width: 50px; text-align: center; padding: 0.25rem;">
+                </td>
+                {% endfor %}
+                <td class="align-right total-col" id="uf_cc_avg">85%</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Year 1: Monthly Heat Rates -->
+<h2 class="section-title">Year 1 Heat Rates - Monthly</h2>
+<div class="grid-container" style="overflow-x: auto;">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Plant</th>
+                {% for m in range(1, 13) %}
+                <th class="align-right">{{ month_names[m][:3] }}</th>
+                {% endfor %}
+                <th class="align-right total-col">Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kyger Creek (BTU/kWh)</td>
+                {% for m in range(1, 13) %}
+                <td class="align-right">
+                    <input type="number" name="hr_kc_{{ m }}" value="{{ heat_rates_kc[m]|default(9850) }}" 
+                           step="10" style="width: 60px; text-align: center; padding: 0.25rem;">
+                </td>
+                {% endfor %}
+                <td class="align-right total-col" id="hr_kc_avg">9,850</td>
+            </tr>
+            <tr>
+                <td>Clifty Creek (BTU/kWh)</td>
+                {% for m in range(1, 13) %}
+                <td class="align-right">
+                    <input type="number" name="hr_cc_{{ m }}" value="{{ heat_rates_cc[m]|default(9900) }}" 
+                           step="10" style="width: 60px; text-align: center; padding: 0.25rem;">
+                </td>
+                {% endfor %}
+                <td class="align-right total-col" id="hr_cc_avg">9,900</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Year 1: Coal & Pricing -->
+<h2 class="section-title">Year 1 Coal Supply & Pricing</h2>
+<div class="system-comparison" style="margin-bottom: 1.5rem;">
+    <div class="plant-summary">
+        <h3>Inventory</h3>
+        <div class="metric-row">
+            <span class="metric-label">KC Beginning (tons)</span>
+            <input type="number" name="inventory_kc" value="{{ inventory_kc|default(1012816) }}" step="1000" 
+                   style="width: 100px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">CC Beginning (tons)</span>
+            <input type="number" name="inventory_cc" value="{{ inventory_cc|default(1400579) }}" step="1000" 
+                   style="width: 100px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Target Days Supply</span>
+            <input type="number" name="inventory_target_days" value="{{ inventory_target_days|default(50) }}" step="5" 
+                   style="width: 60px; text-align: right; padding: 0.25rem;">
+        </div>
+    </div>
+    
+    <div class="plant-summary">
+        <h3>Coal Prices ($/ton)</h3>
+        <div class="metric-row">
+            <span class="metric-label">Contract Avg</span>
+            <input type="number" name="coal_price_contract" value="{{ coal_price_contract|default(65.00) }}" step="0.50" 
+                   style="width: 80px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Spot/Uncommitted</span>
+            <input type="number" name="coal_price_spot" value="{{ coal_price_spot|default(72.00) }}" step="0.50" 
+                   style="width: 80px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Barge Transport</span>
+            <input type="number" name="barge_price" value="{{ barge_price|default(6.00) }}" step="0.25" 
+                   style="width: 80px; text-align: right; padding: 0.25rem;">
+        </div>
+    </div>
+    
+    <div class="plant-summary">
+        <h3>Deductions (%)</h3>
+        <div class="metric-row">
+            <span class="metric-label">FGD Auxiliary</span>
+            <input type="number" name="fgd_aux_pct" value="{{ fgd_aux_pct|default(2.5) }}" step="0.1" 
+                   style="width: 60px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">GSU Losses</span>
+            <input type="number" name="gsu_loss_pct" value="{{ gsu_loss_pct|default(0.5) }}" step="0.1" 
+                   style="width: 60px; text-align: right; padding: 0.25rem;">
+        </div>
+        <div class="metric-row">
+            <span class="metric-label">Reserve MW</span>
+            <input type="number" name="reserve_mw" value="{{ reserve_mw|default(5) }}" step="1" 
+                   style="width: 60px; text-align: right; padding: 0.25rem;">
+        </div>
+    </div>
+</div>
+
+<!-- Multi-Year Inputs (Annual) -->
+<h2 class="section-title">Multi-Year Inputs ({{ year }} - {{ year + 4 }})</h2>
+<div class="grid-container" style="overflow-x: auto;">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Input</th>
+                <th class="align-right">{{ year }}</th>
+                <th class="align-right">{{ year + 1 }}</th>
+                <th class="align-right">{{ year + 2 }}</th>
+                <th class="align-right">{{ year + 3 }}</th>
+                <th class="align-right">{{ year + 4 }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>KC Use Factor (%)</td>
+                <td class="align-right total-col" id="y1_uf_kc">85</td>
+                <td class="align-right"><input type="number" name="uf_kc_y2" value="{{ uf_kc_y2|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_kc_y3" value="{{ uf_kc_y3|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_kc_y4" value="{{ uf_kc_y4|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_kc_y5" value="{{ uf_kc_y5|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>CC Use Factor (%)</td>
+                <td class="align-right total-col" id="y1_uf_cc">85</td>
+                <td class="align-right"><input type="number" name="uf_cc_y2" value="{{ uf_cc_y2|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_cc_y3" value="{{ uf_cc_y3|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_cc_y4" value="{{ uf_cc_y4|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="uf_cc_y5" value="{{ uf_cc_y5|default(85) }}" min="0" max="100" style="width: 50px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>KC Heat Rate (BTU/kWh)</td>
+                <td class="align-right total-col" id="y1_hr_kc">9,850</td>
+                <td class="align-right"><input type="number" name="hr_kc_y2" value="{{ hr_kc_y2|default(9850) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_kc_y3" value="{{ hr_kc_y3|default(9850) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_kc_y4" value="{{ hr_kc_y4|default(9850) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_kc_y5" value="{{ hr_kc_y5|default(9850) }}" step="10" style="width: 60px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>CC Heat Rate (BTU/kWh)</td>
+                <td class="align-right total-col" id="y1_hr_cc">9,900</td>
+                <td class="align-right"><input type="number" name="hr_cc_y2" value="{{ hr_cc_y2|default(9900) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_cc_y3" value="{{ hr_cc_y3|default(9900) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_cc_y4" value="{{ hr_cc_y4|default(9900) }}" step="10" style="width: 60px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="hr_cc_y5" value="{{ hr_cc_y5|default(9900) }}" step="10" style="width: 60px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>Coal Price Escalation (%/yr)</td>
+                <td class="align-right total-col">-</td>
+                <td class="align-right"><input type="number" name="esc_coal_y2" value="{{ esc_coal_y2|default(2.5) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_coal_y3" value="{{ esc_coal_y3|default(2.5) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_coal_y4" value="{{ esc_coal_y4|default(2.5) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_coal_y5" value="{{ esc_coal_y5|default(2.5) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>Transport Escalation (%/yr)</td>
+                <td class="align-right total-col">-</td>
+                <td class="align-right"><input type="number" name="esc_transport_y2" value="{{ esc_transport_y2|default(3.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_transport_y3" value="{{ esc_transport_y3|default(3.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_transport_y4" value="{{ esc_transport_y4|default(3.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_transport_y5" value="{{ esc_transport_y5|default(3.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+            </tr>
+            <tr>
+                <td>Reagent Escalation (%/yr)</td>
+                <td class="align-right total-col">-</td>
+                <td class="align-right"><input type="number" name="esc_reagent_y2" value="{{ esc_reagent_y2|default(2.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_reagent_y3" value="{{ esc_reagent_y3|default(2.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_reagent_y4" value="{{ esc_reagent_y4|default(2.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+                <td class="align-right"><input type="number" name="esc_reagent_y5" value="{{ esc_reagent_y5|default(2.0) }}" step="0.5" style="width: 50px; text-align: center;"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Results Preview -->
+<h2 class="section-title">Forecast Results</h2>
+<div class="grid-container" style="overflow-x: auto;">
+    <table class="data-grid" id="resultsTable">
+        <thead>
+            <tr>
+                <th style="text-align: left;">Metric</th>
+                <th class="align-right">{{ year }}</th>
+                <th class="align-right">{{ year + 1 }}</th>
+                <th class="align-right">{{ year + 2 }}</th>
+                <th class="align-right">{{ year + 3 }}</th>
+                <th class="align-right">{{ year + 4 }}</th>
+                <th class="align-right total-col">5-Year Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Net Generation (GWh)</td>
+                <td class="align-right" id="res_mwh_y1">-</td>
+                <td class="align-right" id="res_mwh_y2">-</td>
+                <td class="align-right" id="res_mwh_y3">-</td>
+                <td class="align-right" id="res_mwh_y4">-</td>
+                <td class="align-right" id="res_mwh_y5">-</td>
+                <td class="align-right total-col" id="res_mwh_total">-</td>
+            </tr>
+            <tr>
+                <td>Coal Consumed (M tons)</td>
+                <td class="align-right" id="res_coal_y1">-</td>
+                <td class="align-right" id="res_coal_y2">-</td>
+                <td class="align-right" id="res_coal_y3">-</td>
+                <td class="align-right" id="res_coal_y4">-</td>
+                <td class="align-right" id="res_coal_y5">-</td>
+                <td class="align-right total-col" id="res_coal_total">-</td>
+            </tr>
+            <tr>
+                <td>Coal Cost ($M)</td>
+                <td class="align-right" id="res_coalcost_y1">-</td>
+                <td class="align-right" id="res_coalcost_y2">-</td>
+                <td class="align-right" id="res_coalcost_y3">-</td>
+                <td class="align-right" id="res_coalcost_y4">-</td>
+                <td class="align-right" id="res_coalcost_y5">-</td>
+                <td class="align-right total-col" id="res_coalcost_total">-</td>
+            </tr>
+            <tr>
+                <td>Consumables ($M)</td>
+                <td class="align-right" id="res_consumables_y1">-</td>
+                <td class="align-right" id="res_consumables_y2">-</td>
+                <td class="align-right" id="res_consumables_y3">-</td>
+                <td class="align-right" id="res_consumables_y4">-</td>
+                <td class="align-right" id="res_consumables_y5">-</td>
+                <td class="align-right total-col" id="res_consumables_total">-</td>
+            </tr>
+            <tr>
+                <td>Byproduct Net ($M)</td>
+                <td class="align-right" id="res_byproduct_y1">-</td>
+                <td class="align-right" id="res_byproduct_y2">-</td>
+                <td class="align-right" id="res_byproduct_y3">-</td>
+                <td class="align-right" id="res_byproduct_y4">-</td>
+                <td class="align-right" id="res_byproduct_y5">-</td>
+                <td class="align-right total-col" id="res_byproduct_total">-</td>
+            </tr>
+            <tr class="totals-row">
+                <td><strong>Total Fuel Cost ($M)</strong></td>
+                <td class="align-right" id="res_total_y1" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_total_y2" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_total_y3" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_total_y4" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_total_y5" style="font-weight: 600;">-</td>
+                <td class="align-right total-col" id="res_total_total" style="font-weight: 600;">-</td>
+            </tr>
+            <tr>
+                <td><strong>$/MWh</strong></td>
+                <td class="align-right" id="res_rate_y1" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_rate_y2" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_rate_y3" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_rate_y4" style="font-weight: 600;">-</td>
+                <td class="align-right" id="res_rate_y5" style="font-weight: 600;">-</td>
+                <td class="align-right total-col" id="res_rate_total" style="font-weight: 600;">-</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+
+<script>
+// Update averages when inputs change
+document.querySelectorAll('input[name^="uf_kc_"]').forEach(input => {
+    if (!input.name.includes('_y')) {
+        input.addEventListener('change', updateUfAverage);
+    }
+});
+document.querySelectorAll('input[name^="uf_cc_"]').forEach(input => {
+    if (!input.name.includes('_y')) {
+        input.addEventListener('change', updateUfAverage);
+    }
+});
+
+function updateUfAverage() {
+    // KC average
+    let kcSum = 0, kcCount = 0;
+    for (let m = 1; m <= 12; m++) {
+        const val = parseFloat(document.querySelector(`[name="uf_kc_${m}"]`).value) || 0;
+        kcSum += val;
+        kcCount++;
+    }
+    document.getElementById('uf_kc_avg').textContent = (kcSum / kcCount).toFixed(0) + '%';
+    document.getElementById('y1_uf_kc').textContent = (kcSum / kcCount).toFixed(0);
+    
+    // CC average
+    let ccSum = 0, ccCount = 0;
+    for (let m = 1; m <= 12; m++) {
+        const val = parseFloat(document.querySelector(`[name="uf_cc_${m}"]`).value) || 0;
+        ccSum += val;
+        ccCount++;
+    }
+    document.getElementById('uf_cc_avg').textContent = (ccSum / ccCount).toFixed(0) + '%';
+    document.getElementById('y1_uf_cc').textContent = (ccSum / ccCount).toFixed(0);
+}
+
+// Gather form data
+function gatherFormData() {
+    const form = document.getElementById('forecastForm');
+    const formData = new FormData(form);
+    const data = { year: {{ year }} };
+    for (const [key, value] of formData.entries()) {
+        data[key] = isNaN(parseFloat(value)) ? value : parseFloat(value);
+    }
+    return data;
+}
+
+// Calculate forecast
+async function calculateForecast() {
+    try {
+        const data = gatherFormData();
+        const response = await fetch('/api/fuel-forecast/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) throw new Error('Calculation failed');
+        
+        const result = await response.json();
+        displayResults(result);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error calculating forecast: ' + error.message);
+    }
+}
+
+// Display results
+function displayResults(result) {
+    // Update summary bar
+    if (result.years && result.years.length > 0) {
+        const y1 = result.years[0];
+        document.getElementById('summary_y1_cost').textContent = '$' + (y1.total_fuel_cost / 1000000).toFixed(1) + 'M';
+        document.getElementById('summary_y1_rate').textContent = '$' + y1.cost_per_mwh.toFixed(2);
+        document.getElementById('summary_y1_mwh').textContent = (y1.total_mwh / 1000).toFixed(0) + ' GWh';
+        
+        // 5-year totals
+        let total_cost = 0, total_mwh = 0;
+        result.years.forEach(y => {
+            total_cost += y.total_fuel_cost;
+            total_mwh += y.total_mwh;
+        });
+        document.getElementById('summary_5yr_cost').textContent = '$' + (total_cost / 1000000).toFixed(0) + 'M';
+        document.getElementById('summary_5yr_rate').textContent = '$' + (total_cost / total_mwh).toFixed(2);
+        
+        // Update results table
+        result.years.forEach((yr, i) => {
+            const suffix = `_y${i + 1}`;
+            document.getElementById('res_mwh' + suffix).textContent = (yr.total_mwh / 1000).toFixed(0);
+            document.getElementById('res_coal' + suffix).textContent = (yr.total_coal_tons / 1000000).toFixed(2);
+            document.getElementById('res_coalcost' + suffix).textContent = '$' + (yr.coal_cost / 1000000).toFixed(1);
+            document.getElementById('res_consumables' + suffix).textContent = '$' + (yr.consumables_cost / 1000000).toFixed(1);
+            document.getElementById('res_byproduct' + suffix).textContent = (yr.byproduct_net < 0 ? '+' : '') + '$' + Math.abs(yr.byproduct_net / 1000000).toFixed(1);
+            document.getElementById('res_total' + suffix).textContent = '$' + (yr.total_fuel_cost / 1000000).toFixed(1);
+            document.getElementById('res_rate' + suffix).textContent = '$' + yr.cost_per_mwh.toFixed(2);
+        });
+        
+        // Totals column
+        document.getElementById('res_mwh_total').textContent = (total_mwh / 1000).toFixed(0);
+        document.getElementById('res_total_total').textContent = '$' + (total_cost / 1000000).toFixed(0);
+        document.getElementById('res_rate_total').textContent = '$' + (total_cost / total_mwh).toFixed(2);
+    }
+}
+
+// Save forecast
+async function saveForecast() {
+    const scenarioName = prompt('Enter scenario name:');
+    if (!scenarioName) return;
+    
+    try {
+        const data = gatherFormData();
+        data.scenario_name = scenarioName;
+        
+        const response = await fetch('/api/fuel-forecast/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) throw new Error('Save failed');
+        
+        alert('Scenario "' + scenarioName + '" saved!');
+        location.reload();
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error saving: ' + error.message);
+    }
+}
+
+// Initialize averages
+updateUfAverage();
+</script>
+{% endblock %}

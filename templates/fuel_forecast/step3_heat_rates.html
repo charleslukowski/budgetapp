@@ -1,0 +1,642 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<style>
+.heat-rate-section {
+    margin-bottom: 32px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.section-badge {
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.heat-rate-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.heat-rate-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.heat-rate-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+.heat-rate-inputs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.input-group .input-with-unit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input-group .unit {
+    font-size: 12px;
+    color: #6b7280;
+    min-width: 60px;
+}
+
+.monthly-grid {
+    margin-top: 24px;
+}
+
+.monthly-grid-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.monthly-grid-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.toggle-monthly {
+    padding: 6px 12px;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-monthly:hover {
+    background: #e5e7eb;
+}
+
+.toggle-monthly.active {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+.monthly-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.monthly-table th,
+.monthly-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.monthly-table th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.monthly-table td input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.monthly-table td input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.curve-preview {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.curve-preview-title {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.curve-chart {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.curve-bar {
+    flex: 1;
+    background: linear-gradient(to top, #3b82f6, #60a5fa);
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s ease;
+}
+
+.curve-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 10px;
+    color: #9ca3af;
+}
+
+.effective-rate-display {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.effective-rate-label {
+    font-size: 14px;
+    color: #065f46;
+}
+
+.effective-rate-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #065f46;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.unit-override-section {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.unit-override-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.unit-override-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.unit-override-toggle input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Heat Rate Configuration</h2>
+        <p>Configure baseline heat rates and adjustment factors. Heat rate determines how much coal is consumed per unit of generation.</p>
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/5" id="heat-rate-form">
+        <div class="step-card-body">
+            
+            <!-- Kyger Creek Section -->
+            <div class="heat-rate-section">
+                <div class="section-header">
+                    <span class="section-title">Kyger Creek</span>
+                    <span class="section-badge">5 Units</span>
+                </div>
+                
+                <div class="heat-rate-card">
+                    <div class="heat-rate-card-header">
+                        <span class="heat-rate-card-title">Plant-Level Heat Rate</span>
+                    </div>
+                    
+                    <div class="heat-rate-inputs">
+                        <div class="input-group">
+                            <label>Baseline Heat Rate</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="kc_baseline" 
+                                       id="kc_baseline"
+                                       value="{{ kyger_heat_rate.baseline or 9850 }}"
+                                       min="8000" max="12000" step="10"
+                                       onchange="updateEffectiveRate('kc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Min Load Heat Rate</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="kc_min_load" 
+                                       id="kc_min_load"
+                                       value="{{ kyger_heat_rate.min_load or 10500 }}"
+                                       min="8000" max="14000" step="10"
+                                       onchange="updateEffectiveRate('kc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>SUF Correction</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="kc_suf_correction" 
+                                       id="kc_suf_correction"
+                                       value="{{ kyger_heat_rate.suf_correction or 0 }}"
+                                       min="-500" max="500" step="10"
+                                       onchange="updateEffectiveRate('kc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>PRB Blend Adjustment</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="kc_prb_adjustment" 
+                                       id="kc_prb_adjustment"
+                                       value="{{ kyger_heat_rate.prb_adjustment or 0 }}"
+                                       min="0" max="300" step="10"
+                                       onchange="updateEffectiveRate('kc')">
+                                <span class="unit">BTU/kWh/%PRB</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="effective-rate-display">
+                        <span class="effective-rate-label">Effective Heat Rate @ 85% Load</span>
+                        <span class="effective-rate-value" id="kc_effective_rate">9,920 BTU/kWh</span>
+                    </div>
+                    
+                    <!-- Monthly Override Section -->
+                    <div class="monthly-grid">
+                        <div class="monthly-grid-header">
+                            <span class="monthly-grid-title">Monthly Adjustments (Optional)</span>
+                            <button type="button" class="toggle-monthly" onclick="toggleMonthlyGrid('kc')">
+                                Show Monthly Grid
+                            </button>
+                        </div>
+                        
+                        <div id="kc_monthly_grid" class="hidden">
+                            <table class="monthly-table">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        {% for m in range(1, 13) %}
+                                        <th>{{ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1] }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Adjustment</td>
+                                        {% for m in range(1, 13) %}
+                                        <td>
+                                            <input type="number" 
+                                                   name="kc_monthly_adj_{{ m }}" 
+                                                   value="0"
+                                                   min="-500" max="500" step="10">
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p style="font-size: 11px; color: #6b7280; margin-top: 8px;">
+                                Add/subtract BTU/kWh from baseline for each month. Use for seasonal adjustments or outage impacts.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clifty Creek Section -->
+            <div class="heat-rate-section">
+                <div class="section-header">
+                    <span class="section-title">Clifty Creek</span>
+                    <span class="section-badge">6 Units</span>
+                </div>
+                
+                <div class="heat-rate-card">
+                    <div class="heat-rate-card-header">
+                        <span class="heat-rate-card-title">Plant-Level Heat Rate</span>
+                    </div>
+                    
+                    <div class="heat-rate-inputs">
+                        <div class="input-group">
+                            <label>Baseline Heat Rate</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="cc_baseline" 
+                                       id="cc_baseline"
+                                       value="{{ clifty_heat_rate.baseline or 9850 }}"
+                                       min="8000" max="12000" step="10"
+                                       onchange="updateEffectiveRate('cc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>Min Load Heat Rate</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="cc_min_load" 
+                                       id="cc_min_load"
+                                       value="{{ clifty_heat_rate.min_load or 10500 }}"
+                                       min="8000" max="14000" step="10"
+                                       onchange="updateEffectiveRate('cc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>SUF Correction</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="cc_suf_correction" 
+                                       id="cc_suf_correction"
+                                       value="{{ clifty_heat_rate.suf_correction or 0 }}"
+                                       min="-500" max="500" step="10"
+                                       onchange="updateEffectiveRate('cc')">
+                                <span class="unit">BTU/kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>PRB Blend Adjustment</label>
+                            <div class="input-with-unit">
+                                <input type="number" 
+                                       name="cc_prb_adjustment" 
+                                       id="cc_prb_adjustment"
+                                       value="{{ clifty_heat_rate.prb_adjustment or 0 }}"
+                                       min="0" max="300" step="10"
+                                       onchange="updateEffectiveRate('cc')">
+                                <span class="unit">BTU/kWh/%PRB</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="effective-rate-display">
+                        <span class="effective-rate-label">Effective Heat Rate @ 85% Load</span>
+                        <span class="effective-rate-value" id="cc_effective_rate">9,920 BTU/kWh</span>
+                    </div>
+                    
+                    <!-- Unit-Level Overrides -->
+                    <div class="unit-override-section">
+                        <div class="unit-override-header">
+                            <label class="unit-override-toggle">
+                                <input type="checkbox" id="cc_unit_override" onchange="toggleUnitOverrides('cc')">
+                                <span>Enable Unit-Level Overrides</span>
+                            </label>
+                        </div>
+                        
+                        <div id="cc_unit_overrides" class="hidden">
+                            <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">
+                                Set different heat rates for specific units (e.g., Unit 6 without SCR may have different characteristics).
+                            </p>
+                            
+                            <table class="monthly-table">
+                                <thead>
+                                    <tr>
+                                        <th>Unit</th>
+                                        <th>Baseline</th>
+                                        <th>Min Load</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for u in range(1, 7) %}
+                                    <tr>
+                                        <td>Unit {{ u }} {% if u == 6 %}<span style="color: #f59e0b; font-size: 10px;">(No SCR)</span>{% endif %}</td>
+                                        <td>
+                                            <input type="number" 
+                                                   name="cc_unit{{ u }}_baseline" 
+                                                   value=""
+                                                   placeholder="Plant default"
+                                                   min="8000" max="12000" step="10">
+                                        </td>
+                                        <td>
+                                            <input type="number" 
+                                                   name="cc_unit{{ u }}_min_load" 
+                                                   value=""
+                                                   placeholder="Plant default"
+                                                   min="8000" max="14000" step="10">
+                                        </td>
+                                        <td style="text-align: left; font-size: 11px; color: #6b7280;">
+                                            {% if u == 6 %}No SCR - may have higher NOx{% else %}SCR equipped{% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Monthly Override Section -->
+                    <div class="monthly-grid">
+                        <div class="monthly-grid-header">
+                            <span class="monthly-grid-title">Monthly Adjustments (Optional)</span>
+                            <button type="button" class="toggle-monthly" onclick="toggleMonthlyGrid('cc')">
+                                Show Monthly Grid
+                            </button>
+                        </div>
+                        
+                        <div id="cc_monthly_grid" class="hidden">
+                            <table class="monthly-table">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        {% for m in range(1, 13) %}
+                                        <th>{{ ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1] }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Adjustment</td>
+                                        {% for m in range(1, 13) %}
+                                        <td>
+                                            <input type="number" 
+                                                   name="cc_monthly_adj_{{ m }}" 
+                                                   value="0"
+                                                   min="-500" max="500" step="10">
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Heat Rate Curve Explanation -->
+            <div class="curve-preview">
+                <div class="curve-preview-title">
+                    <strong>Heat Rate Curve Explanation</strong>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                    Heat rate varies with load level. At full load, units operate near baseline heat rate.
+                    At minimum load, efficiency drops and heat rate increases. The effective heat rate is
+                    interpolated based on the expected capacity factor.
+                </p>
+                <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div style="padding: 12px; background: #e0f2fe; border-radius: 6px;">
+                        <div style="font-size: 12px; color: #0369a1;">Full Load (100%)</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #0c4a6e;">~9,850 BTU/kWh</div>
+                    </div>
+                    <div style="padding: 12px; background: #fef3c7; border-radius: 6px;">
+                        <div style="font-size: 12px; color: #92400e;">Mid Load (85%)</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #78350f;">~9,920 BTU/kWh</div>
+                    </div>
+                    <div style="padding: 12px; background: #fee2e2; border-radius: 6px;">
+                        <div style="font-size: 12px; color: #991b1b;">Min Load (40%)</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #7f1d1d;">~10,500 BTU/kWh</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="step-actions">
+            <a href="/fuel-forecast/{{ session_id }}/step/4" class="btn btn-secondary">
+                ← Back to Use Factors
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Save & Continue →
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Toggle monthly grid visibility
+function toggleMonthlyGrid(plant) {
+    const grid = document.getElementById(`${plant}_monthly_grid`);
+    const btn = grid.previousElementSibling.querySelector('.toggle-monthly');
+    
+    if (grid.classList.contains('hidden')) {
+        grid.classList.remove('hidden');
+        btn.textContent = 'Hide Monthly Grid';
+        btn.classList.add('active');
+    } else {
+        grid.classList.add('hidden');
+        btn.textContent = 'Show Monthly Grid';
+        btn.classList.remove('active');
+    }
+}
+
+// Toggle unit-level overrides
+function toggleUnitOverrides(plant) {
+    const checkbox = document.getElementById(`${plant}_unit_override`);
+    const section = document.getElementById(`${plant}_unit_overrides`);
+    
+    if (checkbox.checked) {
+        section.classList.remove('hidden');
+    } else {
+        section.classList.add('hidden');
+    }
+}
+
+// Update effective heat rate display
+function updateEffectiveRate(plant) {
+    const baseline = parseFloat(document.getElementById(`${plant}_baseline`).value) || 9850;
+    const minLoad = parseFloat(document.getElementById(`${plant}_min_load`).value) || 10500;
+    const sufCorrection = parseFloat(document.getElementById(`${plant}_suf_correction`).value) || 0;
+    
+    // Interpolate for 85% load (between full and min)
+    // Assuming min load is at 40%, full load at 100%
+    const loadFactor = 0.85;
+    const minLoadLevel = 0.40;
+    const fullLoadLevel = 1.0;
+    
+    // Linear interpolation
+    const interpolationFactor = (loadFactor - minLoadLevel) / (fullLoadLevel - minLoadLevel);
+    const interpolatedRate = minLoad - (minLoad - baseline) * interpolationFactor;
+    
+    // Add SUF correction
+    const effectiveRate = interpolatedRate + sufCorrection;
+    
+    // Format with thousands separator
+    const formatted = effectiveRate.toLocaleString('en-US', {
+        maximumFractionDigits: 0
+    }) + ' BTU/kWh';
+    
+    document.getElementById(`${plant}_effective_rate`).textContent = formatted;
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateEffectiveRate('kc');
+    updateEffectiveRate('cc');
+});
+</script>
+{% endblock %}
+

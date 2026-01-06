@@ -1,0 +1,654 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<style>
+/* Enhanced collapsible section styles */
+.collapsible-section {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.collapsible-section.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.collapsible-section.expanded {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.keep-prior-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e8eef5 100%);
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.keep-prior-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #2d4a6f;
+}
+
+.keep-prior-toggle label {
+    font-weight: 500;
+    color: #1e3a5f;
+    cursor: pointer;
+}
+
+.section-summary {
+    margin-left: auto;
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+}
+
+.section-summary .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.section-summary .metric-value {
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: #1e3a5f;
+}
+
+.section-summary .metric-label {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.prior-value {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.prior-value::before {
+    content: "↩ ";
+    opacity: 0.6;
+}
+
+.form-control.changed {
+    border-color: #f59e0b;
+    background-color: #fffbeb;
+}
+
+.input-group-with-prior {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.category-total .label {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.category-total .value {
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: #1e3a5f;
+}
+
+.category-total .variance {
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.category-total .variance.positive {
+    color: #059669;
+}
+
+.category-total .variance.negative {
+    color: #dc2626;
+}
+</style>
+
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Step 4: Other Costs & Escalation</h2>
+        <p>Configure reagent costs, byproduct credits, and escalation factors.</p>
+        {% if has_prior and base_scenario_name %}
+        <div class="prior-indicator">
+            Rolling forward from: <strong>{{ base_scenario_name }}</strong>
+        </div>
+        {% endif %}
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/7">
+        <div class="step-card-body">
+            <!-- Escalation Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Escalation Factors (Annual %)
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    Applied annually to project costs into future years.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="escalation_coal_annual">Coal Price</label>
+                        <div class="input-group-with-prior">
+                            <div class="input-with-unit">
+                                <input type="number" name="escalation_coal_annual" id="escalation_coal_annual" 
+                                       class="form-control {% if has_prior and prior.escalation_coal_annual and prior.escalation_coal_annual != escalation_coal_annual %}changed{% endif %}" 
+                                       value="{{ escalation_coal_annual }}"
+                                       step="0.5" min="-10" max="20">
+                                <span class="unit">%/yr</span>
+                            </div>
+                            {% if has_prior and prior.escalation_coal_annual %}
+                            <span class="prior-value">Prior: {{ "%.1f"|format(prior.escalation_coal_annual) }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="escalation_transport_annual">Transportation</label>
+                        <div class="input-group-with-prior">
+                            <div class="input-with-unit">
+                                <input type="number" name="escalation_transport_annual" id="escalation_transport_annual" 
+                                       class="form-control {% if has_prior and prior.escalation_transport_annual and prior.escalation_transport_annual != escalation_transport_annual %}changed{% endif %}" 
+                                       value="{{ escalation_transport_annual }}"
+                                       step="0.5" min="-10" max="20">
+                                <span class="unit">%/yr</span>
+                            </div>
+                            {% if has_prior and prior.escalation_transport_annual %}
+                            <span class="prior-value">Prior: {{ "%.1f"|format(prior.escalation_transport_annual) }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="escalation_reagent_annual">Reagent/Consumables</label>
+                        <div class="input-group-with-prior">
+                            <div class="input-with-unit">
+                                <input type="number" name="escalation_reagent_annual" id="escalation_reagent_annual" 
+                                       class="form-control {% if has_prior and prior.escalation_reagent_annual and prior.escalation_reagent_annual != escalation_reagent_annual %}changed{% endif %}" 
+                                       value="{{ escalation_reagent_annual }}"
+                                       step="0.5" min="-10" max="20">
+                                <span class="unit">%/yr</span>
+                            </div>
+                            {% if has_prior and prior.escalation_reagent_annual %}
+                            <span class="prior-value">Prior: {{ "%.1f"|format(prior.escalation_reagent_annual) }}%</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reagents Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Reagent & Consumable Costs
+                </div>
+                <div class="keep-prior-toggle">
+                    <input type="checkbox" name="keep_reagents" id="keep_reagents" 
+                           {% if keep_reagents %}checked{% endif %}>
+                    <label for="keep_reagents">Keep prior forecast values</label>
+                    <div class="section-summary">
+                        {% if prior_reagent_total %}
+                        <div class="metric">
+                            <span class="metric-value">${{ "%.1f"|format(prior_reagent_total / 1000000) }}M</span>
+                            <span class="metric-label">Prior Annual</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div id="reagents-detail" class="collapsible-section {% if keep_reagents %}collapsed{% else %}expanded{% endif %}">
+                    <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                        Enter prices per ton. Consumption is calculated based on generation.
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="urea_price_per_ton">Urea Price</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="urea_price_per_ton" id="urea_price_per_ton" 
+                                           class="form-control {% if has_prior and prior.urea_price_per_ton and prior.urea_price_per_ton != urea_price_per_ton %}changed{% endif %}" 
+                                           value="{{ urea_price_per_ton }}"
+                                           step="1" min="0">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.urea_price_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.0f"|format(prior.urea_price_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="limestone_price_per_ton">Limestone Price</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="limestone_price_per_ton" id="limestone_price_per_ton" 
+                                           class="form-control {% if has_prior and prior.limestone_price_per_ton and prior.limestone_price_per_ton != limestone_price_per_ton %}changed{% endif %}" 
+                                           value="{{ limestone_price_per_ton }}"
+                                           step="1" min="0">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.limestone_price_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.0f"|format(prior.limestone_price_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hydrated_lime_price_per_ton">Hydrated Lime Price</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="hydrated_lime_price_per_ton" id="hydrated_lime_price_per_ton" 
+                                           class="form-control {% if has_prior and prior.hydrated_lime_price_per_ton and prior.hydrated_lime_price_per_ton != hydrated_lime_price_per_ton %}changed{% endif %}" 
+                                           value="{{ hydrated_lime_price_per_ton }}"
+                                           step="1" min="0">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.hydrated_lime_price_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.0f"|format(prior.hydrated_lime_price_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mercury_reagent_cost_monthly">Mercury Reagent (Monthly)</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="mercury_reagent_cost_monthly" id="mercury_reagent_cost_monthly" 
+                                           class="form-control {% if has_prior and prior.mercury_reagent_cost_monthly and prior.mercury_reagent_cost_monthly != mercury_reagent_cost_monthly %}changed{% endif %}" 
+                                           value="{{ mercury_reagent_cost_monthly }}"
+                                           step="100" min="0">
+                                    <span class="unit">$/month</span>
+                                </div>
+                                {% if has_prior and prior.mercury_reagent_cost_monthly %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.mercury_reagent_cost_monthly) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reagent subtotal -->
+                    <div class="category-total" id="reagent-subtotal">
+                        <span class="label">Estimated Annual Consumables Cost</span>
+                        <span>
+                            <span class="value" id="reagent-total-value">Calculated on review</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other Monthly Costs Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Other Monthly Fuel Costs
+                </div>
+                <div class="keep-prior-toggle">
+                    <input type="checkbox" name="keep_other_costs" id="keep_other_costs" 
+                           {% if keep_other_costs %}checked{% endif %}>
+                    <label for="keep_other_costs">Keep prior forecast values</label>
+                    <div class="section-summary">
+                        {% if prior_other_cost_total %}
+                        <div class="metric">
+                            <span class="metric-value">${{ "%.1f"|format(prior_other_cost_total / 1000000) }}M</span>
+                            <span class="metric-label">Prior Annual</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div id="other-costs-detail" class="collapsible-section {% if keep_other_costs %}collapsed{% else %}expanded{% endif %}">
+                    <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                        Fixed monthly costs for plant operations.
+                    </p>
+                    
+                    <!-- Bioreactor & WWTP -->
+                    <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; margin-top: 16px;">
+                        Environmental Treatment
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bioreactor_reagent_per_month">Bioreactor Reagent</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="bioreactor_reagent_per_month" id="bioreactor_reagent_per_month" 
+                                           class="form-control {% if has_prior and prior.bioreactor_reagent_per_month and prior.bioreactor_reagent_per_month != bioreactor_reagent_per_month %}changed{% endif %}" 
+                                           value="{{ bioreactor_reagent_per_month|default(15000) }}"
+                                           step="1000" min="0">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.bioreactor_reagent_per_month %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.bioreactor_reagent_per_month) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bioreactor_support_per_month">Bioreactor Support</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="bioreactor_support_per_month" id="bioreactor_support_per_month" 
+                                           class="form-control {% if has_prior and prior.bioreactor_support_per_month and prior.bioreactor_support_per_month != bioreactor_support_per_month %}changed{% endif %}" 
+                                           value="{{ bioreactor_support_per_month|default(25000) }}"
+                                           step="1000" min="0">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.bioreactor_support_per_month %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.bioreactor_support_per_month) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="wwtp_reagent_per_month">WWTP Reagent</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="wwtp_reagent_per_month" id="wwtp_reagent_per_month" 
+                                           class="form-control {% if has_prior and prior.wwtp_reagent_per_month and prior.wwtp_reagent_per_month != wwtp_reagent_per_month %}changed{% endif %}" 
+                                           value="{{ wwtp_reagent_per_month|default(8000) }}"
+                                           step="500" min="0">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.wwtp_reagent_per_month %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.wwtp_reagent_per_month) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="misc_reagent_per_month">Misc Reagents</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="misc_reagent_per_month" id="misc_reagent_per_month" 
+                                           class="form-control {% if has_prior and prior.misc_reagent_per_month and prior.misc_reagent_per_month != misc_reagent_per_month %}changed{% endif %}" 
+                                           value="{{ misc_reagent_per_month|default(5000) }}"
+                                           step="500" min="0">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.misc_reagent_per_month %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.misc_reagent_per_month) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fuel Oil & Coal Handling -->
+                    <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; margin-top: 16px;">
+                        Fuel & Handling
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fuel_oil_per_day">Fuel Oil</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="fuel_oil_per_day" id="fuel_oil_per_day" 
+                                           class="form-control {% if has_prior and prior.fuel_oil_per_day and prior.fuel_oil_per_day != fuel_oil_per_day %}changed{% endif %}" 
+                                           value="{{ fuel_oil_per_day|default(500) }}"
+                                           step="50" min="0">
+                                    <span class="unit">$/day</span>
+                                </div>
+                                {% if has_prior and prior.fuel_oil_per_day %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.fuel_oil_per_day) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="labor_handling_per_day">Labor & Handling</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="labor_handling_per_day" id="labor_handling_per_day" 
+                                           class="form-control {% if has_prior and prior.labor_handling_per_day and prior.labor_handling_per_day != labor_handling_per_day %}changed{% endif %}" 
+                                           value="{{ labor_handling_per_day|default(2500) }}"
+                                           step="100" min="0">
+                                    <span class="unit">$/day</span>
+                                </div>
+                                {% if has_prior and prior.labor_handling_per_day %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.labor_handling_per_day) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="labor_handling_escalation_pct">Labor Escalation</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="labor_handling_escalation_pct" id="labor_handling_escalation_pct" 
+                                           class="form-control" 
+                                           value="{{ labor_handling_escalation_pct|default(2.0) }}"
+                                           step="0.5" min="0" max="10">
+                                    <span class="unit">%/yr</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="temp_coal_storage_per_month">Temp Coal Storage</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="temp_coal_storage_per_month" id="temp_coal_storage_per_month" 
+                                           class="form-control {% if has_prior and prior.temp_coal_storage_per_month and prior.temp_coal_storage_per_month != temp_coal_storage_per_month %}changed{% endif %}" 
+                                           value="{{ temp_coal_storage_per_month|default(0) }}"
+                                           step="1000" min="0">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.temp_coal_storage_per_month %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.temp_coal_storage_per_month) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other costs subtotal -->
+                    <div class="category-total" id="other-cost-subtotal">
+                        <span class="label">Estimated Annual Other Fuel Costs</span>
+                        <span>
+                            <span class="value" id="other-cost-total-value">Calculated on review</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Byproducts Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Byproduct Revenue/Cost
+                </div>
+                <div class="keep-prior-toggle">
+                    <input type="checkbox" name="keep_byproducts" id="keep_byproducts" 
+                           {% if keep_byproducts %}checked{% endif %}>
+                    <label for="keep_byproducts">Keep prior forecast values</label>
+                    <div class="section-summary">
+                        {% if prior_byproduct_total %}
+                        <div class="metric">
+                            <span class="metric-value {% if prior_byproduct_total >= 0 %}positive{% else %}negative{% endif %}">
+                                {{ "$%.1f"|format(prior_byproduct_total / 1000000) if prior_byproduct_total >= 0 else "($%.1f)"|format(-prior_byproduct_total / 1000000) }}M
+                            </span>
+                            <span class="metric-label">Prior Annual {{ "Credit" if prior_byproduct_total >= 0 else "Cost" }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div id="byproducts-detail" class="collapsible-section {% if keep_byproducts %}collapsed{% else %}expanded{% endif %}">
+                    <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                        Positive values = revenue, negative values = disposal cost.
+                    </p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ash_sale_price_per_ton">Fly Ash Sale Price</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="ash_sale_price_per_ton" id="ash_sale_price_per_ton" 
+                                           class="form-control {% if has_prior and prior.ash_sale_price_per_ton and prior.ash_sale_price_per_ton != ash_sale_price_per_ton %}changed{% endif %}" 
+                                           value="{{ ash_sale_price_per_ton }}"
+                                           step="0.50" min="-50" max="50">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.ash_sale_price_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.2f"|format(prior.ash_sale_price_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ash_disposal_cost_per_ton">Bottom Ash Disposal</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="ash_disposal_cost_per_ton" id="ash_disposal_cost_per_ton" 
+                                           class="form-control {% if has_prior and prior.ash_disposal_cost_per_ton and prior.ash_disposal_cost_per_ton != ash_disposal_cost_per_ton %}changed{% endif %}" 
+                                           value="{{ ash_disposal_cost_per_ton }}"
+                                           step="0.50" min="0" max="50">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.ash_disposal_cost_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.2f"|format(prior.ash_disposal_cost_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gypsum_sale_price_per_ton">Gypsum Sale Price</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="gypsum_sale_price_per_ton" id="gypsum_sale_price_per_ton" 
+                                           class="form-control {% if has_prior and prior.gypsum_sale_price_per_ton and prior.gypsum_sale_price_per_ton != gypsum_sale_price_per_ton %}changed{% endif %}" 
+                                           value="{{ gypsum_sale_price_per_ton }}"
+                                           step="0.50" min="-50" max="50">
+                                    <span class="unit">$/ton</span>
+                                </div>
+                                {% if has_prior and prior.gypsum_sale_price_per_ton %}
+                                <span class="prior-value">Prior: ${{ "%.2f"|format(prior.gypsum_sale_price_per_ton) }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fly_ash_sale_pct">Fly Ash Sold %</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="fly_ash_sale_pct" id="fly_ash_sale_pct" 
+                                           class="form-control {% if has_prior and prior.fly_ash_sale_pct and prior.fly_ash_sale_pct != fly_ash_sale_pct %}changed{% endif %}" 
+                                           value="{{ fly_ash_sale_pct }}"
+                                           step="5" min="0" max="100">
+                                    <span class="unit">%</span>
+                                </div>
+                                {% if has_prior and prior.fly_ash_sale_pct %}
+                                <span class="prior-value">Prior: {{ "%.0f"|format(prior.fly_ash_sale_pct) }}%</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="byproduct_misc_expense_monthly">Monthly Misc Expense</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="byproduct_misc_expense_monthly" id="byproduct_misc_expense_monthly" 
+                                           class="form-control {% if has_prior and prior.byproduct_misc_expense_monthly and prior.byproduct_misc_expense_monthly != byproduct_misc_expense_monthly %}changed{% endif %}" 
+                                           value="{{ byproduct_misc_expense_monthly|default(310000) }}"
+                                           step="10000" min="0" max="1000000">
+                                    <span class="unit">$/mo</span>
+                                </div>
+                                {% if has_prior and prior.byproduct_misc_expense_monthly %}
+                                <span class="prior-value">Prior: ${{ "{:,.0f}".format(prior.byproduct_misc_expense_monthly) }}</span>
+                                {% endif %}
+                            </div>
+                            <small style="color: #6b7280;">Fixed monthly byproduct handling costs</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="gypsum_sold_pct">Gypsum Sold %</label>
+                            <div class="input-group-with-prior">
+                                <div class="input-with-unit">
+                                    <input type="number" name="gypsum_sold_pct" id="gypsum_sold_pct" 
+                                           class="form-control {% if has_prior and prior.gypsum_sold_pct and prior.gypsum_sold_pct != gypsum_sold_pct %}changed{% endif %}" 
+                                           value="{{ gypsum_sold_pct|default(80) }}"
+                                           step="5" min="0" max="100">
+                                    <span class="unit">%</span>
+                                </div>
+                                {% if has_prior and prior.gypsum_sold_pct %}
+                                <span class="prior-value">Prior: {{ "%.0f"|format(prior.gypsum_sold_pct) }}%</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Byproduct subtotal -->
+                    <div class="category-total" id="byproduct-subtotal" style="flex-direction: column; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <span class="label">Sales Revenue (Credit)</span>
+                            <span class="value" style="color: #059669;" id="byproduct-sales-value">Calculated on review</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; width: 100%;">
+                            <span class="label">Disposal + Misc Costs</span>
+                            <span class="value" style="color: #dc2626;" id="byproduct-costs-value">Calculated on review</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; width: 100%; border-top: 1px solid #e5e7eb; padding-top: 8px; font-weight: 600;">
+                            <span class="label">Net Byproduct Impact</span>
+                            <span class="value" id="byproduct-total-value">Calculated on review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summary Preview -->
+            <div class="form-section">
+                <div style="padding: 16px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #86efac; border-radius: 8px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <span style="font-size: 24px;">📊</span>
+                        <div style="font-weight: 600; color: #166534;">Ready for Review</div>
+                    </div>
+                    <div style="font-size: 13px; color: #15803d;">
+                        All inputs captured. Continue to review a summary of your forecast assumptions before calculating and saving.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-actions">
+            <a href="/fuel-forecast/{{ session_id }}/step/6" class="btn btn-secondary">
+                ← Back to Generation
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Continue to Review →
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Animated toggle for detail sections
+function toggleSection(checkboxId, sectionId) {
+    const checkbox = document.getElementById(checkboxId);
+    const section = document.getElementById(sectionId);
+    
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            section.classList.remove('expanded');
+            section.classList.add('collapsed');
+        } else {
+            section.classList.remove('collapsed');
+            section.classList.add('expanded');
+        }
+    });
+}
+
+// Initialize toggles
+toggleSection('keep_reagents', 'reagents-detail');
+toggleSection('keep_other_costs', 'other-costs-detail');
+toggleSection('keep_byproducts', 'byproducts-detail');
+</script>
+{% endblock %}

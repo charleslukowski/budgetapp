@@ -1,0 +1,1472 @@
+{% extends "base.html" %}
+
+{% block title %}Forecast Inputs - {{ year }}{% endblock %}
+
+{% block head %}
+<style>
+/* Modern Inputs Page Styling */
+
+/* Section Cards */
+.input-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(to right, #f8fafc, #ffffff);
+    border-bottom: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.card-header:hover {
+    background: linear-gradient(to right, #f1f5f9, #f8fafc);
+}
+
+.card-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header h3 .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.card-header .toggle-icon {
+    color: #94a3b8;
+    transition: transform 0.3s;
+}
+
+.card-header.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body.collapsed {
+    display: none;
+}
+
+/* Modern Table Styling */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+}
+
+.modern-table thead th {
+    background: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.modern-table thead th:first-child {
+    text-align: left;
+    padding-left: 16px;
+    min-width: 180px;
+}
+
+.modern-table tbody tr {
+    transition: background 0.15s;
+}
+
+.modern-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.modern-table tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+.modern-table tbody tr:nth-child(even):hover {
+    background: #f1f5f9;
+}
+
+.modern-table tbody td {
+    padding: 8px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.modern-table tbody td:first-child {
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.modern-table .avg-col {
+    background: #f0fdf4 !important;
+    font-weight: 600;
+    color: #166534;
+    border-left: 2px solid #86efac;
+}
+
+/* Modern Input Styling */
+.modern-input {
+    width: 52px;
+    padding: 6px 4px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    color: #334155;
+    background: #ffffff;
+    transition: all 0.2s;
+}
+
+.modern-input:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.modern-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    background: #ffffff;
+}
+
+.modern-input.input-wide {
+    width: 80px;
+}
+
+.modern-input.input-narrow {
+    width: 40px;
+}
+
+/* Ozone season highlight */
+.ozone-row {
+    background: linear-gradient(to right, #fefce8, #ffffff) !important;
+}
+
+.ozone-row td:first-child {
+    border-left: 3px solid #facc15;
+}
+
+/* Parameter Cards Grid */
+.params-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.param-card {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.param-card h4 {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 14px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.param-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.param-row:not(:last-child) {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.param-label {
+    font-size: 13px;
+    color: #475569;
+}
+
+.param-input {
+    width: 90px;
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: right;
+    background: white;
+    transition: all 0.2s;
+}
+
+.param-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Unit Outages - Compact Grid */
+.outage-section h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    margin: 16px 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.outage-section h4 .plant-icon {
+    width: 20px;
+    height: 20px;
+    background: #e0f2fe;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+/* Outage Table - Compact Grid */
+.outage-table {
+    width: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.outage-table th {
+    background: #f8fafc;
+    padding: 6px 1px;
+    font-weight: 600;
+    color: #64748b;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.outage-table td {
+    padding: 2px 1px;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.outage-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.outage-table .unit-cell {
+    background: #f1f5f9;
+    font-weight: 600;
+    text-align: left;
+    padding: 4px 8px;
+    color: #1e3a5f;
+    border-right: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.outage-table .type-cell {
+    font-size: 10px;
+    font-weight: 500;
+    color: #64748b;
+    text-align: left;
+    padding-left: 6px;
+    padding-right: 4px;
+    background: #fafbfc;
+}
+
+.outage-input {
+    width: 36px;
+    padding: 4px 2px;
+    border: 1px solid #e5e7eb;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    background: white;
+    color: #374151;
+    transition: all 0.15s ease;
+    -moz-appearance: textfield;
+}
+
+/* Hide number input spinners */
+.outage-input::-webkit-outer-spin-button,
+.outage-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Consistent column widths for month columns */
+.outage-table th:not(:first-child),
+.outage-table td:not(:first-child) {
+    width: 42px;
+    min-width: 42px;
+    max-width: 42px;
+}
+
+.outage-input:hover {
+    border-color: #d1d5db;
+}
+
+.outage-input:focus {
+    outline: none;
+    border-color: #2d4a6f;
+    box-shadow: 0 0 0 2px rgba(45, 74, 111, 0.12);
+}
+
+/* Highlight inputs with values */
+.outage-input:not([value="0"]):not([value=""]) {
+    background: #fffbeb;
+    border-color: #fbbf24;
+    color: #92400e;
+}
+
+/* No SCR badge */
+.no-scr-badge {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* Contracts Table */
+.contracts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.contracts-table th {
+    background: #f8fafc;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: #64748b;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.contracts-table td {
+    padding: 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.contracts-table tr:hover {
+    background: #f8fafc;
+}
+
+.contracts-table .amount {
+    font-family: 'SF Mono', 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+/* Sticky header for page */
+.inputs-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(to bottom, #f8fafc 0%, #f8fafc 90%, transparent 100%);
+    padding-bottom: 10px;
+    margin-bottom: -10px;
+}
+
+/* Summary Pills */
+.summary-pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.summary-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.summary-pill .pill-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.summary-pill .pill-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.summary-pill.highlight {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border-color: transparent;
+}
+
+.summary-pill.highlight .pill-label,
+.summary-pill.highlight .pill-value {
+    color: white;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-calc {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+}
+
+.btn-calc:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+}
+
+.btn-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(5, 150, 105, 0.4);
+}
+
+/* Text helpers */
+.text-muted { color: #94a3b8; }
+.text-right { text-align: right; }
+</style>
+{% endblock head %}
+
+{% block content %}
+{% include "components/fuel_tabs.html" %}
+
+<div class="inputs-header">
+    <div class="page-header">
+        <div class="header-left">
+            <h1>Forecast Inputs <span class="subtitle">{{ year }} - {{ year + 4 }}</span></h1>
+        </div>
+        <div class="header-right">
+            <select id="scenario-select" class="filter-select">
+                <option value="">New Forecast</option>
+                {% for scenario in scenarios %}
+                <option value="{{ scenario.id }}">{{ scenario.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="action-buttons">
+                <button class="btn-calc" onclick="calculateForecast()">Calculate Forecast</button>
+                <button class="btn-save" onclick="saveInputs()">Save Scenario</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Pills -->
+    <div class="summary-pills">
+        <div class="summary-pill">
+            <span class="pill-label">Avg Use Factor</span>
+            <span class="pill-value" id="summary_uf">85%</span>
+        </div>
+        <div class="summary-pill">
+            <span class="pill-label">Avg Heat Rate</span>
+            <span class="pill-value" id="summary_hr">9,875</span>
+        </div>
+        <div class="summary-pill">
+            <span class="pill-label">Coal $/ton</span>
+            <span class="pill-value" id="summary_coal_price">$65</span>
+        </div>
+        <div class="summary-pill">
+            <span class="pill-label">Urea $/ton</span>
+            <span class="pill-value" id="summary_urea_price">$459</span>
+        </div>
+        <div class="summary-pill highlight">
+            <span class="pill-label">Forecast</span>
+            <span class="pill-value">{{ year }}-{{ year + 4 }}</span>
+        </div>
+    </div>
+</div>
+
+<form id="inputsForm">
+<input type="hidden" name="year" value="{{ year }}">
+
+<!-- SECTION 1: USE FACTORS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">1</span> Use Factors - Monthly</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    {% for m in range(1, 13) %}
+                    <th>{{ month_names[m][:3] }}</th>
+                    {% endfor %}
+                    <th class="avg-col">Avg</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kyger Creek Base (%)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="uf_kc_{{ m }}" value="{{ use_factors_kc[m]|default(85) }}" min="0" max="100" step="1" class="modern-input input-narrow"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="uf_kc_avg">85%</td>
+                </tr>
+                <tr>
+                    <td>Clifty Creek Base (%)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="uf_cc_{{ m }}" value="{{ use_factors_cc[m]|default(85) }}" min="0" max="100" step="1" class="modern-input input-narrow"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="uf_cc_avg">85%</td>
+                </tr>
+                <tr class="ozone-row">
+                    <td>KC Ozone Non-SCR (Unit 5) (%)</td>
+                    {% for m in range(1, 13) %}
+                    <td>
+                        {% if m >= 5 and m <= 9 %}
+                        <input type="number" name="uf_kc_ozone_{{ m }}" value="{{ use_factors_kc_ozone[m]|default(0) }}" min="0" max="100" step="1" class="modern-input input-narrow">
+                        {% else %}
+                        <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                    <td class="avg-col">-</td>
+                </tr>
+                <tr class="ozone-row">
+                    <td>CC Ozone Non-SCR (Unit 6) (%)</td>
+                    {% for m in range(1, 13) %}
+                    <td>
+                        {% if m >= 5 and m <= 9 %}
+                        <input type="number" name="uf_cc_ozone_{{ m }}" value="{{ use_factors_cc_ozone[m]|default(0) }}" min="0" max="100" step="1" class="modern-input input-narrow">
+                        {% else %}
+                        <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                    <td class="avg-col">-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SECTION 2: HEAT RATES -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">2</span> Heat Rates</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Plant</th>
+                    {% for m in range(1, 13) %}
+                    <th>{{ month_names[m][:3] }}</th>
+                    {% endfor %}
+                    <th class="avg-col">Avg</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kyger Creek (BTU/kWh)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="hr_kc_{{ m }}" value="{{ heat_rates_kc[m]|default(9850) }}" step="10" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="hr_kc_avg">9,850</td>
+                </tr>
+                <tr>
+                    <td>Clifty Creek (BTU/kWh)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="hr_cc_{{ m }}" value="{{ heat_rates_cc[m]|default(9900) }}" step="10" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="hr_cc_avg">9,900</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="params-grid" style="margin-top: 20px;">
+            <div class="param-card">
+                <h4>Kyger Creek Parameters</h4>
+                <div class="param-row">
+                    <span class="param-label">Min Load Heat Rate (BTU/kWh)</span>
+                    <input type="number" name="hr_kc_min_load" value="{{ hr_kc_min_load|default(10500) }}" step="50" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">SUF Correction (BTU/kWh)</span>
+                    <input type="number" name="hr_kc_suf" value="{{ hr_kc_suf|default(0) }}" step="10" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">PRB Blend (%)</span>
+                    <input type="number" name="hr_kc_prb_pct" value="{{ hr_kc_prb_pct|default(0) }}" min="0" max="100" step="5" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Clifty Creek Parameters</h4>
+                <div class="param-row">
+                    <span class="param-label">Min Load Heat Rate (BTU/kWh)</span>
+                    <input type="number" name="hr_cc_min_load" value="{{ hr_cc_min_load|default(10600) }}" step="50" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">SUF Correction (BTU/kWh)</span>
+                    <input type="number" name="hr_cc_suf" value="{{ hr_cc_suf|default(0) }}" step="10" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">PRB Blend (%)</span>
+                    <input type="number" name="hr_cc_prb_pct" value="{{ hr_cc_prb_pct|default(0) }}" min="0" max="100" step="5" class="param-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 3: UNIT AVAILABILITY -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">3</span> Unit Availability - Outage Schedule</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body outage-section">
+        <!-- Forced Outage Rate -->
+        <div class="forced-outage-rate" style="margin-bottom: 20px; padding: 12px 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e5e7eb; display: flex; align-items: center; gap: 16px;">
+            <span style="font-size: 13px; font-weight: 500; color: #374151;">Forced Outage Rate (EFOR)</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <input type="number" name="forced_outage_rate" value="{{ forced_outage_rate|default(5) }}" min="0" max="30" step="0.5" class="param-input" style="width: 60px;">
+                <span style="font-size: 13px; color: #6b7280;">%</span>
+            </div>
+            <span style="font-size: 12px; color: #9ca3af; margin-left: auto;">Applied uniformly to all units</span>
+        </div>
+        
+        <h4><span class="plant-icon">KC</span> Kyger Creek - Planned Outage Days</h4>
+        <table class="outage-table">
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Unit</th>
+                    {% for m in range(1, 13) %}
+                    <th>{{ month_names[m][:3] }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for unit in range(1, 6) %}
+                <tr>
+                    <td class="unit-cell">Unit {{ unit }}{% if unit == 5 %}<span class="no-scr-badge">No SCR</span>{% endif %}</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="outage_kc_{{ unit }}_planned_{{ m }}" value="{{ outages_kc.get(unit, {}).get(m, {}).get('planned', 0) }}" min="0" max="31" step="0.5" class="outage-input"></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4 style="margin-top: 24px;"><span class="plant-icon">CC</span> Clifty Creek - Planned Outage Days</h4>
+        <table class="outage-table">
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Unit</th>
+                    {% for m in range(1, 13) %}
+                    <th>{{ month_names[m][:3] }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for unit in range(1, 7) %}
+                <tr>
+                    <td class="unit-cell">Unit {{ unit }}{% if unit == 6 %}<span class="no-scr-badge">No SCR</span>{% endif %}</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="outage_cc_{{ unit }}_planned_{{ m }}" value="{{ outages_cc.get(unit, {}).get(m, {}).get('planned', 0) }}" min="0" max="31" step="0.5" class="outage-input"></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SECTION 4: PLANT PARAMETERS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">4</span> Plant Parameters</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid">
+            <div class="param-card">
+                <h4>Kyger Creek</h4>
+                <div class="param-row">
+                    <span class="param-label">FGD Auxiliary Load (MW)</span>
+                    <input type="number" name="kc_fgd_aux_mw" value="{{ kc_fgd_aux_mw|default(25) }}" step="1" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Bioreactor Load (MW)</span>
+                    <input type="number" name="kc_bioreactor_mw" value="{{ kc_bioreactor_mw|default(6) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">GSU Transformer Loss (%)</span>
+                    <input type="number" name="kc_gsu_loss_pct" value="{{ kc_gsu_loss_pct|default(0.5545) }}" step="0.01" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Reserve Margin (MW)</span>
+                    <input type="number" name="kc_reserve_mw" value="{{ kc_reserve_mw|default(10) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Clifty Creek</h4>
+                <div class="param-row">
+                    <span class="param-label">FGD Auxiliary Load (MW)</span>
+                    <input type="number" name="cc_fgd_aux_mw" value="{{ cc_fgd_aux_mw|default(30) }}" step="1" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Bioreactor Load (MW)</span>
+                    <input type="number" name="cc_bioreactor_mw" value="{{ cc_bioreactor_mw|default(6) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">GSU Transformer Loss (%)</span>
+                    <input type="number" name="cc_gsu_loss_pct" value="{{ cc_gsu_loss_pct|default(0.5545) }}" step="0.01" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Reserve Margin (MW)</span>
+                    <input type="number" name="cc_reserve_mw" value="{{ cc_reserve_mw|default(10) }}" step="1" class="param-input">
+                </div>
+            </div>
+        </div>
+
+        <h4 style="margin: 20px 0 12px; font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Unit Capacities (MW)</h4>
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Plant</th>
+                    <th>Unit 1</th>
+                    <th>Unit 2</th>
+                    <th>Unit 3</th>
+                    <th>Unit 4</th>
+                    <th>Unit 5</th>
+                    <th>Unit 6</th>
+                    <th class="avg-col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kyger Creek</td>
+                    {% for u in range(1, 6) %}
+                    <td><input type="number" name="kc_unit_{{ u }}_mw" value="{{ kc_unit_capacities[u]|default(217) }}" step="1" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="text-muted">-</td>
+                    <td class="avg-col" id="kc_total_mw">1,085</td>
+                </tr>
+                <tr>
+                    <td>Clifty Creek</td>
+                    {% for u in range(1, 7) %}
+                    <td><input type="number" name="cc_unit_{{ u }}_mw" value="{{ cc_unit_capacities[u]|default(217) }}" step="1" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="cc_total_mw">1,302</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- SECTION 5: COAL QUALITY -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">5</span> Coal Quality Assumptions</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid">
+            <div class="param-card">
+                <h4>Kyger Creek Coal</h4>
+                <div class="param-row">
+                    <span class="param-label">Heat Content (BTU/lb)</span>
+                    <input type="number" name="coal_kc_btu_lb" value="{{ coal_kc_btu_lb|default(12500) }}" step="50" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">SO2 Content (lb/MMBtu)</span>
+                    <input type="number" name="coal_kc_so2" value="{{ coal_kc_so2|default(5.60) }}" step="0.1" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Ash Content (%)</span>
+                    <input type="number" name="coal_kc_ash_pct" value="{{ coal_kc_ash_pct|default(10) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Moisture Content (%)</span>
+                    <input type="number" name="coal_kc_moisture_pct" value="{{ coal_kc_moisture_pct|default(6) }}" step="0.5" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Clifty Creek Coal</h4>
+                <div class="param-row">
+                    <span class="param-label">Heat Content (BTU/lb)</span>
+                    <input type="number" name="coal_cc_btu_lb" value="{{ coal_cc_btu_lb|default(12500) }}" step="50" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">SO2 Content (lb/MMBtu)</span>
+                    <input type="number" name="coal_cc_so2" value="{{ coal_cc_so2|default(5.60) }}" step="0.1" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Ash Content (%)</span>
+                    <input type="number" name="coal_cc_ash_pct" value="{{ coal_cc_ash_pct|default(10) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Moisture Content (%)</span>
+                    <input type="number" name="coal_cc_moisture_pct" value="{{ coal_cc_moisture_pct|default(6) }}" step="0.5" class="param-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 6: COAL CONTRACTS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">6</span> Coal Contracts (Active)</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        {% if coal_contracts %}
+        <table class="contracts-table">
+            <thead>
+                <tr>
+                    <th>Contract ID</th>
+                    <th>Supplier</th>
+                    <th>Plant</th>
+                    <th class="text-right">Annual Tons</th>
+                    <th class="text-right">Price $/ton</th>
+                    <th class="text-right">BTU/lb</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contract in coal_contracts %}
+                <tr>
+                    <td><strong>{{ contract.contract_id }}</strong></td>
+                    <td>{{ contract.supplier }}</td>
+                    <td>{{ contract.plant_name }}</td>
+                    <td class="text-right amount">{{ "{:,.0f}".format(contract.annual_tons) }}</td>
+                    <td class="text-right amount">${{ "{:.2f}".format(contract.coal_price_per_ton) }}</td>
+                    <td class="text-right">{{ "{:,.0f}".format(contract.btu_per_lb) }}</td>
+                    <td>{{ contract.end_date.strftime('%m/%d/%Y') if contract.end_date else '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No active contracts found.</p>
+            <p style="font-size: 12px; margin-top: 8px;">Add contracts in Coal Management section.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- SECTION 7: MONTHLY COAL PRICING -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">7</span> Monthly Coal Pricing ({{ year }})</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Price Component</th>
+                    {% for m in range(1, 13) %}
+                    <th>{{ month_names[m][:3] }}</th>
+                    {% endfor %}
+                    <th class="avg-col">Avg</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Contract Coal ($/ton)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="coal_contract_{{ m }}" value="{{ coal_prices_contract[m]|default(65.00) }}" step="0.50" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="coal_contract_avg">$65.00</td>
+                </tr>
+                <tr>
+                    <td>Spot/Uncommitted ($/ton)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="coal_spot_{{ m }}" value="{{ coal_prices_spot[m]|default(72.00) }}" step="0.50" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="coal_spot_avg">$72.00</td>
+                </tr>
+                <tr>
+                    <td>Barge Transport ($/ton)</td>
+                    {% for m in range(1, 13) %}
+                    <td><input type="number" name="barge_{{ m }}" value="{{ barge_prices[m]|default(6.00) }}" step="0.25" class="modern-input"></td>
+                    {% endfor %}
+                    <td class="avg-col" id="barge_avg">$6.00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="params-grid" style="margin-top: 20px;">
+            <div class="param-card">
+                <h4>Kyger Creek Inventory</h4>
+                <div class="param-row">
+                    <span class="param-label">Beginning Inventory (tons)</span>
+                    <input type="text" name="inventory_kc" value="{{ "{:,}".format(inventory_kc|default(1012816)|int) }}" class="param-input input-wide" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Target Days Supply</span>
+                    <input type="number" name="kc_target_days" value="{{ kc_target_days|default(50) }}" step="5" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Clifty Creek Inventory</h4>
+                <div class="param-row">
+                    <span class="param-label">Beginning Inventory (tons)</span>
+                    <input type="text" name="inventory_cc" value="{{ "{:,}".format(inventory_cc|default(1400579)|int) }}" class="param-input input-wide" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Target Days Supply</span>
+                    <input type="number" name="cc_target_days" value="{{ cc_target_days|default(50) }}" step="5" class="param-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 8: REAGENTS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">8</span> Reagents & Consumables</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="param-card">
+                <h4>Urea (SCR)</h4>
+                <div class="param-row">
+                    <span class="param-label">NOx Removed (lb/MMBtu)</span>
+                    <input type="number" name="urea_nox_removed" value="{{ urea_nox_removed|default(0.50) }}" step="0.01" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">lb Urea / lb NOx</span>
+                    <input type="number" name="urea_lb_per_nox" value="{{ urea_lb_per_nox|default(0.685) }}" step="0.01" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Price ($/ton)</span>
+                    <input type="number" name="urea_price_ton" value="{{ urea_price_ton|default(459) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Limestone (FGD)</h4>
+                <div class="param-row">
+                    <span class="param-label">FGD Efficiency (%)</span>
+                    <input type="number" name="fgd_efficiency" value="{{ fgd_efficiency|default(97.5) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">lb ite / lb SO2</span>
+                    <input type="number" name="limestone_ratio" value="{{ limestone_ratio|default(1.45) }}" step="0.05" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Price ($/ton)</span>
+                    <input type="number" name="limestone_price" value="{{ limestone_price|default(25) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Hydrated Lime</h4>
+                <div class="param-row">
+                    <span class="param-label">Usage (lb/MMBtu)</span>
+                    <input type="number" name="lime_rate" value="{{ lime_rate|default(0.1) }}" step="0.01" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Price ($/ton)</span>
+                    <input type="number" name="lime_price" value="{{ lime_price|default(150) }}" step="5" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Mercury Control</h4>
+                <div class="param-row">
+                    <span class="param-label">PAC Rate (lb/MMBtu)</span>
+                    <input type="number" name="pac_rate" value="{{ pac_rate|default(0.5) }}" step="0.1" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">PAC Price ($/lb)</span>
+                    <input type="number" name="pac_price" value="{{ pac_price|default(0.75) }}" step="0.05" class="param-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 9: FIXED COSTS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">9</span> Fixed Monthly Costs</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="param-card">
+                <h4>Bioreactor</h4>
+                <div class="param-row">
+                    <span class="param-label">Reagent ($/mo)</span>
+                    <input type="text" name="bioreactor_reagent" value="{{ "{:,}".format(bioreactor_reagent|default(15000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Support ($/mo)</span>
+                    <input type="text" name="bioreactor_support" value="{{ "{:,}".format(bioreactor_support|default(25000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Water Treatment</h4>
+                <div class="param-row">
+                    <span class="param-label">WWTP Reagent ($/mo)</span>
+                    <input type="text" name="wwtp_reagent" value="{{ "{:,}".format(wwtp_reagent|default(8000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Misc Reagent ($/mo)</span>
+                    <input type="text" name="misc_reagent" value="{{ "{:,}".format(misc_reagent|default(5000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Daily Costs</h4>
+                <div class="param-row">
+                    <span class="param-label">Fuel Oil ($/day)</span>
+                    <input type="number" name="fuel_oil_day" value="{{ fuel_oil_day|default(500) }}" step="50" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Labor ($/day)</span>
+                    <input type="text" name="labor_handling_day" value="{{ "{:,}".format(labor_handling_day|default(2500)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 10: BYPRODUCTS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">10</span> Byproduct Parameters</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="param-card">
+                <h4>Fly Ash</h4>
+                <div class="param-row">
+                    <span class="param-label">% of Total Ash</span>
+                    <input type="number" name="fly_ash_pct" value="{{ fly_ash_pct|default(40) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">% Sold</span>
+                    <input type="number" name="fly_ash_sold_pct" value="{{ fly_ash_sold_pct|default(0) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Sale Price ($/ton)</span>
+                    <input type="number" name="fly_ash_sale_price" value="{{ fly_ash_sale_price|default(-1) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Bottom Ash</h4>
+                <div class="param-row">
+                    <span class="param-label">% of Total Ash</span>
+                    <input type="number" name="bottom_ash_pct" value="{{ bottom_ash_pct|default(60) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">% Sold</span>
+                    <input type="number" name="bottom_ash_sold_pct" value="{{ bottom_ash_sold_pct|default(55) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Sale Price ($/ton)</span>
+                    <input type="number" name="bottom_ash_sale_price" value="{{ bottom_ash_sale_price|default(-9) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Gypsum</h4>
+                <div class="param-row">
+                    <span class="param-label">% Sold</span>
+                    <input type="number" name="gypsum_sold_pct" value="{{ gypsum_sold_pct|default(80) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Sale Price ($/ton)</span>
+                    <input type="number" name="gypsum_sale_price" value="{{ gypsum_sale_price|default(-17.50) }}" step="0.5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Disposal ($/ton)</span>
+                    <input type="number" name="gypsum_disposal" value="{{ gypsum_disposal|default(4) }}" step="0.5" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Misc Expense</h4>
+                <div class="param-row">
+                    <span class="param-label">KC ($/mo)</span>
+                    <input type="text" name="kc_byproduct_misc" value="{{ "{:,}".format(kc_byproduct_misc|default(310000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">CC ($/mo)</span>
+                    <input type="text" name="cc_byproduct_misc" value="{{ "{:,}".format(cc_byproduct_misc|default(310000)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 11: EMISSIONS -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">11</span> Emissions & Allowances</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <div class="params-grid">
+            <div class="param-card">
+                <h4>NOx Allowances</h4>
+                <div class="param-row">
+                    <span class="param-label">Ozone Season Rate ($/ton)</span>
+                    <input type="text" name="nox_ozone_rate" value="{{ "{:,}".format(nox_ozone_rate|default(2500)|int) }}" class="param-input" onchange="formatNumber(this)">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">Non-Ozone Rate ($/ton)</span>
+                    <input type="number" name="nox_non_ozone_rate" value="{{ nox_non_ozone_rate|default(500) }}" step="50" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>Emission Rates</h4>
+                <div class="param-row">
+                    <span class="param-label">NOx Uncontrolled (lb/MMBtu)</span>
+                    <input type="number" name="nox_uncontrolled" value="{{ nox_uncontrolled|default(0.60) }}" step="0.05" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">SCR Removal (%)</span>
+                    <input type="number" name="scr_efficiency" value="{{ scr_efficiency|default(90) }}" step="1" class="param-input">
+                </div>
+            </div>
+            <div class="param-card">
+                <h4>CO2 (Future)</h4>
+                <div class="param-row">
+                    <span class="param-label">CO2 Rate (lb/MMBtu)</span>
+                    <input type="number" name="co2_rate" value="{{ co2_rate|default(205) }}" step="5" class="param-input">
+                </div>
+                <div class="param-row">
+                    <span class="param-label">CO2 Tax ($/ton)</span>
+                    <input type="number" name="co2_tax" value="{{ co2_tax|default(0) }}" step="5" class="param-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 12: ESCALATION -->
+<div class="input-card">
+    <div class="card-header" onclick="toggleCard(this)">
+        <h3><span class="section-num">12</span> Multi-Year Escalation (%/yr)</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="card-body">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>Cost Category</th>
+                    <th class="avg-col">{{ year }}</th>
+                    <th>{{ year + 1 }}</th>
+                    <th>{{ year + 2 }}</th>
+                    <th>{{ year + 3 }}</th>
+                    <th>{{ year + 4 }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Coal Price</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_coal_y2" value="{{ esc_coal_y2|default(2.5) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_coal_y3" value="{{ esc_coal_y3|default(2.5) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_coal_y4" value="{{ esc_coal_y4|default(2.5) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_coal_y5" value="{{ esc_coal_y5|default(2.5) }}" step="0.5" class="modern-input"></td>
+                </tr>
+                <tr>
+                    <td>Transportation</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_transport_y2" value="{{ esc_transport_y2|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_transport_y3" value="{{ esc_transport_y3|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_transport_y4" value="{{ esc_transport_y4|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_transport_y5" value="{{ esc_transport_y5|default(3.0) }}" step="0.5" class="modern-input"></td>
+                </tr>
+                <tr>
+                    <td>Reagents</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_reagent_y2" value="{{ esc_reagent_y2|default(2.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_reagent_y3" value="{{ esc_reagent_y3|default(2.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_reagent_y4" value="{{ esc_reagent_y4|default(2.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_reagent_y5" value="{{ esc_reagent_y5|default(2.0) }}" step="0.5" class="modern-input"></td>
+                </tr>
+                <tr>
+                    <td>Labor</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_labor_y2" value="{{ esc_labor_y2|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_labor_y3" value="{{ esc_labor_y3|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_labor_y4" value="{{ esc_labor_y4|default(3.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_labor_y5" value="{{ esc_labor_y5|default(3.0) }}" step="0.5" class="modern-input"></td>
+                </tr>
+                <tr>
+                    <td>Byproducts</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_byproduct_y2" value="{{ esc_byproduct_y2|default(1.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_byproduct_y3" value="{{ esc_byproduct_y3|default(1.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_byproduct_y4" value="{{ esc_byproduct_y4|default(1.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_byproduct_y5" value="{{ esc_byproduct_y5|default(1.0) }}" step="0.5" class="modern-input"></td>
+                </tr>
+                <tr>
+                    <td>Allowances</td>
+                    <td class="avg-col text-muted">Base</td>
+                    <td><input type="number" name="esc_allowance_y2" value="{{ esc_allowance_y2|default(5.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_allowance_y3" value="{{ esc_allowance_y3|default(5.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_allowance_y4" value="{{ esc_allowance_y4|default(5.0) }}" step="0.5" class="modern-input"></td>
+                    <td><input type="number" name="esc_allowance_y5" value="{{ esc_allowance_y5|default(5.0) }}" step="0.5" class="modern-input"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</form>
+
+<!-- Results Panel -->
+<div id="resultPanel" style="display: none; margin-top: 20px;">
+    <div class="summary-pills">
+        <div class="summary-pill highlight">
+            <span class="pill-label">Year 1 Generation</span>
+            <span class="pill-value" id="result_mwh">-</span>
+        </div>
+        <div class="summary-pill highlight">
+            <span class="pill-label">Year 1 Fuel Cost</span>
+            <span class="pill-value" id="result_cost">-</span>
+        </div>
+        <div class="summary-pill">
+            <span class="pill-label">Year 1 $/MWh</span>
+            <span class="pill-value" id="result_rate">-</span>
+        </div>
+        <div class="summary-pill highlight">
+            <span class="pill-label">5-Year Total</span>
+            <span class="pill-value" id="result_5yr">-</span>
+        </div>
+    </div>
+</div>
+
+<!-- Page Footer -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+    <button class="btn btn-secondary" onclick="resetToDefaults()">Reset to Defaults</button>
+    <span style="font-size: 12px; color: #94a3b8;">Data as of {{ last_updated|default('Dec 27, 2025') }}</span>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Toggle card collapse
+function toggleCard(header) {
+    header.classList.toggle('collapsed');
+    header.nextElementSibling.classList.toggle('collapsed');
+}
+
+// Format number with commas
+function formatNumber(input) {
+    let value = input.value.replace(/,/g, '');
+    if (!isNaN(value) && value !== '') {
+        input.value = parseInt(value).toLocaleString();
+    }
+}
+
+// Parse number removing commas
+function parseFormattedNumber(str) {
+    if (typeof str === 'string') {
+        return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+    return parseFloat(str) || 0;
+}
+
+// Update summary calculations
+function updateSummary() {
+    // Calculate averages
+    let kcUfSum = 0, ccUfSum = 0, kcHrSum = 0, ccHrSum = 0;
+    for (let m = 1; m <= 12; m++) {
+        kcUfSum += parseFloat(document.querySelector(`[name="uf_kc_${m}"]`)?.value) || 0;
+        ccUfSum += parseFloat(document.querySelector(`[name="uf_cc_${m}"]`)?.value) || 0;
+        kcHrSum += parseFloat(document.querySelector(`[name="hr_kc_${m}"]`)?.value) || 0;
+        ccHrSum += parseFloat(document.querySelector(`[name="hr_cc_${m}"]`)?.value) || 0;
+    }
+    
+    const avgUf = ((kcUfSum + ccUfSum) / 24);
+    const avgHr = ((kcHrSum + ccHrSum) / 24);
+    
+    document.getElementById('summary_uf').textContent = avgUf.toFixed(0) + '%';
+    document.getElementById('summary_hr').textContent = new Intl.NumberFormat().format(Math.round(avgHr));
+    document.getElementById('uf_kc_avg').textContent = (kcUfSum / 12).toFixed(0) + '%';
+    document.getElementById('uf_cc_avg').textContent = (ccUfSum / 12).toFixed(0) + '%';
+    document.getElementById('hr_kc_avg').textContent = new Intl.NumberFormat().format(Math.round(kcHrSum / 12));
+    document.getElementById('hr_cc_avg').textContent = new Intl.NumberFormat().format(Math.round(ccHrSum / 12));
+    
+    // Coal pricing
+    let contractSum = 0, spotSum = 0, bargeSum = 0;
+    for (let m = 1; m <= 12; m++) {
+        contractSum += parseFloat(document.querySelector(`[name="coal_contract_${m}"]`)?.value) || 0;
+        spotSum += parseFloat(document.querySelector(`[name="coal_spot_${m}"]`)?.value) || 0;
+        bargeSum += parseFloat(document.querySelector(`[name="barge_${m}"]`)?.value) || 0;
+    }
+    document.getElementById('coal_contract_avg').textContent = '$' + (contractSum / 12).toFixed(2);
+    document.getElementById('coal_spot_avg').textContent = '$' + (spotSum / 12).toFixed(2);
+    document.getElementById('barge_avg').textContent = '$' + (bargeSum / 12).toFixed(2);
+    document.getElementById('summary_coal_price').textContent = '$' + (contractSum / 12).toFixed(0);
+    
+    const ureaPrice = document.querySelector('[name="urea_price_ton"]');
+    if (ureaPrice) {
+        document.getElementById('summary_urea_price').textContent = '$' + parseInt(ureaPrice.value).toLocaleString();
+    }
+    
+    // Unit capacities
+    let kcMw = 0, ccMw = 0;
+    for (let u = 1; u <= 5; u++) kcMw += parseFloat(document.querySelector(`[name="kc_unit_${u}_mw"]`)?.value) || 0;
+    for (let u = 1; u <= 6; u++) ccMw += parseFloat(document.querySelector(`[name="cc_unit_${u}_mw"]`)?.value) || 0;
+    document.getElementById('kc_total_mw').textContent = new Intl.NumberFormat().format(kcMw);
+    document.getElementById('cc_total_mw').textContent = new Intl.NumberFormat().format(ccMw);
+}
+
+// Gather form data
+function gatherFormData() {
+    const form = document.getElementById('inputsForm');
+    const formData = new FormData(form);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+        const cleanValue = typeof value === 'string' ? value.replace(/,/g, '') : value;
+        data[key] = isNaN(parseFloat(cleanValue)) ? value : parseFloat(cleanValue);
+    }
+    return data;
+}
+
+// Calculate forecast
+async function calculateForecast() {
+    try {
+        const data = gatherFormData();
+        const response = await fetch('/api/fuel-forecast/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Calculation failed');
+        const result = await response.json();
+        if (result.years && result.years.length > 0) {
+            const y1 = result.years[0];
+            document.getElementById('result_mwh').textContent = (y1.total_mwh / 1000).toFixed(0) + ' GWh';
+            document.getElementById('result_cost').textContent = '$' + (y1.total_fuel_cost / 1000000).toFixed(1) + 'M';
+            document.getElementById('result_rate').textContent = '$' + y1.cost_per_mwh.toFixed(2);
+            let totalCost = 0;
+            result.years.forEach(y => totalCost += y.total_fuel_cost);
+            document.getElementById('result_5yr').textContent = '$' + (totalCost / 1000000).toFixed(0) + 'M';
+        }
+        document.getElementById('resultPanel').style.display = 'block';
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error calculating forecast: ' + error.message);
+    }
+}
+
+// Save inputs
+async function saveInputs() {
+    const scenarioName = prompt('Enter a name for this scenario:');
+    if (!scenarioName) return;
+    try {
+        const data = gatherFormData();
+        data.scenario_name = scenarioName;
+        const response = await fetch('/api/fuel-forecast/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Save failed');
+        alert('Scenario "' + scenarioName + '" saved successfully!');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error saving inputs: ' + error.message);
+    }
+}
+
+// Reset to defaults
+function resetToDefaults() {
+    if (!confirm('Reset all inputs to default values?')) return;
+    location.reload();
+}
+
+// Add change listeners
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', updateSummary);
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', updateSummary);
+</script>
+{% endblock %}

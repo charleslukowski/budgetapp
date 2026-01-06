@@ -1,0 +1,45 @@
+area,dept_code,dept_name,plant_code,outage_flag,manager,active
+O&M,MAINT,Maintenance,KC,N,,Y
+O&M,OPER,Operations,KC,N,,Y
+O&M,IC,I&C,KC,N,,Y
+O&M,ENV,Environmental,KC,N,,Y
+O&M,YARD,Fuel Handling,KC,N,,Y
+O&M,OUTAGE,Outage Planning,KC,Y,,Y
+O&M,PLANNED-01,Planned Outage Unit 1,KC,Y,,Y
+O&M,PLANNED-02,Planned Outage Unit 2,KC,Y,,Y
+O&M,PLANNED-03,Planned Outage Unit 3,KC,Y,,Y
+O&M,PLANNED-04,Planned Outage Unit 4,KC,Y,,Y
+O&M,PLANNED-05,Planned Outage Unit 5,KC,Y,,Y
+O&M,PLANNED-12,Planned Outage JBR 12,KC,Y,,Y
+O&M,PLANNED-13,Planned Outage JBR 13,KC,Y,,Y
+O&M,PLANNED-46,Planned Outage JBR 46,KC,Y,,Y
+O&M,PLANNED-35,Planned Outage JBR 35,KC,Y,,Y
+O&M,UNPLANNED,Unplanned Outage,KC,Y,,Y
+O&M,MAINT,Maintenance,CC,N,,Y
+O&M,OPER,Operations,CC,N,,Y
+O&M,IC,I&C,CC,N,,Y
+O&M,ENV,Environmental,CC,N,,Y
+O&M,YARD,Fuel Handling,CC,N,,Y
+O&M,OUTAGE,Outage Planning,CC,Y,,Y
+O&M,PLANNED-01,Planned Outage Unit 1,CC,Y,,Y
+O&M,PLANNED-02,Planned Outage Unit 2,CC,Y,,Y
+O&M,PLANNED-03,Planned Outage Unit 3,CC,Y,,Y
+O&M,PLANNED-04,Planned Outage Unit 4,CC,Y,,Y
+O&M,PLANNED-05,Planned Outage Unit 5,CC,Y,,Y
+O&M,PLANNED-06,Planned Outage Unit 6,CC,Y,,Y
+O&M,PLANNED-13,Planned Outage JBR 13,CC,Y,,Y
+O&M,PLANNED-46,Planned Outage JBR 46,CC,Y,,Y
+O&M,UNPLANNED,Unplanned Outage,CC,Y,,Y
+T&D,EO,Electrical Operations,BOTH,N,,Y
+T&D,TC,Training & Compliance,BOTH,N,,Y
+T&D,TS,Transmission & Substation,BOTH,N,,Y
+T&D,RE,Relay/Metering/Communications,BOTH,N,,Y
+A&G,EO-ADMIN,EO Administration,BOTH,N,,Y
+A&G,EA,Environmental Safety & Health,BOTH,N,,Y
+A&G,IS,Information Systems,BOTH,N,,Y
+A&G,OS,Office Services,BOTH,N,,Y
+A&G,HR,Human Resources,BOTH,N,,Y
+A&G,AC,Accounting,BOTH,N,,Y
+A&G,TA,Treasury & Accounting,BOTH,N,,Y
+A&G,EX,Executive,BOTH,N,,Y
+

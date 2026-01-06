@@ -1,0 +1,1171 @@
+====================================================================================================
+DETAILED FORMULA EXTRACTION FOR FUEL COST CATEGORIES
+====================================================================================================
+
+================================================================================
+SHEET: CC Consumables
+================================================================================
+
+--- Row 25: Urea Cost (Total) ---
+Row Label: Total Urea Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C19:C24),0)
+  [FORMULA] D: =ROUND(SUM(D19:D24),0)
+  [FORMULA] E: =ROUND(SUM(E19:E24),0)
+  [FORMULA] F: =ROUND(SUM(F19:F24),0)
+  [FORMULA] G: =ROUND(SUM(G19:G24),0)
+
+CONTEXT (surrounding rows):
+      Row  15: A:Clifty Unit 6 | C:=IF(ISERROR(C$6*'CC Emissions'!C80),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D80),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E80),0,E$6*'CC Emis
+      Row  16: A:Plant | C:=SUM(C10:C15) | D:=SUM(D10:D15) | E:=SUM(E10:E15)
+      Row  17: 
+      Row  18: A:Urea Cost - $
+      Row  19: A:Clifty Unit 1 | C:=C10*C$7 | D:=D10*D$7 | E:=E10*E$7
+      Row  20: A:Clifty Unit 2 | C:=C11*C$7 | D:=D11*D$7 | E:=E11*E$7
+      Row  21: A:Clifty Unit 3 | C:=C12*C$7 | D:=D12*D$7 | E:=E12*E$7
+      Row  22: A:Clifty Unit 4 | C:=C13*C$7 | D:=D13*D$7 | E:=E13*E$7
+      Row  23: A:Clifty Unit 5 | C:=C14*C$7 | D:=D14*D$7 | E:=E14*E$7
+      Row  24: A:Clifty Unit 6 | C:=C15*C$7 | D:=D15*D$7 | E:=E15*E$7
+  >>> Row  25: A:Total Urea Cost | C:=ROUND(SUM(C19:C24),0) | D:=ROUND(SUM(D19:D24),0) | E:=ROUND(SUM(E19:E24),0)
+      Row  26: 
+      Row  27: A:Limestone
+      Row  28: A:FGD Removal Efficiency (%) | C:='CC Emissions'!C38 | D:='CC Emissions'!D38 | E:='CC Emissions'!E38
+      Row  29: A:lb-limestone/lb-SO2 | C:='CC Forecast Inputs'!$B$319 | D:='CC Forecast Inputs'!$B$319 | E:='CC Forecast Inputs'!$B$319
+      Row  30: A:CaCO3 Content (%) | C:='CC Forecast Inputs'!$B$320 | D:='CC Forecast Inputs'!$B$320 | E:='CC Forecast Inputs'!$B$320
+      Row  31: A: Moisture (%) | C:='CC Forecast Inputs'!$B$321 | D:='CC Forecast Inputs'!$B$321 | E:='CC Forecast Inputs'!$B$321
+      Row  32: A:$/ton
+      Row  33: 
+      Row  34: A:Limestone Tons
+      Row  35: A:Clifty Unit 1 | C:=IF(ISERROR(C$29*'CC Emissions'!C41*(1+'CC Consuma | D:=IF(ISERROR(D$29*'CC Emissions'!D41*(1+'CC Consuma | E:=IF(ISERROR(E$29*'CC Emissions'!E41*(1+'CC Consuma
+
+--- Row 24: Urea Usage Rate ---
+Row Label: Clifty Unit 6
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C15*C$7
+  [FORMULA] D: =D15*D$7
+  [FORMULA] E: =E15*E$7
+  [FORMULA] F: =F15*F$7
+  [FORMULA] G: =G15*G$7
+
+CONTEXT (surrounding rows):
+      Row  14: A:Clifty Unit 5 | C:=IF(ISERROR(C$6*'CC Emissions'!C79),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D79),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E79),0,E$6*'CC Emis
+      Row  15: A:Clifty Unit 6 | C:=IF(ISERROR(C$6*'CC Emissions'!C80),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D80),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E80),0,E$6*'CC Emis
+      Row  16: A:Plant | C:=SUM(C10:C15) | D:=SUM(D10:D15) | E:=SUM(E10:E15)
+      Row  17: 
+      Row  18: A:Urea Cost - $
+      Row  19: A:Clifty Unit 1 | C:=C10*C$7 | D:=D10*D$7 | E:=E10*E$7
+      Row  20: A:Clifty Unit 2 | C:=C11*C$7 | D:=D11*D$7 | E:=E11*E$7
+      Row  21: A:Clifty Unit 3 | C:=C12*C$7 | D:=D12*D$7 | E:=E12*E$7
+      Row  22: A:Clifty Unit 4 | C:=C13*C$7 | D:=D13*D$7 | E:=E13*E$7
+      Row  23: A:Clifty Unit 5 | C:=C14*C$7 | D:=D14*D$7 | E:=E14*E$7
+  >>> Row  24: A:Clifty Unit 6 | C:=C15*C$7 | D:=D15*D$7 | E:=E15*E$7
+      Row  25: A:Total Urea Cost | C:=ROUND(SUM(C19:C24),0) | D:=ROUND(SUM(D19:D24),0) | E:=ROUND(SUM(E19:E24),0)
+      Row  26: 
+      Row  27: A:Limestone
+      Row  28: A:FGD Removal Efficiency (%) | C:='CC Emissions'!C38 | D:='CC Emissions'!D38 | E:='CC Emissions'!E38
+      Row  29: A:lb-limestone/lb-SO2 | C:='CC Forecast Inputs'!$B$319 | D:='CC Forecast Inputs'!$B$319 | E:='CC Forecast Inputs'!$B$319
+      Row  30: A:CaCO3 Content (%) | C:='CC Forecast Inputs'!$B$320 | D:='CC Forecast Inputs'!$B$320 | E:='CC Forecast Inputs'!$B$320
+      Row  31: A: Moisture (%) | C:='CC Forecast Inputs'!$B$321 | D:='CC Forecast Inputs'!$B$321 | E:='CC Forecast Inputs'!$B$321
+      Row  32: A:$/ton
+      Row  33: 
+      Row  34: A:Limestone Tons
+
+--- Row 23: Urea Price ---
+Row Label: Clifty Unit 5
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C14*C$7
+  [FORMULA] D: =D14*D$7
+  [FORMULA] E: =E14*E$7
+  [FORMULA] F: =F14*F$7
+  [FORMULA] G: =G14*G$7
+
+CONTEXT (surrounding rows):
+      Row  13: A:Clifty Unit 4 | C:=IF(ISERROR(C$6*'CC Emissions'!C78),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D78),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E78),0,E$6*'CC Emis
+      Row  14: A:Clifty Unit 5 | C:=IF(ISERROR(C$6*'CC Emissions'!C79),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D79),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E79),0,E$6*'CC Emis
+      Row  15: A:Clifty Unit 6 | C:=IF(ISERROR(C$6*'CC Emissions'!C80),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D80),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E80),0,E$6*'CC Emis
+      Row  16: A:Plant | C:=SUM(C10:C15) | D:=SUM(D10:D15) | E:=SUM(E10:E15)
+      Row  17: 
+      Row  18: A:Urea Cost - $
+      Row  19: A:Clifty Unit 1 | C:=C10*C$7 | D:=D10*D$7 | E:=E10*E$7
+      Row  20: A:Clifty Unit 2 | C:=C11*C$7 | D:=D11*D$7 | E:=E11*E$7
+      Row  21: A:Clifty Unit 3 | C:=C12*C$7 | D:=D12*D$7 | E:=E12*E$7
+      Row  22: A:Clifty Unit 4 | C:=C13*C$7 | D:=D13*D$7 | E:=E13*E$7
+  >>> Row  23: A:Clifty Unit 5 | C:=C14*C$7 | D:=D14*D$7 | E:=E14*E$7
+      Row  24: A:Clifty Unit 6 | C:=C15*C$7 | D:=D15*D$7 | E:=E15*E$7
+      Row  25: A:Total Urea Cost | C:=ROUND(SUM(C19:C24),0) | D:=ROUND(SUM(D19:D24),0) | E:=ROUND(SUM(E19:E24),0)
+      Row  26: 
+      Row  27: A:Limestone
+      Row  28: A:FGD Removal Efficiency (%) | C:='CC Emissions'!C38 | D:='CC Emissions'!D38 | E:='CC Emissions'!E38
+      Row  29: A:lb-limestone/lb-SO2 | C:='CC Forecast Inputs'!$B$319 | D:='CC Forecast Inputs'!$B$319 | E:='CC Forecast Inputs'!$B$319
+      Row  30: A:CaCO3 Content (%) | C:='CC Forecast Inputs'!$B$320 | D:='CC Forecast Inputs'!$B$320 | E:='CC Forecast Inputs'!$B$320
+      Row  31: A: Moisture (%) | C:='CC Forecast Inputs'!$B$321 | D:='CC Forecast Inputs'!$B$321 | E:='CC Forecast Inputs'!$B$321
+      Row  32: A:$/ton
+      Row  33: 
+
+--- Row 22: Urea Tons ---
+Row Label: Clifty Unit 4
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C13*C$7
+  [FORMULA] D: =D13*D$7
+  [FORMULA] E: =E13*E$7
+  [FORMULA] F: =F13*F$7
+  [FORMULA] G: =G13*G$7
+
+CONTEXT (surrounding rows):
+      Row  12: A:Clifty Unit 3 | C:=IF(ISERROR(C$6*'CC Emissions'!C77),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D77),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E77),0,E$6*'CC Emis
+      Row  13: A:Clifty Unit 4 | C:=IF(ISERROR(C$6*'CC Emissions'!C78),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D78),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E78),0,E$6*'CC Emis
+      Row  14: A:Clifty Unit 5 | C:=IF(ISERROR(C$6*'CC Emissions'!C79),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D79),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E79),0,E$6*'CC Emis
+      Row  15: A:Clifty Unit 6 | C:=IF(ISERROR(C$6*'CC Emissions'!C80),0,C$6*'CC Emis | D:=IF(ISERROR(D$6*'CC Emissions'!D80),0,D$6*'CC Emis | E:=IF(ISERROR(E$6*'CC Emissions'!E80),0,E$6*'CC Emis
+      Row  16: A:Plant | C:=SUM(C10:C15) | D:=SUM(D10:D15) | E:=SUM(E10:E15)
+      Row  17: 
+      Row  18: A:Urea Cost - $
+      Row  19: A:Clifty Unit 1 | C:=C10*C$7 | D:=D10*D$7 | E:=E10*E$7
+      Row  20: A:Clifty Unit 2 | C:=C11*C$7 | D:=D11*D$7 | E:=E11*E$7
+      Row  21: A:Clifty Unit 3 | C:=C12*C$7 | D:=D12*D$7 | E:=E12*E$7
+  >>> Row  22: A:Clifty Unit 4 | C:=C13*C$7 | D:=D13*D$7 | E:=E13*E$7
+      Row  23: A:Clifty Unit 5 | C:=C14*C$7 | D:=D14*D$7 | E:=E14*E$7
+      Row  24: A:Clifty Unit 6 | C:=C15*C$7 | D:=D15*D$7 | E:=E15*E$7
+      Row  25: A:Total Urea Cost | C:=ROUND(SUM(C19:C24),0) | D:=ROUND(SUM(D19:D24),0) | E:=ROUND(SUM(E19:E24),0)
+      Row  26: 
+      Row  27: A:Limestone
+      Row  28: A:FGD Removal Efficiency (%) | C:='CC Emissions'!C38 | D:='CC Emissions'!D38 | E:='CC Emissions'!E38
+      Row  29: A:lb-limestone/lb-SO2 | C:='CC Forecast Inputs'!$B$319 | D:='CC Forecast Inputs'!$B$319 | E:='CC Forecast Inputs'!$B$319
+      Row  30: A:CaCO3 Content (%) | C:='CC Forecast Inputs'!$B$320 | D:='CC Forecast Inputs'!$B$320 | E:='CC Forecast Inputs'!$B$320
+      Row  31: A: Moisture (%) | C:='CC Forecast Inputs'!$B$321 | D:='CC Forecast Inputs'!$B$321 | E:='CC Forecast Inputs'!$B$321
+      Row  32: A:$/ton
+
+--- Row 65: Limestone Cost (Total) ---
+Row Label: Total Limestone Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C59:C64),0)
+  [FORMULA] D: =ROUND(SUM(D59:D64),0)
+  [FORMULA] E: =ROUND(SUM(E59:E64),0)
+  [FORMULA] F: =ROUND(SUM(F59:F64),0)
+  [FORMULA] G: =ROUND(SUM(G59:G64),0)
+
+CONTEXT (surrounding rows):
+      Row  55: A:Ending $ | C:=C53-C54 | D:=D53-D54 | E:=E53-E54
+      Row  56: A:$/ton | C:=C55/C48 | D:=D55/D48 | E:=E55/E48
+      Row  57: 
+      Row  58: A:Limestone Cost - $
+      Row  59: A:Clifty Unit 1 | C:=C$54*C35/C$41 | D:=D$54*D35/D$41 | E:=E$54*E35/E$41
+      Row  60: A:Clifty Unit 2 | C:=C$54*C36/C$41 | D:=D$54*D36/D$41 | E:=E$54*E36/E$41
+      Row  61: A:Clifty Unit 3 | C:=C$54*C37/C$41 | D:=D$54*D37/D$41 | E:=E$54*E37/E$41
+      Row  62: A:Clifty Unit 4 | C:=C$54*C38/C$41 | D:=D$54*D38/D$41 | E:=E$54*E38/E$41
+      Row  63: A:Clifty Unit 5 | C:=C$54*C39/C$41 | D:=D$54*D39/D$41 | E:=E$54*E39/E$41
+      Row  64: A:Clifty Unit 6 | C:=C$54*C40/C$41 | D:=D$54*D40/D$41 | E:=E$54*E40/E$41
+  >>> Row  65: A:Total Limestone Cost | C:=ROUND(SUM(C59:C64),0) | D:=ROUND(SUM(D59:D64),0) | E:=ROUND(SUM(E59:E64),0)
+      Row  66: 
+      Row  67: A:Hydrated Lime
+      Row  68: A:Hydrated Lime Tons
+      Row  69: A:Clifty Unit 1 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174
+      Row  70: A:Clifty Unit 2 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174
+      Row  71: A:Clifty Unit 3 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174
+      Row  72: A:Clifty Unit 4 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174
+      Row  73: A:Clifty Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174
+      Row  74: A:Clifty Unit 6 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+
+--- Row 64: Limestone Usage ---
+Row Label: Clifty Unit 6
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C$54*C40/C$41
+  [FORMULA] D: =D$54*D40/D$41
+  [FORMULA] E: =E$54*E40/E$41
+  [FORMULA] F: =F$54*F40/F$41
+  [FORMULA] G: =G$54*G40/G$41
+
+CONTEXT (surrounding rows):
+      Row  54: A:Consumed $ | C:=C53*(C47/C46) | D:=D53*(D47/D46) | E:=E53*(E47/E46)
+      Row  55: A:Ending $ | C:=C53-C54 | D:=D53-D54 | E:=E53-E54
+      Row  56: A:$/ton | C:=C55/C48 | D:=D55/D48 | E:=E55/E48
+      Row  57: 
+      Row  58: A:Limestone Cost - $
+      Row  59: A:Clifty Unit 1 | C:=C$54*C35/C$41 | D:=D$54*D35/D$41 | E:=E$54*E35/E$41
+      Row  60: A:Clifty Unit 2 | C:=C$54*C36/C$41 | D:=D$54*D36/D$41 | E:=E$54*E36/E$41
+      Row  61: A:Clifty Unit 3 | C:=C$54*C37/C$41 | D:=D$54*D37/D$41 | E:=E$54*E37/E$41
+      Row  62: A:Clifty Unit 4 | C:=C$54*C38/C$41 | D:=D$54*D38/D$41 | E:=E$54*E38/E$41
+      Row  63: A:Clifty Unit 5 | C:=C$54*C39/C$41 | D:=D$54*D39/D$41 | E:=E$54*E39/E$41
+  >>> Row  64: A:Clifty Unit 6 | C:=C$54*C40/C$41 | D:=D$54*D40/D$41 | E:=E$54*E40/E$41
+      Row  65: A:Total Limestone Cost | C:=ROUND(SUM(C59:C64),0) | D:=ROUND(SUM(D59:D64),0) | E:=ROUND(SUM(E59:E64),0)
+      Row  66: 
+      Row  67: A:Hydrated Lime
+      Row  68: A:Hydrated Lime Tons
+      Row  69: A:Clifty Unit 1 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174
+      Row  70: A:Clifty Unit 2 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174
+      Row  71: A:Clifty Unit 3 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174
+      Row  72: A:Clifty Unit 4 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174
+      Row  73: A:Clifty Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174
+      Row  74: A:Clifty Unit 6 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174
+
+--- Row 63: Limestone Price ---
+Row Label: Clifty Unit 5
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C$54*C39/C$41
+  [FORMULA] D: =D$54*D39/D$41
+  [FORMULA] E: =E$54*E39/E$41
+  [FORMULA] F: =F$54*F39/F$41
+  [FORMULA] G: =G$54*G39/G$41
+
+CONTEXT (surrounding rows):
+      Row  53: A:Available $ | C:=C51+C52 | D:=D51+D52 | E:=E51+E52
+      Row  54: A:Consumed $ | C:=C53*(C47/C46) | D:=D53*(D47/D46) | E:=E53*(E47/E46)
+      Row  55: A:Ending $ | C:=C53-C54 | D:=D53-D54 | E:=E53-E54
+      Row  56: A:$/ton | C:=C55/C48 | D:=D55/D48 | E:=E55/E48
+      Row  57: 
+      Row  58: A:Limestone Cost - $
+      Row  59: A:Clifty Unit 1 | C:=C$54*C35/C$41 | D:=D$54*D35/D$41 | E:=E$54*E35/E$41
+      Row  60: A:Clifty Unit 2 | C:=C$54*C36/C$41 | D:=D$54*D36/D$41 | E:=E$54*E36/E$41
+      Row  61: A:Clifty Unit 3 | C:=C$54*C37/C$41 | D:=D$54*D37/D$41 | E:=E$54*E37/E$41
+      Row  62: A:Clifty Unit 4 | C:=C$54*C38/C$41 | D:=D$54*D38/D$41 | E:=E$54*E38/E$41
+  >>> Row  63: A:Clifty Unit 5 | C:=C$54*C39/C$41 | D:=D$54*D39/D$41 | E:=E$54*E39/E$41
+      Row  64: A:Clifty Unit 6 | C:=C$54*C40/C$41 | D:=D$54*D40/D$41 | E:=E$54*E40/E$41
+      Row  65: A:Total Limestone Cost | C:=ROUND(SUM(C59:C64),0) | D:=ROUND(SUM(D59:D64),0) | E:=ROUND(SUM(E59:E64),0)
+      Row  66: 
+      Row  67: A:Hydrated Lime
+      Row  68: A:Hydrated Lime Tons
+      Row  69: A:Clifty Unit 1 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$174
+      Row  70: A:Clifty Unit 2 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$174
+      Row  71: A:Clifty Unit 3 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$174
+      Row  72: A:Clifty Unit 4 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174
+      Row  73: A:Clifty Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174
+
+--- Row 84: Hydrated Lime Cost (Total) ---
+Row Label: Total Hydrated Lime Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C78:C83),0)
+  [FORMULA] D: =ROUND(SUM(D78:D83),0)
+  [FORMULA] E: =ROUND(SUM(E78:E83),0)
+  [FORMULA] F: =ROUND(SUM(F78:F83),0)
+  [FORMULA] G: =ROUND(SUM(G78:G83),0)
+
+CONTEXT (surrounding rows):
+      Row  74: A:Clifty Unit 6 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+      Row  76: A:SO2 Tons Removed | C:=INDEX('CC Emissions'!$47:$47,MATCH(C$1,'CC Emissi | D:=INDEX('CC Emissions'!$47:$47,MATCH(D$1,'CC Emissi | E:=INDEX('CC Emissions'!$47:$47,MATCH(E$1,'CC Emissi
+      Row  77: A:Hydrated Lime Cost - $
+      Row  78: A:Clifty Unit 1 | C:=C69*C$86 | D:=D69*D$86 | E:=E69*E$86
+      Row  79: A:Clifty Unit 2 | C:=C70*C$86 | D:=D70*D$86 | E:=E70*E$86
+      Row  80: A:Clifty Unit 3 | C:=C71*C$86 | D:=D71*D$86 | E:=E71*E$86
+      Row  81: A:Clifty Unit 4 | C:=C72*C$86 | D:=D72*D$86 | E:=E72*E$86
+      Row  82: A:Clifty Unit 5 | C:=C73*C$86 | D:=D73*D$86 | E:=E73*E$86
+      Row  83: A:Clifty Unit 6 | C:=C74*C$86 | D:=D74*D$86 | E:=E74*E$86
+  >>> Row  84: A:Total Hydrated Lime Cost | C:=ROUND(SUM(C78:C83),0) | D:=ROUND(SUM(D78:D83),0) | E:=ROUND(SUM(E78:E83),0)
+      Row  85: 
+      Row  86: A:Hydrated Lime $/ton | C:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | D:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | E:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA
+      Row  87: A:Stack Outlet SO3, ppm | C:='CC Forecast Inputs'!$B328 | D:='CC Forecast Inputs'!$B328 | E:='CC Forecast Inputs'!$B328
+      Row  88: A:Flue Gas MW @ AH In, #/mol | C:='CC Forecast Inputs'!$B329 | D:='CC Forecast Inputs'!$B329 | E:='CC Forecast Inputs'!$B329
+      Row  89: A:Flue Gas MW @ AH Out, #/mol | C:='CC Forecast Inputs'!$B330 | D:='CC Forecast Inputs'!$B330 | E:='CC Forecast Inputs'!$B330
+      Row  90: A:SO2 MW, #/mol | C:='CC Forecast Inputs'!$B331 | D:='CC Forecast Inputs'!$B331 | E:='CC Forecast Inputs'!$B331
+      Row  91: A:Economizer Outlet Temp, DegF | C:='CC Forecast Inputs'!$B332 | D:='CC Forecast Inputs'!$B332 | E:='CC Forecast Inputs'!$B332
+      Row  92: A:Flue Gas Flow @ AH In, # FG/# Fuel | C:='CC Forecast Inputs'!$B333 | D:='CC Forecast Inputs'!$B333 | E:='CC Forecast Inputs'!$B333
+      Row  93: A:Flue Gas Flow @ AH Out, # FG/# Fuel | C:='CC Forecast Inputs'!$B334 | D:='CC Forecast Inputs'!$B334 | E:='CC Forecast Inputs'!$B334
+      Row  94: A:Ammonia Injection On | C:='CC Forecast Inputs'!$B335 | D:='CC Forecast Inputs'!$B335 | E:='CC Forecast Inputs'!$B335
+
+--- Row 83: Hydrated Lime Usage ---
+Row Label: Clifty Unit 6
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C74*C$86
+  [FORMULA] D: =D74*D$86
+  [FORMULA] E: =E74*E$86
+  [FORMULA] F: =F74*F$86
+  [FORMULA] G: =G74*G$86
+
+CONTEXT (surrounding rows):
+      Row  73: A:Clifty Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174
+      Row  74: A:Clifty Unit 6 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+      Row  76: A:SO2 Tons Removed | C:=INDEX('CC Emissions'!$47:$47,MATCH(C$1,'CC Emissi | D:=INDEX('CC Emissions'!$47:$47,MATCH(D$1,'CC Emissi | E:=INDEX('CC Emissions'!$47:$47,MATCH(E$1,'CC Emissi
+      Row  77: A:Hydrated Lime Cost - $
+      Row  78: A:Clifty Unit 1 | C:=C69*C$86 | D:=D69*D$86 | E:=E69*E$86
+      Row  79: A:Clifty Unit 2 | C:=C70*C$86 | D:=D70*D$86 | E:=E70*E$86
+      Row  80: A:Clifty Unit 3 | C:=C71*C$86 | D:=D71*D$86 | E:=E71*E$86
+      Row  81: A:Clifty Unit 4 | C:=C72*C$86 | D:=D72*D$86 | E:=E72*E$86
+      Row  82: A:Clifty Unit 5 | C:=C73*C$86 | D:=D73*D$86 | E:=E73*E$86
+  >>> Row  83: A:Clifty Unit 6 | C:=C74*C$86 | D:=D74*D$86 | E:=E74*E$86
+      Row  84: A:Total Hydrated Lime Cost | C:=ROUND(SUM(C78:C83),0) | D:=ROUND(SUM(D78:D83),0) | E:=ROUND(SUM(E78:E83),0)
+      Row  85: 
+      Row  86: A:Hydrated Lime $/ton | C:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | D:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | E:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA
+      Row  87: A:Stack Outlet SO3, ppm | C:='CC Forecast Inputs'!$B328 | D:='CC Forecast Inputs'!$B328 | E:='CC Forecast Inputs'!$B328
+      Row  88: A:Flue Gas MW @ AH In, #/mol | C:='CC Forecast Inputs'!$B329 | D:='CC Forecast Inputs'!$B329 | E:='CC Forecast Inputs'!$B329
+      Row  89: A:Flue Gas MW @ AH Out, #/mol | C:='CC Forecast Inputs'!$B330 | D:='CC Forecast Inputs'!$B330 | E:='CC Forecast Inputs'!$B330
+      Row  90: A:SO2 MW, #/mol | C:='CC Forecast Inputs'!$B331 | D:='CC Forecast Inputs'!$B331 | E:='CC Forecast Inputs'!$B331
+      Row  91: A:Economizer Outlet Temp, DegF | C:='CC Forecast Inputs'!$B332 | D:='CC Forecast Inputs'!$B332 | E:='CC Forecast Inputs'!$B332
+      Row  92: A:Flue Gas Flow @ AH In, # FG/# Fuel | C:='CC Forecast Inputs'!$B333 | D:='CC Forecast Inputs'!$B333 | E:='CC Forecast Inputs'!$B333
+      Row  93: A:Flue Gas Flow @ AH Out, # FG/# Fuel | C:='CC Forecast Inputs'!$B334 | D:='CC Forecast Inputs'!$B334 | E:='CC Forecast Inputs'!$B334
+
+--- Row 82: Hydrated Lime Price ---
+Row Label: Clifty Unit 5
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C73*C$86
+  [FORMULA] D: =D73*D$86
+  [FORMULA] E: =E73*E$86
+  [FORMULA] F: =F73*F$86
+  [FORMULA] G: =G73*G$86
+
+CONTEXT (surrounding rows):
+      Row  72: A:Clifty Unit 4 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$174
+      Row  73: A:Clifty Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$174
+      Row  74: A:Clifty Unit 6 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A74,$A$104:$A$174
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+      Row  76: A:SO2 Tons Removed | C:=INDEX('CC Emissions'!$47:$47,MATCH(C$1,'CC Emissi | D:=INDEX('CC Emissions'!$47:$47,MATCH(D$1,'CC Emissi | E:=INDEX('CC Emissions'!$47:$47,MATCH(E$1,'CC Emissi
+      Row  77: A:Hydrated Lime Cost - $
+      Row  78: A:Clifty Unit 1 | C:=C69*C$86 | D:=D69*D$86 | E:=E69*E$86
+      Row  79: A:Clifty Unit 2 | C:=C70*C$86 | D:=D70*D$86 | E:=E70*E$86
+      Row  80: A:Clifty Unit 3 | C:=C71*C$86 | D:=D71*D$86 | E:=E71*E$86
+      Row  81: A:Clifty Unit 4 | C:=C72*C$86 | D:=D72*D$86 | E:=E72*E$86
+  >>> Row  82: A:Clifty Unit 5 | C:=C73*C$86 | D:=D73*D$86 | E:=E73*E$86
+      Row  83: A:Clifty Unit 6 | C:=C74*C$86 | D:=D74*D$86 | E:=E74*E$86
+      Row  84: A:Total Hydrated Lime Cost | C:=ROUND(SUM(C78:C83),0) | D:=ROUND(SUM(D78:D83),0) | E:=ROUND(SUM(E78:E83),0)
+      Row  85: 
+      Row  86: A:Hydrated Lime $/ton | C:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | D:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA | E:=ROUND(INDEX('CC Forecast Inputs'!$B$325:$T$325,MA
+      Row  87: A:Stack Outlet SO3, ppm | C:='CC Forecast Inputs'!$B328 | D:='CC Forecast Inputs'!$B328 | E:='CC Forecast Inputs'!$B328
+      Row  88: A:Flue Gas MW @ AH In, #/mol | C:='CC Forecast Inputs'!$B329 | D:='CC Forecast Inputs'!$B329 | E:='CC Forecast Inputs'!$B329
+      Row  89: A:Flue Gas MW @ AH Out, #/mol | C:='CC Forecast Inputs'!$B330 | D:='CC Forecast Inputs'!$B330 | E:='CC Forecast Inputs'!$B330
+      Row  90: A:SO2 MW, #/mol | C:='CC Forecast Inputs'!$B331 | D:='CC Forecast Inputs'!$B331 | E:='CC Forecast Inputs'!$B331
+      Row  91: A:Economizer Outlet Temp, DegF | C:='CC Forecast Inputs'!$B332 | D:='CC Forecast Inputs'!$B332 | E:='CC Forecast Inputs'!$B332
+      Row  92: A:Flue Gas Flow @ AH In, # FG/# Fuel | C:='CC Forecast Inputs'!$B333 | D:='CC Forecast Inputs'!$B333 | E:='CC Forecast Inputs'!$B333
+
+--- Row 179: Bioreactor Reagent Cost ---
+Row Label: Bioreactor Reagent and Support Expense ($/month)
+
+FORMULAS/VALUES:
+  [VALUE] C: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6ABF5970>
+  [VALUE] D: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6ABF5A00>
+  [VALUE] E: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6ABF5A30>
+  [VALUE] F: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6ABF6BD0>
+  [VALUE] G: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6ABF5A60>
+
+CONTEXT (surrounding rows):
+      Row 169: A:AH Outlet, ppmV | C:=C168*(1-C$99) | D:=D168*(1-D$99) | E:=E168*(1-E$99)
+      Row 170: A:Mole SO3, Mole | C:=IF(ISERROR(C169*C$93*'CC Coal Burn'!C$56*2000/10^ | D:=IF(ISERROR(D169*D$93*'CC Coal Burn'!D$56*2000/10^ | E:=IF(ISERROR(E169*E$93*'CC Coal Burn'!E$56*2000/10^
+      Row 171: A:ESP Out SO3 Required, ppmV | C:=C$87/(1-C$100) | D:=D$87/(1-D$100) | E:=E$87/(1-E$100)
+      Row 172: A:Hydrated Lime SO3 Removal Required, % | C:=MIN(0.9,(C169-C171)/C169) | D:=MIN(0.9,(D169-D171)/D169) | E:=MIN(0.9,(E169-E171)/E169)
+      Row 173: A:Stoich Ratio Required | C:='CC Forecast Inputs'!$G$349 | D:='CC Forecast Inputs'!$G$349 | E:='CC Forecast Inputs'!$G$349
+      Row 174: A:No Hydrated Lime Required, No SCR | C: | D: | E:
+      Row 175: A:SO3 Production Rates
+      Row 176: A:CC6 Temp. adj. SCR conversion n/a | C: | D: | E:
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+  >>> Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 180: A:Reagent Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+
+--- Row 180: Bioreactor Support Cost ---
+Row Label: Reagent Expense ($/month)
+
+FORMULAS/VALUES:
+  [VALUE] C: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC12300>
+  [VALUE] D: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC123F0>
+  [VALUE] E: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC124E0>
+  [VALUE] F: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC125D0>
+  [VALUE] G: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC126C0>
+
+CONTEXT (surrounding rows):
+      Row 170: A:Mole SO3, Mole | C:=IF(ISERROR(C169*C$93*'CC Coal Burn'!C$56*2000/10^ | D:=IF(ISERROR(D169*D$93*'CC Coal Burn'!D$56*2000/10^ | E:=IF(ISERROR(E169*E$93*'CC Coal Burn'!E$56*2000/10^
+      Row 171: A:ESP Out SO3 Required, ppmV | C:=C$87/(1-C$100) | D:=D$87/(1-D$100) | E:=E$87/(1-E$100)
+      Row 172: A:Hydrated Lime SO3 Removal Required, % | C:=MIN(0.9,(C169-C171)/C169) | D:=MIN(0.9,(D169-D171)/D169) | E:=MIN(0.9,(E169-E171)/E169)
+      Row 173: A:Stoich Ratio Required | C:='CC Forecast Inputs'!$G$349 | D:='CC Forecast Inputs'!$G$349 | E:='CC Forecast Inputs'!$G$349
+      Row 174: A:No Hydrated Lime Required, No SCR | C: | D: | E:
+      Row 175: A:SO3 Production Rates
+      Row 176: A:CC6 Temp. adj. SCR conversion n/a | C: | D: | E:
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+  >>> Row 180: A:Reagent Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+
+--- Row 182: WWTP Reagent Cost ---
+Row Label: WWTP Reagent ($/month)
+
+FORMULAS/VALUES:
+  [VALUE] C: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC42510>
+  [VALUE] D: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC42570>
+  [VALUE] E: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC425A0>
+  [VALUE] F: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC425D0>
+  [VALUE] G: <openpyxl.worksheet.formula.ArrayFormula object at 0x0000021D6AC42600>
+
+CONTEXT (surrounding rows):
+      Row 172: A:Hydrated Lime SO3 Removal Required, % | C:=MIN(0.9,(C169-C171)/C169) | D:=MIN(0.9,(D169-D171)/D169) | E:=MIN(0.9,(E169-E171)/E169)
+      Row 173: A:Stoich Ratio Required | C:='CC Forecast Inputs'!$G$349 | D:='CC Forecast Inputs'!$G$349 | E:='CC Forecast Inputs'!$G$349
+      Row 174: A:No Hydrated Lime Required, No SCR | C: | D: | E:
+      Row 175: A:SO3 Production Rates
+      Row 176: A:CC6 Temp. adj. SCR conversion n/a | C: | D: | E:
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 180: A:Reagent Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 181: 
+  >>> Row 182: A:WWTP Reagent ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+
+--- Row 184: Misc Reagents Cost ---
+Row Label: Misc. Reagent Expenses
+
+FORMULAS/VALUES:
+  [FORMULA] C: =INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(C$1),'CC Forecast Inputs'!$357:$357,0))
+  [FORMULA] D: =INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(D$1),'CC Forecast Inputs'!$357:$357,0))
+  [FORMULA] E: =INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(E$1),'CC Forecast Inputs'!$357:$357,0))
+  [FORMULA] F: =INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(F$1),'CC Forecast Inputs'!$357:$357,0))
+  [FORMULA] G: =INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(G$1),'CC Forecast Inputs'!$357:$357,0))
+
+CONTEXT (surrounding rows):
+      Row 174: A:No Hydrated Lime Required, No SCR | C: | D: | E:
+      Row 175: A:SO3 Production Rates
+      Row 176: A:CC6 Temp. adj. SCR conversion n/a | C: | D: | E:
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 180: A:Reagent Expense ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:<openpyxl.worksheet.formula.ArrayFormula object at | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 183: 
+  >>> Row 184: A:Misc. Reagent Expenses | C:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('CC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+
+================================================================================
+SHEET: KC Consumables
+================================================================================
+
+--- Row 25: Urea Cost (Total) ---
+Row Label: Total Urea Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C19:C24),0)
+  [FORMULA] D: =ROUND(SUM(D19:D24),0)
+  [FORMULA] E: =ROUND(SUM(E19:E24),0)
+  [FORMULA] F: =ROUND(SUM(F19:F24),0)
+  [FORMULA] G: =ROUND(SUM(G19:G24),0)
+
+CONTEXT (surrounding rows):
+      Row  15: 
+      Row  16: A:Plant | C:=SUM(C10:C15) | D:=SUM(D10:D15) | E:=SUM(E10:E15)
+      Row  17: 
+      Row  18: A:Urea Cost - $
+      Row  19: A:Kyger Unit 1 | C:=C10*C$7 | D:=D10*D$7 | E:=E10*E$7
+      Row  20: A:Kyger Unit 2 | C:=C11*C$7 | D:=D11*D$7 | E:=E11*E$7
+      Row  21: A:Kyger Unit 3 | C:=C12*C$7 | D:=D12*D$7 | E:=E12*E$7
+      Row  22: A:Kyger Unit 4 | C:=C13*C$7 | D:=D13*D$7 | E:=E13*E$7
+      Row  23: A:Kyger Unit 5 | C:=C14*C$7 | D:=D14*D$7 | E:=E14*E$7
+      Row  24: 
+  >>> Row  25: A:Total Urea Cost | C:=ROUND(SUM(C19:C24),0) | D:=ROUND(SUM(D19:D24),0) | E:=ROUND(SUM(E19:E24),0)
+      Row  26: 
+      Row  27: A:Limestone
+      Row  28: A:FGD Removal Efficiency (%) | C:='KC Emissions'!C38 | D:='KC Emissions'!D38 | E:='KC Emissions'!E38
+      Row  29: A:lb-limestone/lb-SO2 | C:='KC Forecast Inputs'!$B$319 | D:='KC Forecast Inputs'!$B$319 | E:='KC Forecast Inputs'!$B$319
+      Row  30: A:CaCO3 Content (%) | C:='KC Forecast Inputs'!$B$320 | D:='KC Forecast Inputs'!$B$320 | E:='KC Forecast Inputs'!$B$320
+      Row  31: A: Moisture (%) | C:='KC Forecast Inputs'!$B$321 | D:='KC Forecast Inputs'!$B$321 | E:='KC Forecast Inputs'!$B$321
+      Row  32: A:$/ton
+      Row  33: 
+      Row  34: A:Limestone Tons
+      Row  35: A:Kyger Unit 1 | C:=IF(ISERROR(C$29*'KC Emissions'!C41*(1+'KC Consuma | D:=IF(ISERROR(D$29*'KC Emissions'!D41*(1+'KC Consuma | E:=IF(ISERROR(E$29*'KC Emissions'!E41*(1+'KC Consuma
+
+--- Row 65: Limestone Cost (Total) ---
+Row Label: Total Limestone Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C59:C64),0)
+  [FORMULA] D: =ROUND(SUM(D59:D64),0)
+  [FORMULA] E: =ROUND(SUM(E59:E64),0)
+  [FORMULA] F: =ROUND(SUM(F59:F64),0)
+  [FORMULA] G: =ROUND(SUM(G59:G64),0)
+
+CONTEXT (surrounding rows):
+      Row  55: A:Ending $ | C:=C53-C54 | D:=D53-D54 | E:=E53-E54
+      Row  56: A:$/ton | C:=C55/C48 | D:=D55/D48 | E:=E55/E48
+      Row  57: 
+      Row  58: A:Limestone Cost - $
+      Row  59: A:Kyger Unit 1 | C:=C$54*C35/C$41 | D:=D$54*D35/D$41 | E:=E$54*E35/E$41
+      Row  60: A:Kyger Unit 2 | C:=C$54*C36/C$41 | D:=D$54*D36/D$41 | E:=E$54*E36/E$41
+      Row  61: A:Kyger Unit 3 | C:=C$54*C37/C$41 | D:=D$54*D37/D$41 | E:=E$54*E37/E$41
+      Row  62: A:Kyger Unit 4 | C:=C$54*C38/C$41 | D:=D$54*D38/D$41 | E:=E$54*E38/E$41
+      Row  63: A:Kyger Unit 5 | C:=C$54*C39/C$41 | D:=D$54*D39/D$41 | E:=E$54*E39/E$41
+      Row  64: 
+  >>> Row  65: A:Total Limestone Cost | C:=ROUND(SUM(C59:C64),0) | D:=ROUND(SUM(D59:D64),0) | E:=ROUND(SUM(E59:E64),0)
+      Row  66: 
+      Row  67: A:Hydrated Lime
+      Row  68: A:Trona Tons
+      Row  69: A:Kyger Unit 1 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$176 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$176 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A69,$A$104:$A$176
+      Row  70: A:Kyger Unit 2 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$176 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$176 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A70,$A$104:$A$176
+      Row  71: A:Kyger Unit 3 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$176 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$176 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A71,$A$104:$A$176
+      Row  72: A:Kyger Unit 4 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$176 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$176 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A72,$A$104:$A$176
+      Row  73: A:Kyger Unit 5 | C:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$176 | D:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$176 | E:=IF(ISERROR(OFFSET($A$103,MATCH($A73,$A$104:$A$176
+      Row  74: 
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+
+--- Row 84: Hydrated Lime Cost (Total) ---
+Row Label: Total Hydrated Lime Cost
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(SUM(C78:C83),0)
+  [FORMULA] D: =ROUND(SUM(D78:D83),0)
+  [FORMULA] E: =ROUND(SUM(E78:E83),0)
+  [FORMULA] F: =ROUND(SUM(F78:F83),0)
+  [FORMULA] G: =ROUND(SUM(G78:G83),0)
+
+CONTEXT (surrounding rows):
+      Row  74: 
+      Row  75: A:Plant | C:=SUM(C69:C74) | D:=SUM(D69:D74) | E:=SUM(E69:E74)
+      Row  76: A:SO2 Tons Removed | C:=INDEX('CC Emissions'!$47:$47,MATCH(C$1,'CC Emissi | D:=INDEX('CC Emissions'!$47:$47,MATCH(D$1,'CC Emissi | E:=INDEX('CC Emissions'!$47:$47,MATCH(E$1,'CC Emissi
+      Row  77: A:Hydrated Lime Cost - $
+      Row  78: A:Kyger Unit 1 | C:=C69*C$86 | D:=D69*D$86 | E:=E69*E$86
+      Row  79: A:Kyger Unit 2 | C:=C70*C$86 | D:=D70*D$86 | E:=E70*E$86
+      Row  80: A:Kyger Unit 3 | C:=C71*C$86 | D:=D71*D$86 | E:=E71*E$86
+      Row  81: A:Kyger Unit 4 | C:=C72*C$86 | D:=D72*D$86 | E:=E72*E$86
+      Row  82: A:Kyger Unit 5 | C:=C73*C$86 | D:=D73*D$86 | E:=E73*E$86
+      Row  83: 
+  >>> Row  84: A:Total Hydrated Lime Cost | C:=ROUND(SUM(C78:C83),0) | D:=ROUND(SUM(D78:D83),0) | E:=ROUND(SUM(E78:E83),0)
+      Row  85: 
+      Row  86: A:Trona $/ton | C:=ROUND(INDEX('KC Forecast Inputs'!$B$325:$T$325,MA | D:=ROUND(INDEX('KC Forecast Inputs'!$B$325:$T$325,MA | E:=ROUND(INDEX('KC Forecast Inputs'!$B$325:$T$325,MA
+      Row  87: A:Stack Outlet SO3, ppm | C:='KC Forecast Inputs'!$B328 | D:='KC Forecast Inputs'!$B328 | E:='KC Forecast Inputs'!$B328
+      Row  88: A:Flue Gas MW @ AH In, #/mol | C:='KC Forecast Inputs'!$B329 | D:='KC Forecast Inputs'!$B329 | E:='KC Forecast Inputs'!$B329
+      Row  89: A:Flue Gas MW @ AH Out, #/mol | C:='KC Forecast Inputs'!$B330 | D:='KC Forecast Inputs'!$B330 | E:='KC Forecast Inputs'!$B330
+      Row  90: A:SO2 MW, #/mol | C:='KC Forecast Inputs'!$B331 | D:='KC Forecast Inputs'!$B331 | E:='KC Forecast Inputs'!$B331
+      Row  91: A:Economizer Outlet Temp, DegF | C:='KC Forecast Inputs'!$B332 | D:='KC Forecast Inputs'!$B332 | E:='KC Forecast Inputs'!$B332
+      Row  92: A:Flue Gas Flow @ AH In, # FG/# Fuel | C:='KC Forecast Inputs'!$B333 | D:='KC Forecast Inputs'!$B333 | E:='KC Forecast Inputs'!$B333
+      Row  93: A:Flue Gas Flow @ AH Out, # FG/# Fuel | C:='KC Forecast Inputs'!$B334 | D:='KC Forecast Inputs'!$B334 | E:='KC Forecast Inputs'!$B334
+      Row  94: A:Ammonia Injection On | C:='KC Forecast Inputs'!$B335 | D:='KC Forecast Inputs'!$B335 | E:='KC Forecast Inputs'!$B335
+
+--- Row 179: Bioreactor Reagent Cost ---
+Row Label: Bioreactor Reagent and Support Expense ($/month)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =IF(AND(C$1>=kc_bioreactorSupportStart,C$1<kc_bioreactorSupportEnd),kc_bioreactorSupport,0)
+  [FORMULA] D: =IF(AND(D$1>=kc_bioreactorSupportStart,D$1<kc_bioreactorSupportEnd),kc_bioreactorSupport,0)
+  [FORMULA] E: =IF(AND(E$1>=kc_bioreactorSupportStart,E$1<kc_bioreactorSupportEnd),kc_bioreactorSupport,0)
+  [FORMULA] F: =IF(AND(F$1>=kc_bioreactorSupportStart,F$1<kc_bioreactorSupportEnd),kc_bioreactorSupport,0)
+  [FORMULA] G: =IF(AND(G$1>=kc_bioreactorSupportStart,G$1<kc_bioreactorSupportEnd),kc_bioreactorSupport,0)
+
+CONTEXT (surrounding rows):
+      Row 169: 
+      Row 170: 
+      Row 171: 
+      Row 172: 
+      Row 173: 
+      Row 174: 
+      Row 175: 
+      Row 176: 
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+  >>> Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:=IF(AND(C$1>=kc_bioreactorSupportStart,C$1<kc_bior | D:=IF(AND(D$1>=kc_bioreactorSupportStart,D$1<kc_bior | E:=IF(AND(E$1>=kc_bioreactorSupportStart,E$1<kc_bior
+      Row 180: A:Reagent Expense ($/month) | C:=IF(C$1>=kc_bioreactorReagentStart,kc_bioreactorRe | D:=IF(D$1>=kc_bioreactorReagentStart,kc_bioreactorRe | E:=IF(E$1>=kc_bioreactorReagentStart,kc_bioreactorRe
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:=kc_wwtpReagent | D:=kc_wwtpReagent | E:=kc_wwtpReagent
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+      Row 187: 
+
+--- Row 180: Bioreactor Support Cost ---
+Row Label: Reagent Expense ($/month)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =IF(C$1>=kc_bioreactorReagentStart,kc_bioreactorReagent,0)
+  [FORMULA] D: =IF(D$1>=kc_bioreactorReagentStart,kc_bioreactorReagent,0)
+  [FORMULA] E: =IF(E$1>=kc_bioreactorReagentStart,kc_bioreactorReagent,0)
+  [FORMULA] F: =IF(F$1>=kc_bioreactorReagentStart,kc_bioreactorReagent,0)
+  [FORMULA] G: =IF(G$1>=kc_bioreactorReagentStart,kc_bioreactorReagent,0)
+
+CONTEXT (surrounding rows):
+      Row 170: 
+      Row 171: 
+      Row 172: 
+      Row 173: 
+      Row 174: 
+      Row 175: 
+      Row 176: 
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:=IF(AND(C$1>=kc_bioreactorSupportStart,C$1<kc_bior | D:=IF(AND(D$1>=kc_bioreactorSupportStart,D$1<kc_bior | E:=IF(AND(E$1>=kc_bioreactorSupportStart,E$1<kc_bior
+  >>> Row 180: A:Reagent Expense ($/month) | C:=IF(C$1>=kc_bioreactorReagentStart,kc_bioreactorRe | D:=IF(D$1>=kc_bioreactorReagentStart,kc_bioreactorRe | E:=IF(E$1>=kc_bioreactorReagentStart,kc_bioreactorRe
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:=kc_wwtpReagent | D:=kc_wwtpReagent | E:=kc_wwtpReagent
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+      Row 187: 
+
+--- Row 182: WWTP Reagent Cost ---
+Row Label: WWTP Reagent ($/month)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =kc_wwtpReagent
+  [FORMULA] D: =kc_wwtpReagent
+  [FORMULA] E: =kc_wwtpReagent
+  [FORMULA] F: =kc_wwtpReagent
+  [FORMULA] G: =kc_wwtpReagent
+
+CONTEXT (surrounding rows):
+      Row 172: 
+      Row 173: 
+      Row 174: 
+      Row 175: 
+      Row 176: 
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:=IF(AND(C$1>=kc_bioreactorSupportStart,C$1<kc_bior | D:=IF(AND(D$1>=kc_bioreactorSupportStart,D$1<kc_bior | E:=IF(AND(E$1>=kc_bioreactorSupportStart,E$1<kc_bior
+      Row 180: A:Reagent Expense ($/month) | C:=IF(C$1>=kc_bioreactorReagentStart,kc_bioreactorRe | D:=IF(D$1>=kc_bioreactorReagentStart,kc_bioreactorRe | E:=IF(E$1>=kc_bioreactorReagentStart,kc_bioreactorRe
+      Row 181: 
+  >>> Row 182: A:WWTP Reagent ($/month) | C:=kc_wwtpReagent | D:=kc_wwtpReagent | E:=kc_wwtpReagent
+      Row 183: 
+      Row 184: A:Misc. Reagent Expenses | C:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+      Row 187: 
+
+--- Row 184: Misc Reagents Cost ---
+Row Label: Misc. Reagent Expenses
+
+FORMULAS/VALUES:
+  [FORMULA] C: =INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(C$1),'KC Forecast Inputs'!$357:$357,0))
+  [FORMULA] D: =INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(D$1),'KC Forecast Inputs'!$357:$357,0))
+  [FORMULA] E: =INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(E$1),'KC Forecast Inputs'!$357:$357,0))
+  [FORMULA] F: =INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(F$1),'KC Forecast Inputs'!$357:$357,0))
+  [FORMULA] G: =INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(G$1),'KC Forecast Inputs'!$357:$357,0))
+
+CONTEXT (surrounding rows):
+      Row 174: 
+      Row 175: 
+      Row 176: 
+      Row 177: 
+      Row 178: A:Bioreactor and WWTP Reagent Expenses
+      Row 179: A:Bioreactor Reagent and Support Expense ($/month) | C:=IF(AND(C$1>=kc_bioreactorSupportStart,C$1<kc_bior | D:=IF(AND(D$1>=kc_bioreactorSupportStart,D$1<kc_bior | E:=IF(AND(E$1>=kc_bioreactorSupportStart,E$1<kc_bior
+      Row 180: A:Reagent Expense ($/month) | C:=IF(C$1>=kc_bioreactorReagentStart,kc_bioreactorRe | D:=IF(D$1>=kc_bioreactorReagentStart,kc_bioreactorRe | E:=IF(E$1>=kc_bioreactorReagentStart,kc_bioreactorRe
+      Row 181: 
+      Row 182: A:WWTP Reagent ($/month) | C:=kc_wwtpReagent | D:=kc_wwtpReagent | E:=kc_wwtpReagent
+      Row 183: 
+  >>> Row 184: A:Misc. Reagent Expenses | C:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(C | D:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(D | E:=INDEX('KC Forecast Inputs'!$358:$358,MATCH(YEAR(E
+      Row 185: 
+      Row 186: A:Total Other Reagent Expenses | C:=SUM(C179:C185) | D:=SUM(D179:D185) | E:=SUM(E179:E185)
+      Row 187: 
+
+================================================================================
+SHEET: CC Coal Burn
+================================================================================
+
+--- Row 128: Fuel Oil Cost ---
+Row Label: Fuel Oil - $
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(C127*C2,0)
+  [FORMULA] D: =ROUND(D127*D2,0)
+  [FORMULA] E: =ROUND(E127*E2,0)
+  [FORMULA] F: =ROUND(F127*F2,0)
+  [FORMULA] G: =ROUND(G127*G2,0)
+
+CONTEXT (surrounding rows):
+      Row 118: A:Available | C:=C116+C117 | D:=D116+D117 | E:=E116+E117
+      Row 119: A:Consumed | C:=C110*(C118/C109) | D:=D110*(D118/D109) | E:=E110*(E118/E109)
+      Row 120: A:Ending | C:=C118-C119 | D:=D118-D119 | E:=E118-E119
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost:
+      Row 127: A:Fuel Oil - $/day | C:='CC Forecast Inputs'!$B$278 | D:='CC Forecast Inputs'!$B$278 | E:='CC Forecast Inputs'!$B$278
+  >>> Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='CC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(
+      Row 131: A:Labor & Handling - $ | C:='CC Generation'!C$2*C130 | D:='CC Generation'!D$2*D130 | E:='CC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+      Row 138: 
+
+--- Row 127: Fuel Oil Usage ---
+Row Label: Fuel Oil - $/day
+
+FORMULAS/VALUES:
+  [FORMULA] C: ='CC Forecast Inputs'!$B$278
+  [FORMULA] D: ='CC Forecast Inputs'!$B$278
+  [FORMULA] E: ='CC Forecast Inputs'!$B$278
+  [FORMULA] F: ='CC Forecast Inputs'!$B$278
+  [FORMULA] G: ='CC Forecast Inputs'!$B$278
+
+CONTEXT (surrounding rows):
+      Row 117: A:Received | C:=C108*'CC Coal Supply'!C213 | D:=D108*'CC Coal Supply'!D213 | E:=E108*'CC Coal Supply'!E213
+      Row 118: A:Available | C:=C116+C117 | D:=D116+D117 | E:=E116+E117
+      Row 119: A:Consumed | C:=C110*(C118/C109) | D:=D110*(D118/D109) | E:=E110*(E118/E109)
+      Row 120: A:Ending | C:=C118-C119 | D:=D118-D119 | E:=E118-E119
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost:
+  >>> Row 127: A:Fuel Oil - $/day | C:='CC Forecast Inputs'!$B$278 | D:='CC Forecast Inputs'!$B$278 | E:='CC Forecast Inputs'!$B$278
+      Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='CC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(
+      Row 131: A:Labor & Handling - $ | C:='CC Generation'!C$2*C130 | D:='CC Generation'!D$2*D130 | E:='CC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+
+--- Row 126: Fuel Oil Price ---
+Row Label: Other Cost:
+
+FORMULAS/VALUES:
+
+CONTEXT (surrounding rows):
+      Row 116: A:Beginning | C:='CC Forecast Inputs'!$B$266 | D:<openpyxl.worksheet.formula.ArrayFormula object at | E:<openpyxl.worksheet.formula.ArrayFormula object at
+      Row 117: A:Received | C:=C108*'CC Coal Supply'!C213 | D:=D108*'CC Coal Supply'!D213 | E:=E108*'CC Coal Supply'!E213
+      Row 118: A:Available | C:=C116+C117 | D:=D116+D117 | E:=E116+E117
+      Row 119: A:Consumed | C:=C110*(C118/C109) | D:=D110*(D118/D109) | E:=E110*(E118/E109)
+      Row 120: A:Ending | C:=C118-C119 | D:=D118-D119 | E:=E118-E119
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+  >>> Row 126: A:Other Cost:
+      Row 127: A:Fuel Oil - $/day | C:='CC Forecast Inputs'!$B$278 | D:='CC Forecast Inputs'!$B$278 | E:='CC Forecast Inputs'!$B$278
+      Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='CC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(
+      Row 131: A:Labor & Handling - $ | C:='CC Generation'!C$2*C130 | D:='CC Generation'!D$2*D130 | E:='CC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+
+--- Row 131: Labor & Handling Cost ---
+Row Label: Labor & Handling - $
+
+FORMULAS/VALUES:
+  [FORMULA] C: ='CC Generation'!C$2*C130
+  [FORMULA] D: ='CC Generation'!D$2*D130
+  [FORMULA] E: ='CC Generation'!E$2*E130
+  [FORMULA] F: ='CC Generation'!F$2*F130
+  [FORMULA] G: ='CC Generation'!G$2*G130
+
+CONTEXT (surrounding rows):
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost:
+      Row 127: A:Fuel Oil - $/day | C:='CC Forecast Inputs'!$B$278 | D:='CC Forecast Inputs'!$B$278 | E:='CC Forecast Inputs'!$B$278
+      Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='CC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(
+  >>> Row 131: A:Labor & Handling - $ | C:='CC Generation'!C$2*C130 | D:='CC Generation'!D$2*D130 | E:='CC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+      Row 138: 
+      Row 139: 
+
+--- Row 130: Coal Handling ---
+Row Label: Labor & Handling - $/day
+
+FORMULAS/VALUES:
+  [FORMULA] C: ='CC Forecast Inputs'!$B$279
+  [FORMULA] D: =IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^(YEAR('CC Coal Burn'!D$1)-YEAR(asOfDate)),2),ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^('CC Coal Burn'!D$1-YEAR(asOfDate)),2))
+  [FORMULA] E: =IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^(YEAR('CC Coal Burn'!E$1)-YEAR(asOfDate)),2),ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^('CC Coal Burn'!E$1-YEAR(asOfDate)),2))
+  [FORMULA] F: =IF(F$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^(YEAR('CC Coal Burn'!F$1)-YEAR(asOfDate)),2),ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^('CC Coal Burn'!F$1-YEAR(asOfDate)),2))
+  [FORMULA] G: =IF(G$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^(YEAR('CC Coal Burn'!G$1)-YEAR(asOfDate)),2),ROUND(('CC Forecast Inputs'!$B$279)*(1+'CC Forecast Inputs'!$B$280)^('CC Coal Burn'!G$1-YEAR(asOfDate)),2))
+
+CONTEXT (surrounding rows):
+      Row 120: A:Ending | C:=C118-C119 | D:=D118-D119 | E:=E118-E119
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost:
+      Row 127: A:Fuel Oil - $/day | C:='CC Forecast Inputs'!$B$278 | D:='CC Forecast Inputs'!$B$278 | E:='CC Forecast Inputs'!$B$278
+      Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+  >>> Row 130: A:Labor & Handling - $/day | C:='CC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('CC Forecast Inputs'!$B$279)*(
+      Row 131: A:Labor & Handling - $ | C:='CC Generation'!C$2*C130 | D:='CC Generation'!D$2*D130 | E:='CC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+      Row 138: 
+      Row 139: 
+
+================================================================================
+SHEET: KC Coal Burn
+================================================================================
+
+--- Row 128: Fuel Oil Cost ---
+Row Label: Fuel Oil - $
+
+FORMULAS/VALUES:
+  [FORMULA] C: =ROUND(C127*C2,0)
+  [FORMULA] D: =ROUND(D127*D2,0)
+  [FORMULA] E: =ROUND(E127*E2,0)
+  [FORMULA] F: =ROUND(F127*F2,0)
+  [FORMULA] G: =ROUND(G127*G2,0)
+
+CONTEXT (surrounding rows):
+      Row 118: A:Available | C:=C116+C117 | D:=D116+D117 | E:=E116+E117
+      Row 119: A:Consumed | C:=C110*(C118/C109) | D:=D110*(D118/D109) | E:=E110*(E118/E109)
+      Row 120: A:Ending | C:=C118-C119 | D:=D118-D119 | E:=E118-E119
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost
+      Row 127: A:Fuel Oil - $/day | C:='KC Forecast Inputs'!$B$278 | D:='KC Forecast Inputs'!$B$278 | E:='KC Forecast Inputs'!$B$278
+  >>> Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='KC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('KC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('KC Forecast Inputs'!$B$279)*(
+      Row 131: A:Labor & Handling - $ | C:='KC Generation'!C$2*C130 | D:='KC Generation'!D$2*D130 | E:='KC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+      Row 138: 
+
+--- Row 131: Labor & Handling Cost ---
+Row Label: Labor & Handling - $
+
+FORMULAS/VALUES:
+  [FORMULA] C: ='KC Generation'!C$2*C130
+  [FORMULA] D: ='KC Generation'!D$2*D130
+  [FORMULA] E: ='KC Generation'!E$2*E130
+  [FORMULA] F: ='KC Generation'!F$2*F130
+  [FORMULA] G: ='KC Generation'!G$2*G130
+
+CONTEXT (surrounding rows):
+      Row 121: 
+      Row 122: A:Total Coal Consumed Expense
+      Row 123: A:Total Coal Consumed $ | C:=ROUND(C102+C119,0) | D:=ROUND(D102+D119,0) | E:=ROUND(E102+E119,0)
+      Row 124: A:$/ton | C:=C123/C57 | D:=D123/D57 | E:=E123/E57
+      Row 125: A:$/mmBtu | C:=C123/C31 | D:=D123/D31 | E:=E123/E31
+      Row 126: A:Other Cost
+      Row 127: A:Fuel Oil - $/day | C:='KC Forecast Inputs'!$B$278 | D:='KC Forecast Inputs'!$B$278 | E:='KC Forecast Inputs'!$B$278
+      Row 128: A:Fuel Oil - $ | C:=ROUND(C127*C2,0) | D:=ROUND(D127*D2,0) | E:=ROUND(E127*E2,0)
+      Row 129: 
+      Row 130: A:Labor & Handling - $/day | C:='KC Forecast Inputs'!$B$279 | D:=IF(D$1>4000,ROUND(('KC Forecast Inputs'!$B$279)*( | E:=IF(E$1>4000,ROUND(('KC Forecast Inputs'!$B$279)*(
+  >>> Row 131: A:Labor & Handling - $ | C:='KC Generation'!C$2*C130 | D:='KC Generation'!D$2*D130 | E:='KC Generation'!E$2*E130
+      Row 132: 
+      Row 133: 
+      Row 134: 
+      Row 135: 
+      Row 136: 
+      Row 137: 
+      Row 138: 
+      Row 139: 
+      Row 140: 
+      Row 141: 
+
+================================================================================
+SHEET: CC Emissions
+================================================================================
+
+--- Row 135: NOx Allowance Cost ---
+Row Label: NOx Allowance Cost ($)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C$104*C$129+IF(C$104=0,C$90*C$130,0)
+  [FORMULA] D: =D$104*D$129+IF(D$104=0,D$90*D$130,0)
+  [FORMULA] E: =E$104*E$129+IF(E$104=0,E$90*E$130,0)
+  [FORMULA] F: =F$104*F$129+IF(F$104=0,F$90*F$130,0)
+  [FORMULA] G: =G$104*G$129+IF(G$104=0,G$90*G$130,0)
+
+CONTEXT (surrounding rows):
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Ozone Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+      Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+      Row 134: 
+  >>> Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+--- Row 134: NOx Allowance Rate ---
+Row Label: Row 134
+
+FORMULAS/VALUES:
+
+CONTEXT (surrounding rows):
+      Row 124: A:Clifty Unit 6 | C:=(C$117)*'CC Coal Burn'!C30 | D:=(D$117)*'CC Coal Burn'!D30 | E:=(E$117)*'CC Coal Burn'!E30
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Ozone Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+      Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+  >>> Row 134: 
+      Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+--- Row 133: NOx Emissions ---
+Row Label: NOx Non-Ozone Cost ($)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =IF(C$104=0,C$90*C$130,0)
+  [FORMULA] D: =IF(D$104=0,D$90*D$130,0)
+  [FORMULA] E: =IF(E$104=0,E$90*E$130,0)
+  [FORMULA] F: =IF(F$104=0,F$90*F$130,0)
+  [FORMULA] G: =IF(G$104=0,G$90*G$130,0)
+
+CONTEXT (surrounding rows):
+      Row 123: A:Clifty Unit 5 | C:=(C$117)*'CC Coal Burn'!C29 | D:=(D$117)*'CC Coal Burn'!D29 | E:=(E$117)*'CC Coal Burn'!E29
+      Row 124: A:Clifty Unit 6 | C:=(C$117)*'CC Coal Burn'!C30 | D:=(D$117)*'CC Coal Burn'!D30 | E:=(E$117)*'CC Coal Burn'!E30
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Ozone Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+  >>> Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+      Row 134: 
+      Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+================================================================================
+SHEET: KC Emissions
+================================================================================
+
+--- Row 135: NOx Allowance Cost ---
+Row Label: NOx Allowance Cost ($)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =C$104*C$129+IF(C$104=0,C$90*C$130,0)
+  [FORMULA] D: =D$104*D$129+IF(D$104=0,D$90*D$130,0)
+  [FORMULA] E: =E$104*E$129+IF(E$104=0,E$90*E$130,0)
+  [FORMULA] F: =F$104*F$129+IF(F$104=0,F$90*F$130,0)
+  [FORMULA] G: =G$104*G$129+IF(G$104=0,G$90*G$130,0)
+
+CONTEXT (surrounding rows):
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+      Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+      Row 134: 
+  >>> Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+--- Row 134: NOx Allowance Rate ---
+Row Label: Row 134
+
+FORMULAS/VALUES:
+
+CONTEXT (surrounding rows):
+      Row 124: 
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+      Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+  >>> Row 134: 
+      Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+--- Row 133: NOx Emissions ---
+Row Label: NOx Non-Ozone Cost ($)
+
+FORMULAS/VALUES:
+  [FORMULA] C: =IF(C$104=0,C$90*C$130,0)
+  [FORMULA] D: =IF(D$104=0,D$90*D$130,0)
+  [FORMULA] E: =IF(E$104=0,E$90*E$130,0)
+  [FORMULA] F: =IF(F$104=0,F$90*F$130,0)
+  [FORMULA] G: =IF(G$104=0,G$90*G$130,0)
+
+CONTEXT (surrounding rows):
+      Row 123: A:Kyger Unit 5 | C:=(C$117)*'KC Coal Burn'!C29 | D:=(D$117)*'KC Coal Burn'!D29 | E:=(E$117)*'KC Coal Burn'!E29
+      Row 124: 
+      Row 125: A:Plant  | C:=SUM(C119:C124) | D:=SUM(D119:D124) | E:=SUM(E119:E124)
+      Row 126: 
+      Row 127: 
+      Row 128: 
+      Row 129: A:NOx Seasonal Price ($/Ton) | C:=seasonalNOxPrice | D:=seasonalNOxPrice | E:=seasonalNOxPrice
+      Row 130: A:NOx Annual Price ($/Ton) | C:=annualNOxPrice | D:=annualNOxPrice | E:=annualNOxPrice
+      Row 131: 
+      Row 132: A:NOx Ozone Seasonal Cost ($) | C:=C$104*C$129 | D:=D$104*D$129 | E:=E$104*E$129
+  >>> Row 133: A:NOx Non-Ozone Cost ($) | C:=IF(C$104=0,C$90*C$130,0) | D:=IF(D$104=0,D$90*D$130,0) | E:=IF(E$104=0,E$90*E$130,0)
+      Row 134: 
+      Row 135: A:NOx Allowance Cost ($) | C:=C$104*C$129+IF(C$104=0,C$90*C$130,0) | D:=D$104*D$129+IF(D$104=0,D$90*D$130,0) | E:=E$104*E$129+IF(E$104=0,E$90*E$130,0)
+
+================================================================================
+SHEET: CC Forecast Inputs
+================================================================================
+
+--- Row 216: Temp Storage Header ---
+Row Label: Row 216
+
+FORMULAS/VALUES:
+  [FORMULA] B: =asOfDate
+  [FORMULA] C: =EDATE(B216,1)
+  [FORMULA] D: =EDATE(C216,1)
+  [FORMULA] E: =EDATE(D216,1)
+  [FORMULA] F: =EDATE(E216,1)
+  [FORMULA] G: =EDATE(F216,1)
+
+CONTEXT (surrounding rows):
+      Row 206: A:Contract Start Date | B:2026-01-01 00:00:00 | C:2027-01-01 00:00:00
+      Row 207: A:Contract End Date | B:2026-12-31 00:00:00 | C:2027-12-31 00:00:00
+      Row 208: A:Months | B:=ROUND((B207-B206)/30.5,0) | C:=ROUND((C207-C206)/30.5,0) | D:=ROUND((D207-D206)/30.5,0)
+      Row 209: A:Thousand Tons | B:726 | C:650
+      Row 210: A:Contracted Btu | B:11350 | C:11350
+      Row 211: A:Contracted SO2 | B:5.2 | C:5.2
+      Row 212: A:Ash | B:8.25 | C:8.25
+      Row 213: A:Coal $/ton | B:52 | C:52
+      Row 214: A:Transportation $/ton | B:7.89 | C:8.13
+      Row 215: 
+  >>> Row 216: B:=asOfDate | C:=EDATE(B216,1) | D:=EDATE(C216,1) | E:=EDATE(D216,1)
+      Row 217: A:Temporary Coal Storage and Storage Transportation  | B: | C: | D:
+      Row 218: A:****Attention- All Coal has been removed from stor
+      Row 219: 
+      Row 220: A:Reliability Inputs
+      Row 221: A:Planned Outage Days | B:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | C:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | D:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate
+      Row 222: A:Clifty Unit 1 | B: | C: | D:
+      Row 223: A:Clifty Unit 2 | B: | C: | D:
+      Row 224: A:Clifty Unit 3 | B: | C: | D:
+      Row 225: A:Clifty Unit 4 | B: | C: | D:
+      Row 226: A:Clifty Unit 5 | B: | C: | D:
+
+--- Row 217: Temp Storage Cost ---
+Row Label: Temporary Coal Storage and Storage Transportation Expense ($)
+
+FORMULAS/VALUES:
+
+CONTEXT (surrounding rows):
+      Row 207: A:Contract End Date | B:2026-12-31 00:00:00 | C:2027-12-31 00:00:00
+      Row 208: A:Months | B:=ROUND((B207-B206)/30.5,0) | C:=ROUND((C207-C206)/30.5,0) | D:=ROUND((D207-D206)/30.5,0)
+      Row 209: A:Thousand Tons | B:726 | C:650
+      Row 210: A:Contracted Btu | B:11350 | C:11350
+      Row 211: A:Contracted SO2 | B:5.2 | C:5.2
+      Row 212: A:Ash | B:8.25 | C:8.25
+      Row 213: A:Coal $/ton | B:52 | C:52
+      Row 214: A:Transportation $/ton | B:7.89 | C:8.13
+      Row 215: 
+      Row 216: B:=asOfDate | C:=EDATE(B216,1) | D:=EDATE(C216,1) | E:=EDATE(D216,1)
+  >>> Row 217: A:Temporary Coal Storage and Storage Transportation  | B: | C: | D:
+      Row 218: A:****Attention- All Coal has been removed from stor
+      Row 219: 
+      Row 220: A:Reliability Inputs
+      Row 221: A:Planned Outage Days | B:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | C:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | D:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate
+      Row 222: A:Clifty Unit 1 | B: | C: | D:
+      Row 223: A:Clifty Unit 2 | B: | C: | D:
+      Row 224: A:Clifty Unit 3 | B: | C: | D:
+      Row 225: A:Clifty Unit 4 | B: | C: | D:
+      Row 226: A:Clifty Unit 5 | B: | C: | D:
+      Row 227: A:Clifty Unit 6 | B: | C: | D:
+
+================================================================================
+SHEET: KC Forecast Inputs
+================================================================================
+
+--- Row 216: Temp Storage Header ---
+Row Label: Row 216
+
+FORMULAS/VALUES:
+  [FORMULA] B: =asOfDate
+  [FORMULA] C: =EDATE(B216,1)
+  [FORMULA] D: =EDATE(C216,1)
+  [FORMULA] E: =EDATE(D216,1)
+  [FORMULA] F: =EDATE(E216,1)
+  [FORMULA] G: =EDATE(F216,1)
+
+CONTEXT (surrounding rows):
+      Row 206: A:Contract Start Date
+      Row 207: A:Contract End Date
+      Row 208: A:Months | B:=ROUND((B207-B206)/30.5,0) | C:=ROUND((C207-C206)/30.5,0) | D:=ROUND((D207-D206)/30.5,0)
+      Row 209: A:Thousand Tons
+      Row 210: A:Contracted Btu
+      Row 211: A:Contracted SO2
+      Row 212: A:Ash
+      Row 213: A:Coal $/ton
+      Row 214: A:Transportation $/ton
+      Row 215: 
+  >>> Row 216: B:=asOfDate | C:=EDATE(B216,1) | D:=EDATE(C216,1) | E:=EDATE(D216,1)
+      Row 217: A:Temporary Coal Storage and Storage Transportation  | B: | C: | D:
+      Row 218: A:****Attention- All Coal has been removed from stor
+      Row 219: 
+      Row 220: A:Reliability Inputs
+      Row 221: A:Planned Outage Days | B:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | C:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | D:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate
+      Row 222: A:Kyger Unit 1 | B: | C: | D:
+      Row 223: A:Kyger Unit 2 | B: | C: | D:
+      Row 224: A:Kyger Unit 3 | B: | C: | D:
+      Row 225: A:Kyger Unit 4 | B: | C: | D:
+      Row 226: A:Kyger Unit 5 | B: | C: | D:
+
+--- Row 217: Temp Storage Cost ---
+Row Label: Temporary Coal Storage and Storage Transportation Expense ($)
+
+FORMULAS/VALUES:
+
+CONTEXT (surrounding rows):
+      Row 207: A:Contract End Date
+      Row 208: A:Months | B:=ROUND((B207-B206)/30.5,0) | C:=ROUND((C207-C206)/30.5,0) | D:=ROUND((D207-D206)/30.5,0)
+      Row 209: A:Thousand Tons
+      Row 210: A:Contracted Btu
+      Row 211: A:Contracted SO2
+      Row 212: A:Ash
+      Row 213: A:Coal $/ton
+      Row 214: A:Transportation $/ton
+      Row 215: 
+      Row 216: B:=asOfDate | C:=EDATE(B216,1) | D:=EDATE(C216,1) | E:=EDATE(D216,1)
+  >>> Row 217: A:Temporary Coal Storage and Storage Transportation  | B: | C: | D:
+      Row 218: A:****Attention- All Coal has been removed from stor
+      Row 219: 
+      Row 220: A:Reliability Inputs
+      Row 221: A:Planned Outage Days | B:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | C:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate | D:=IF(COLUMN()-1>=MONTH(asOfDate),DATE(YEAR(asOfDate
+      Row 222: A:Kyger Unit 1 | B: | C: | D:
+      Row 223: A:Kyger Unit 2 | B: | C: | D:
+      Row 224: A:Kyger Unit 3 | B: | C: | D:
+      Row 225: A:Kyger Unit 4 | B: | C: | D:
+      Row 226: A:Kyger Unit 5 | B: | C: | D:
+      Row 227: 

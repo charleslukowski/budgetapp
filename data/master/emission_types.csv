@@ -1,0 +1,8 @@
+# these don't have GL Accounts
+
+emission_code,emission_name,unit_of_measure,allowance_required,gl_account_prefix
+SO2,Sulfur Dioxide,tons,Y,401-10-350-504
+NOX,Nitrogen Oxides,tons,Y,401-10-350-504
+CO2,Carbon Dioxide,tons,N,
+MERCURY,Mercury,lbs,Y,401-10-350-504
+

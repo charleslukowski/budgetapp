@@ -1,0 +1,105 @@
+GLCUFA.GLPTX1 Columns
+============================================================
+
+Column               Type            Length   Scale  Nulls
+------------------------------------------------------------
+GXJRNL               DECIMAL         7        0      N
+GXACCT               CHAR            36              N
+GXPAGE               DECIMAL         9        0      N
+CTDESC               CHAR            30              N
+CTACTV               CHAR            1               N
+CTMORS               CHAR            1               N
+GXMORS               CHAR            1               N
+GXJOB                CHAR            10              N
+GXDESC               CHAR            30              N
+TXYEAR               DECIMAL         4        0      N
+TXMNTH               DECIMAL         2        0      N
+TXBNBR               DECIMAL         7        0      N
+TXPOST               CHAR            1               N
+TXPSTB               DECIMAL         7        0      N
+THHDAT               NUMERIC         6        0      N
+TH8DAT               DECIMAL         8        0      N
+THEDAT               CHAR            10              N
+THSRC                CHAR            10              N
+THREF                CHAR            10              N
+GXFAMT               DECIMAL         17       2      N
+GXOLDA               CHAR            36              N
+RXNUMR               DECIMAL         7        2      N
+RXDENO               DECIMAL         7        2      N
+GXAF01               CHAR            30              N
+GXAF02               CHAR            30              N
+GXAF03               CHAR            30              N
+GXAF04               CHAR            30              N
+GXNF01               DECIMAL         17       2      N
+GXNF02               DECIMAL         17       2      N
+GXDF1H               NUMERIC         6        0      N
+GXDF18               DECIMAL         8        0      N
+GXDF1E               CHAR            10              N
+GXSN1                DECIMAL         9        0      N
+GXSN2                DECIMAL         9        0      N
+GXRATE               DECIMAL         15       9      N
+GXCUR                CHAR            3               N
+GXSEQ                DECIMAL         6        0      N
+GXCDNO               DECIMAL         3        0      N
+GXCONV               CHAR            1               N
+GXUCHG               CHAR            1               N
+GXIBE                CHAR            1               N
+GXCO                 CHAR            3               N
+GXDRCR               CHAR            1               N
+GXPJCO               CHAR            5               N
+GXPJNO               CHAR            10              N
+PHDESC               CHAR            30              N
+GXPWBS               CHAR            24              N
+WBDESC               CHAR            30              N
+GXPCCD               CHAR            6               N
+GXSUBP               CHAR            5               N
+GXIREF               DECIMAL         6        0      N
+GXDSC2               CHAR            140             N
+GXVND#               CHAR            12              N
+GXVNDS               CHAR            2               N
+GXVNDN               CHAR            64              N
+GXUNIT               CHAR            6               N
+GXSHUT               CHAR            12              N
+GXJOBT               CHAR            24              N
+GXEQFC               CHAR            3               N
+GXEQUN               CHAR            12              N
+GXEQOS               CHAR            6               N
+GXEQSC               CHAR            12              N
+GXEQCL               CHAR            6               N
+GXEQTY               CHAR            70              N
+GXEQ#                CHAR            15              N
+GXEQCT               CHAR            6               N
+GXEQC#               CHAR            15              N
+GXEQDV               CHAR            20              N
+GXEQAR               CHAR            8               N
+GXEQNM               CHAR            65              N
+GXPGGT               CHAR            4               N
+GXPGGI               CHAR            20              N
+GXPGDS               CHAR            65              N
+GXDISC               CHAR            15              N
+GXRFTY               CHAR            2               N
+GXRF#                CHAR            15              N
+GXRFS#               CHAR            5               N
+GXPLAN               CHAR            8               N
+GXCTID               CHAR            10              N
+GXCTQL               CHAR            1               N
+GXWOTD               CHAR            20              N
+GXINVREO             CHAR            1               N
+GXPJDEPT             CHAR            3               N
+GXPJDESC             CHAR            50              N
+GXPREF               CHAR            12              N
+INVSUB01             CHAR            3               N
+INVSUB02             CHAR            21              N
+INVSUB03             CHAR            4               N
+POSUB01              CHAR            2               N
+POSUB02              CHAR            8               N
+POSUB03              CHAR            3               N
+POSUB04              CHAR            5               N
+POSUB05              CHAR            8               N
+CNSUB01              CHAR            2               N
+CNSUB02              CHAR            8               N
+CNSUB03              CHAR            5               N
+CNSUB04              CHAR            12              N
+WBSSUB01             CHAR            8               N
+WBSSUB02             CHAR            3               N
+GXWBS                CHAR            29              N

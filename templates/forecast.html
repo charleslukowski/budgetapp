@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}Forecast Input | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Forecast Input</span></h1>
+        <span class="status-draft">Draft</span>
+    </div>
+    <div class="header-right">
+        <button class="btn btn-secondary" onclick="resetForecast()">Reset to Budget</button>
+        <button class="btn btn-success" onclick="saveForecast()">Save Forecast</button>
+    </div>
+</header>
+
+<!-- Budget Summary -->
+<div class="budget-summary">
+    <div class="summary-item">
+        <span class="label">YTD Actual</span>
+        <span class="value">${{ "{:,.0f}".format(totals.ytd_actual) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">YTD Budget</span>
+        <span class="value">${{ "{:,.0f}".format(totals.ytd_budget) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">YTD Variance</span>
+        {% set ytd_var = totals.ytd_budget - totals.ytd_actual %}
+        <span class="value {% if ytd_var >= 0 %}favorable{% else %}unfavorable{% endif %}">
+            {{ "{:+,.0f}".format(ytd_var) }}
+        </span>
+    </div>
+    <div class="summary-item highlight">
+        <span class="label">Full Year Forecast</span>
+        <span class="value">${{ "{:,.0f}".format(totals.forecast|sum) }}</span>
+    </div>
+</div>
+
+<!-- Legend -->
+<div class="legend-bar">
+    <span class="legend-item"><span class="legend-dot actual"></span> Actual (Locked)</span>
+    <span class="legend-item"><span class="legend-dot forecast"></span> Forecast (Editable)</span>
+    <span class="legend-item favorable">Green = Under Budget</span>
+    <span class="legend-item unfavorable">Red = Over Budget</span>
+</div>
+
+<!-- Forecast Grid -->
+<div class="grid-container">
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th class="sticky-col col-dept">Department</th>
+                {% for m in range(1, 13) %}
+                    {% if m <= current_month %}
+                    <th class="month-col actual-col align-right">{{ month_names[m] }}</th>
+                    {% else %}
+                    <th class="month-col forecast-col align-right">{{ month_names[m] }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th class="total-col align-right">Total</th>
+                <th class="budget-col align-right">Budget</th>
+                <th class="variance-col align-right">Variance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dept in departments %}
+            <tr>
+                <td class="sticky-col col-dept">{{ dept.dept_code }}</td>
+                {% for m in range(12) %}
+                    {% if m < current_month %}
+                    <td class="actual-cell">{{ "{:,.0f}".format(dept.actuals[m]) }}</td>
+                    {% else %}
+                    <td class="forecast-cell editable has-value" 
+                        data-dept="{{ dept.dept_code }}" 
+                        data-month="{{ m + 1 }}"
+                        contenteditable="true">{{ "{:,.0f}".format(dept.forecast[m]) }}</td>
+                    {% endif %}
+                {% endfor %}
+                {% set forecast_total = dept.forecast|sum %}
+                <td class="total-col">{{ "{:,.0f}".format(forecast_total) }}</td>
+                <td class="budget-cell">{{ "{:,.0f}".format(dept.total_budget) }}</td>
+                {% set var = dept.total_budget - forecast_total %}
+                <td class="variance-cell {% if var >= 0 %}favorable{% else %}unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(var) }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="totals-row">
+                <td class="sticky-col col-dept">TOTAL</td>
+                {% for m in range(12) %}
+                    {% set month_total = namespace(value=0) %}
+                    {% for dept in departments %}
+                        {% if m < current_month %}
+                            {% set month_total.value = month_total.value + dept.actuals[m] %}
+                        {% else %}
+                            {% set month_total.value = month_total.value + dept.forecast[m] %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if m < current_month %}
+                    <td class="actual-cell">{{ "{:,.0f}".format(month_total.value) }}</td>
+                    {% else %}
+                    <td class="forecast-cell">{{ "{:,.0f}".format(month_total.value) }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td class="total-col">{{ "{:,.0f}".format(totals.forecast|sum) }}</td>
+                <td class="budget-cell">{{ "{:,.0f}".format(totals.total_budget) }}</td>
+                {% set total_var = totals.total_budget - totals.forecast|sum %}
+                <td class="variance-cell {% if total_var >= 0 %}favorable{% else %}unfavorable{% endif %}">
+                    {{ "{:+,.0f}".format(total_var) }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ department_count }} departments &bull; Forecast through Dec {{ year }}</span>
+    </div>
+    <div class="footer-right">
+        <span class="last-updated">Last updated: {{ last_updated }}</span>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function saveForecast() {
+    const forecasts = [];
+    const rows = document.querySelectorAll('.data-grid tbody tr');
+    
+    rows.forEach(row => {
+        const deptCell = row.querySelector('.col-dept');
+        if (!deptCell) return;
+        
+        const deptCode = deptCell.textContent.trim();
+        const months = [];
+        
+        // Get all 12 months (actual + forecast cells)
+        const cells = row.querySelectorAll('.actual-cell, .forecast-cell');
+        cells.forEach(cell => {
+            const value = parseFloat(cell.textContent.replace(/,/g, '')) || 0;
+            months.push(value);
+        });
+        
+        if (months.length === 12) {
+            forecasts.push({
+                dept_code: deptCode,
+                months: months
+            });
+        }
+    });
+    
+    try {
+        const response = await fetch('/api/forecasts/{{ plant_code }}/{{ year }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: '{{ plant_code }}',
+                year: {{ year }},
+                forecasts: forecasts
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`Saved ${result.count} forecasts successfully!`);
+            // Remove modified markers
+            document.querySelectorAll('.modified').forEach(el => el.classList.remove('modified'));
+        } else {
+            alert('Error saving: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error saving forecasts: ' + error.message);
+    }
+}
+
+function resetForecast() {
+    if (confirm('Reset all forecast values to budget amounts?')) {
+        location.reload();
+    }
+}
+
+// Handle editable cells
+document.querySelectorAll('.editable').forEach(cell => {
+    cell.addEventListener('blur', function() {
+        // Mark as modified
+        this.classList.add('modified');
+        updateRowTotal(this.closest('tr'));
+    });
+    
+    cell.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.blur();
+        }
+    });
+    
+    // Format on blur
+    cell.addEventListener('blur', function() {
+        const value = parseFloat(this.textContent.replace(/,/g, '')) || 0;
+        this.textContent = value.toLocaleString('en-US', {maximumFractionDigits: 0});
+    });
+});
+
+function updateRowTotal(row) {
+    if (!row) return;
+    const cells = row.querySelectorAll('.actual-cell, .forecast-cell');
+    let total = 0;
+    cells.forEach(cell => {
+        total += parseFloat(cell.textContent.replace(/,/g, '')) || 0;
+    });
+    const totalCell = row.querySelector('.total-col');
+    if (totalCell) {
+        totalCell.textContent = total.toLocaleString('en-US', {maximumFractionDigits: 0});
+    }
+}
+</script>
+{% endblock %}
+

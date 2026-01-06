@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Entry | OVEC Budget System{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="header-left">
+        <h1>{{ plant_name }} <span class="subtitle">{{ year }} Budget Entry</span></h1>
+        {% if submission %}
+        <span class="status-{{ submission.status }}">{{ submission.status|title }}</span>
+        {% if submission.status == 'rejected' and submission.rejection_reason %}
+        <span class="rejection-note" title="{{ submission.rejection_reason }}">Reason: {{ submission.rejection_reason }}</span>
+        {% endif %}
+        {% else %}
+        <span class="status-draft">New</span>
+        {% endif %}
+    </div>
+    <div class="header-right">
+        {% if not submission or submission.status in ['draft', 'rejected'] %}
+        <button class="btn btn-secondary" onclick="addBudgetLine()">+ Add Line</button>
+        <button class="btn btn-primary" onclick="saveBudgetDraft()">Save Draft</button>
+        <button class="btn btn-success" onclick="submitBudget()">Submit for Approval</button>
+        {% elif submission.status == 'submitted' %}
+        <span class="pending-label">Awaiting Approval</span>
+        {% elif submission.status == 'approved' %}
+        <span class="approved-label">Approved</span>
+        {% endif %}
+    </div>
+</header>
+
+<!-- Department Selector -->
+<div class="filter-bar">
+    <div class="filter-group">
+        <label>Department:</label>
+        <select id="deptSelect" class="form-input" onchange="changeDepartment()">
+            {% for dept in departments %}
+            <option value="{{ dept.dept_code }}" {% if dept.dept_code == current_dept %}selected{% endif %}>
+                {{ dept.dept_code }} - {{ dept.dept_name|default(dept.dept_code) }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="filter-group">
+        <span class="item-count">{{ entries|length }} budget lines</span>
+    </div>
+</div>
+
+<!-- Budget Summary -->
+<div class="budget-summary">
+    <div class="summary-item">
+        <span class="label">Q1 Total</span>
+        <span class="value" id="q1Total">${{ "{:,.0f}".format(totals.q1) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Q2 Total</span>
+        <span class="value" id="q2Total">${{ "{:,.0f}".format(totals.q2) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Q3 Total</span>
+        <span class="value" id="q3Total">${{ "{:,.0f}".format(totals.q3) }}</span>
+    </div>
+    <div class="summary-item">
+        <span class="label">Q4 Total</span>
+        <span class="value" id="q4Total">${{ "{:,.0f}".format(totals.q4) }}</span>
+    </div>
+    <div class="summary-item highlight">
+        <span class="label">Annual Total</span>
+        <span class="value" id="annualTotal">${{ "{:,.0f}".format(totals.annual) }}</span>
+    </div>
+</div>
+
+<!-- Budget Entry Grid -->
+<div class="grid-container">
+    <table class="data-grid" id="budgetGrid">
+        <thead>
+            <tr>
+                <th class="sticky-col col-account">Account</th>
+                <th class="col-desc">Description</th>
+                {% for m in range(1, 13) %}
+                <th class="month-col align-right">{{ month_names[m] }}</th>
+                {% endfor %}
+                <th class="total-col align-right">Total</th>
+                <th class="action-col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="budgetBody">
+            {% for entry in entries %}
+            <tr data-entry-id="{{ entry.id|default('new') }}">
+                <td class="sticky-col col-account">
+                    <input type="text" class="inline-input account-input" 
+                           value="{{ entry.account_code|default('') }}" 
+                           placeholder="Account #"
+                           {% if submission and submission.status not in ['draft', 'rejected'] %}disabled{% endif %}>
+                </td>
+                <td class="col-desc">
+                    <input type="text" class="inline-input desc-input" 
+                           value="{{ entry.line_description|default('') }}" 
+                           placeholder="Description"
+                           {% if submission and submission.status not in ['draft', 'rejected'] %}disabled{% endif %}>
+                </td>
+                {% for m in range(12) %}
+                <td class="budget-cell {% if not submission or submission.status in ['draft', 'rejected'] %}editable{% endif %}" 
+                    data-month="{{ m + 1 }}"
+                    {% if not submission or submission.status in ['draft', 'rejected'] %}contenteditable="true"{% endif %}>
+                    {{ "{:,.0f}".format(entry.months[m]|default(0)) }}
+                </td>
+                {% endfor %}
+                <td class="total-col row-total">{{ "{:,.0f}".format(entry.total|default(0)) }}</td>
+                <td class="action-col">
+                    {% if not submission or submission.status in ['draft', 'rejected'] %}
+                    <button class="btn-icon btn-delete" onclick="deleteLine(this)" title="Delete line">×</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="totals-row">
+                <td class="sticky-col col-account">TOTAL</td>
+                <td class="col-desc"></td>
+                {% for m in range(12) %}
+                <td class="budget-cell month-total" data-month="{{ m + 1 }}">
+                    {{ "{:,.0f}".format(totals.by_month[m]|default(0)) }}
+                </td>
+                {% endfor %}
+                <td class="total-col grand-total">{{ "{:,.0f}".format(totals.annual) }}</td>
+                <td class="action-col"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Footer -->
+<footer class="page-footer">
+    <div class="footer-left">
+        <span class="item-count">{{ current_dept }} &bull; {{ year }} Budget</span>
+    </div>
+    <div class="footer-right">
+        <span class="last-updated">Last saved: {{ last_updated }}</span>
+    </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const plantCode = '{{ plant_code }}';
+const year = {{ year }};
+const currentDept = '{{ current_dept }}';
+const isEditable = {% if not submission or submission.status in ['draft', 'rejected'] %}true{% else %}false{% endif %};
+
+function changeDepartment() {
+    const dept = document.getElementById('deptSelect').value;
+    window.location.href = `/budget-entry/${plantCode}?year=${year}&dept=${dept}`;
+}
+
+function addBudgetLine() {
+    const tbody = document.getElementById('budgetBody');
+    const newRow = document.createElement('tr');
+    newRow.dataset.entryId = 'new';
+    
+    newRow.innerHTML = `
+        <td class="sticky-col col-account">
+            <input type="text" class="inline-input account-input" placeholder="Account #">
+        </td>
+        <td class="col-desc">
+            <input type="text" class="inline-input desc-input" placeholder="Description">
+        </td>
+        ${[...Array(12)].map((_, i) => `
+            <td class="budget-cell editable" data-month="${i+1}" contenteditable="true">0</td>
+        `).join('')}
+        <td class="total-col row-total">0</td>
+        <td class="action-col">
+            <button class="btn-icon btn-delete" onclick="deleteLine(this)" title="Delete line">×</button>
+        </td>
+    `;
+    
+    tbody.appendChild(newRow);
+    attachCellListeners(newRow);
+    newRow.querySelector('.account-input').focus();
+}
+
+function deleteLine(btn) {
+    if (confirm('Delete this budget line?')) {
+        btn.closest('tr').remove();
+        updateTotals();
+    }
+}
+
+function collectEntries() {
+    const entries = [];
+    const rows = document.querySelectorAll('#budgetBody tr');
+    
+    rows.forEach(row => {
+        const accountInput = row.querySelector('.account-input');
+        const descInput = row.querySelector('.desc-input');
+        const cells = row.querySelectorAll('.budget-cell');
+        
+        const months = [];
+        cells.forEach(cell => {
+            const value = parseFloat(cell.textContent.replace(/,/g, '')) || 0;
+            months.push(value);
+        });
+        
+        entries.push({
+            account_code: accountInput ? accountInput.value : '',
+            line_description: descInput ? descInput.value : '',
+            months: months
+        });
+    });
+    
+    return entries;
+}
+
+async function saveBudgetDraft() {
+    const entries = collectEntries();
+    
+    if (entries.length === 0) {
+        alert('Please add at least one budget line.');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/budget-entry/${plantCode}/${year}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: plantCode,
+                dept_code: currentDept,
+                year: year,
+                entries: entries
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(`Saved ${entries.length} budget lines as draft!`);
+            location.reload();
+        } else {
+            alert('Error saving: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error saving budget: ' + error.message);
+    }
+}
+
+async function submitBudget() {
+    // First save, then submit
+    const entries = collectEntries();
+    
+    if (entries.length === 0) {
+        alert('Please add at least one budget line before submitting.');
+        return;
+    }
+    
+    if (!confirm('Submit this budget for approval? You will not be able to edit it until it is approved or rejected.')) {
+        return;
+    }
+    
+    try {
+        // Save first
+        await fetch(`/api/budget-entry/${plantCode}/${year}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                plant_code: plantCode,
+                dept_code: currentDept,
+                year: year,
+                entries: entries
+            })
+        });
+        
+        // Then submit
+        const response = await fetch(`/api/budget-entry/${plantCode}/${year}/submit?dept_code=${currentDept}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({})
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Budget submitted for approval!');
+            location.reload();
+        } else {
+            alert('Error submitting: ' + (result.detail || 'Unknown error'));
+        }
+    } catch (error) {
+        alert('Error submitting budget: ' + error.message);
+    }
+}
+
+function updateTotals() {
+    const rows = document.querySelectorAll('#budgetBody tr');
+    const monthTotals = Array(12).fill(0);
+    let grandTotal = 0;
+    
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('.budget-cell');
+        let rowTotal = 0;
+        
+        cells.forEach((cell, idx) => {
+            const value = parseFloat(cell.textContent.replace(/,/g, '')) || 0;
+            rowTotal += value;
+            monthTotals[idx] += value;
+        });
+        
+        const rowTotalCell = row.querySelector('.row-total');
+        if (rowTotalCell) {
+            rowTotalCell.textContent = rowTotal.toLocaleString('en-US', {maximumFractionDigits: 0});
+        }
+        grandTotal += rowTotal;
+    });
+    
+    // Update footer totals
+    document.querySelectorAll('.month-total').forEach((cell, idx) => {
+        cell.textContent = monthTotals[idx].toLocaleString('en-US', {maximumFractionDigits: 0});
+    });
+    
+    const grandTotalCell = document.querySelector('.grand-total');
+    if (grandTotalCell) {
+        grandTotalCell.textContent = grandTotal.toLocaleString('en-US', {maximumFractionDigits: 0});
+    }
+    
+    // Update summary cards
+    document.getElementById('q1Total').textContent = '$' + (monthTotals[0] + monthTotals[1] + monthTotals[2]).toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('q2Total').textContent = '$' + (monthTotals[3] + monthTotals[4] + monthTotals[5]).toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('q3Total').textContent = '$' + (monthTotals[6] + monthTotals[7] + monthTotals[8]).toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('q4Total').textContent = '$' + (monthTotals[9] + monthTotals[10] + monthTotals[11]).toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('annualTotal').textContent = '$' + grandTotal.toLocaleString('en-US', {maximumFractionDigits: 0});
+}
+
+function attachCellListeners(row) {
+    row.querySelectorAll('.editable').forEach(cell => {
+        cell.addEventListener('blur', function() {
+            const value = parseFloat(this.textContent.replace(/,/g, '')) || 0;
+            this.textContent = value.toLocaleString('en-US', {maximumFractionDigits: 0});
+            updateTotals();
+        });
+        
+        cell.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.blur();
+            }
+        });
+    });
+}
+
+// Initialize
+document.querySelectorAll('#budgetBody tr').forEach(row => {
+    attachCellListeners(row);
+});
+</script>
+{% endblock %}
+

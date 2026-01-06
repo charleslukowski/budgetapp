@@ -1,0 +1,446 @@
+/**
+ * Responsive styles for Fuel Forecast Workflow
+ * Supports: Desktop (1200px+), Tablet (768-1199px), Phone (< 768px)
+ */
+
+/* =============================================================================
+   Base responsive utilities
+   ============================================================================= */
+
+/* Responsive visibility helpers */
+.hide-mobile { display: block; }
+.show-mobile { display: none; }
+.hide-tablet { display: block; }
+.show-tablet { display: none; }
+
+/* =============================================================================
+   Tablet breakpoint (768px - 1199px)
+   ============================================================================= */
+
+@media (max-width: 1199px) {
+    .hide-tablet { display: none; }
+    .show-tablet { display: block; }
+    
+    /* Reduce padding on step content */
+    .step-content {
+        padding: 24px 16px;
+    }
+    
+    /* Step cards slightly smaller */
+    .step-card {
+        max-width: 100%;
+    }
+    
+    /* Form rows can still be side-by-side but tighter */
+    .form-row {
+        gap: 12px;
+    }
+    
+    /* Smaller step navigation */
+    .step {
+        min-width: 100px;
+        padding: 8px 12px;
+    }
+    
+    .step-number {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .step-label {
+        font-size: 11px;
+    }
+}
+
+/* =============================================================================
+   Mobile breakpoint (< 768px)
+   ============================================================================= */
+
+@media (max-width: 767px) {
+    .hide-mobile { display: none; }
+    .show-mobile { display: block; }
+    
+    /* Workflow header compact mode */
+    .workflow-header {
+        padding: 0 12px;
+    }
+    
+    .workflow-title-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px 0;
+    }
+    
+    .workflow-meta {
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 11px;
+    }
+    
+    /* Step navigation - horizontal scroll */
+    .step-nav {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 12px 0;
+        gap: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .step-nav::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .step {
+        min-width: 70px;
+        padding: 8px 10px;
+        flex-shrink: 0;
+    }
+    
+    .step-number {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+    
+    .step-label {
+        font-size: 10px;
+        max-width: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* Connector lines hidden on mobile */
+    .step:not(:last-child)::after {
+        display: none;
+    }
+    
+    /* Step content full width */
+    .step-content {
+        padding: 16px 12px;
+    }
+    
+    .step-card {
+        border-radius: 8px;
+    }
+    
+    .step-card-header {
+        padding: 16px;
+    }
+    
+    .step-card-header h2 {
+        font-size: 16px;
+    }
+    
+    .step-card-header p {
+        font-size: 13px;
+    }
+    
+    .step-card-body {
+        padding: 16px;
+    }
+    
+    /* Form rows stack on mobile */
+    .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .form-row .form-group {
+        flex: none;
+        width: 100%;
+    }
+    
+    /* Larger touch targets */
+    .form-control {
+        padding: 12px 14px;
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        min-height: 44px;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        min-height: 44px;
+    }
+    
+    /* Option cards larger for touch */
+    .option-card {
+        padding: 16px;
+        min-height: 60px;
+    }
+    
+    .option-card input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        margin-right: 14px;
+    }
+    
+    /* Step actions stack on mobile */
+    .step-actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+        padding: 16px;
+    }
+    
+    .step-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .step-actions > div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+    
+    /* Summary tables responsive */
+    .summary-table {
+        font-size: 13px;
+    }
+    
+    .summary-table th,
+    .summary-table td {
+        padding: 8px 6px;
+    }
+    
+    /* Input with unit adjustments */
+    .input-with-unit .form-control {
+        padding-right: 55px;
+    }
+    
+    .input-with-unit .unit {
+        font-size: 12px;
+        right: 10px;
+    }
+    
+    /* Form section spacing */
+    .form-section {
+        margin-bottom: 20px;
+    }
+    
+    .form-section-title {
+        font-size: 13px;
+    }
+    
+    /* Keep prior toggle stacks */
+    .keep-prior-toggle {
+        flex-wrap: wrap;
+    }
+    
+    .keep-prior-toggle .prior-value {
+        width: 100%;
+        margin-left: 28px;
+        margin-top: 4px;
+    }
+    
+    /* Monthly pattern section */
+    .monthly-pattern-section {
+        overflow-x: auto;
+    }
+    
+    /* Results cards stack */
+    .comparison-grid,
+    .projection-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    /* Waterfall chart height reduced */
+    .waterfall-chart-wrapper,
+    .chart-wrapper {
+        height: 200px;
+    }
+    
+    /* Tables horizontal scroll */
+    .projection-table-container,
+    .differences-table-container {
+        overflow-x: auto;
+    }
+    
+    .projection-table,
+    .differences-table,
+    .monthly-table {
+        min-width: 600px;
+    }
+    
+    /* Scenario selectors stack */
+    .scenario-selectors {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .vs-badge {
+        margin: 0 auto;
+    }
+}
+
+/* =============================================================================
+   Small phone breakpoint (< 480px)
+   ============================================================================= */
+
+@media (max-width: 479px) {
+    /* Even more compact */
+    .workflow-header {
+        padding: 0 8px;
+    }
+    
+    .step-content {
+        padding: 12px 8px;
+    }
+    
+    .step-card-header,
+    .step-card-body,
+    .step-actions {
+        padding: 12px;
+    }
+    
+    /* Metrics single column */
+    .comparison-grid,
+    .projection-metrics {
+        grid-template-columns: 1fr;
+    }
+    
+    .projection-metric .value {
+        font-size: 20px;
+    }
+    
+    /* Very small screens - abbreviated step labels */
+    .step-label {
+        font-size: 9px;
+        max-width: 50px;
+    }
+    
+    /* Summary cards compact */
+    .summary-card {
+        padding: 12px;
+    }
+    
+    .summary-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* =============================================================================
+   Touch-specific enhancements
+   ============================================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Touch devices: larger tap targets */
+    .btn {
+        min-height: 48px;
+    }
+    
+    .form-control {
+        min-height: 48px;
+    }
+    
+    .option-card {
+        min-height: 64px;
+    }
+    
+    /* Remove hover states on touch */
+    .step.clickable:hover {
+        background: transparent;
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    /* Add active states instead */
+    .btn:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+    
+    .option-card:active {
+        background: #f8fafc;
+    }
+}
+
+/* =============================================================================
+   Print styles
+   ============================================================================= */
+
+@media print {
+    .workflow-header {
+        position: static;
+        background: white;
+        color: black;
+        border-bottom: 2px solid #000;
+    }
+    
+    .step-nav {
+        display: none;
+    }
+    
+    .step-actions {
+        display: none;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    .step-card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    .form-control {
+        border: 1px solid #000;
+    }
+}
+
+/* =============================================================================
+   Accessibility improvements
+   ============================================================================= */
+
+/* Visible focus indicators */
+.btn:focus-visible,
+.form-control:focus-visible,
+.option-card:focus-visible,
+.step.clickable:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .step-card {
+        border: 2px solid #000;
+    }
+    
+    .btn-primary {
+        background: #000;
+        color: #fff;
+    }
+    
+    .btn-secondary {
+        background: #fff;
+        border: 2px solid #000;
+    }
+    
+    .form-control {
+        border: 2px solid #000;
+    }
+}
+

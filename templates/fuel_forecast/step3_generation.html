@@ -1,0 +1,421 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<style>
+.prior-indicator {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #e8eef5;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1e3a5f;
+}
+
+.prior-value {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.form-control.changed {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+.monthly-pattern-section {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.pattern-select {
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    background: white;
+    cursor: pointer;
+}
+
+.sparkline-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 40px;
+    padding: 8px 0;
+}
+
+.sparkline-bar {
+    flex: 1;
+    background: linear-gradient(to top, #10b981, #34d399);
+    border-radius: 2px;
+    min-height: 4px;
+    transition: height 0.3s ease;
+}
+
+.sparkline-bar.low {
+    background: linear-gradient(to top, #f59e0b, #fbbf24);
+}
+
+.sparkline-bar:hover {
+    opacity: 0.8;
+}
+</style>
+
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Step 3: Generation Profile</h2>
+        <p>Set capacity, use factors, heat rates, and deductions that drive generation and coal consumption.</p>
+        {% if has_prior and base_scenario_name %}
+        <div class="prior-indicator">
+            Rolling forward from: <strong>{{ base_scenario_name }}</strong>
+        </div>
+        {% endif %}
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/6">
+        <div class="step-card-body">
+            <!-- Capacity Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Plant Capacity
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="capacity_mw_kc">Kyger Creek Capacity</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="capacity_mw_kc" id="capacity_mw_kc" 
+                                   class="form-control" 
+                                   value="{{ capacity_mw_kc }}"
+                                   step="5" min="0" max="2000">
+                            <span class="unit">MW</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity_mw_cc">Clifty Creek Capacity</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="capacity_mw_cc" id="capacity_mw_cc" 
+                                   class="form-control" 
+                                   value="{{ capacity_mw_cc }}"
+                                   step="5" min="0" max="2000">
+                            <span class="unit">MW</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                    System total: <strong>{{ capacity_mw_kc + capacity_mw_cc }} MW</strong>
+                </p>
+            </div>
+            
+            <!-- Use Factor Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Use Factor
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    The use factor determines expected generation as a percentage of available capacity.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="use_factor">System Use Factor</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="use_factor" id="use_factor" 
+                                   class="form-control {% if has_prior and prior.use_factor and prior.use_factor != use_factor %}changed{% endif %}" 
+                                   value="{{ use_factor }}"
+                                   step="1" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                        {% if has_prior and prior.use_factor %}
+                        <span class="prior-value">Prior: {{ prior.use_factor }}%</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="capacity_factor_target">Target Capacity Factor</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="capacity_factor_target" id="capacity_factor_target" 
+                                   class="form-control {% if has_prior and prior.capacity_factor_target and prior.capacity_factor_target != capacity_factor_target %}changed{% endif %}" 
+                                   value="{{ capacity_factor_target }}"
+                                   step="1" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                        {% if has_prior and prior.capacity_factor_target %}
+                        <span class="prior-value">Prior: {{ prior.capacity_factor_target }}%</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Generation estimate -->
+                <div style="margin-top: 16px; padding: 16px; background: linear-gradient(135deg, #f0f4f8 0%, #e8eef5 100%); border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="font-size: 13px; color: #1e3a5f;">Estimated Annual Generation</span>
+                            <div style="font-size: 28px; font-weight: 700; color: #1e3a5f;" id="est_generation">
+                                {{ "%.1f"|format((capacity_mw_kc + capacity_mw_cc) * 8760 * use_factor / 100 / 1000) }} GWh
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 13px; color: #1e3a5f;">Based on</span>
+                            <div style="font-size: 18px; font-weight: 600; color: #2d4a6f;">
+                                {{ use_factor }}% use factor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Monthly Use Factor Pattern - Interactive Curve Editor -->
+                <div class="monthly-pattern-section">
+                    <details class="curve-editor-details">
+                        <summary style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                            <span style="font-size: 13px; font-weight: 500; color: #374151;">
+                                📊 Monthly Use Factor Profile
+                            </span>
+                            <span style="font-size: 12px; color: #6b7280;">Click to customize</span>
+                        </summary>
+                        
+                        <div style="padding: 16px; background: #f9fafb; border-radius: 8px; margin-top: 8px;">
+                            <div id="use_factor_curve"
+                                 data-curve-editor
+                                 data-base-value="{{ use_factor }}"
+                                 data-unit="%"
+                                 data-input-prefix="use_factor_month_"
+                                 data-min-multiplier="0.3"
+                                 data-max-multiplier="1.2"
+                                 data-width="360"
+                                 data-height="180">
+                            </div>
+                            <p style="font-size: 11px; color: #9ca3af; margin-top: 8px;">
+                                Drag points to adjust monthly use factors. Lower values for outage months.
+                            </p>
+                        </div>
+                    </details>
+                    
+                    <!-- Simple sparkline preview (always visible) -->
+                    <div class="sparkline-container" id="use_sparkline" style="margin-top: 8px;">
+                        <!-- Sparkline bars generated by JS -->
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-top: 4px;">
+                        <span>Jan</span>
+                        <span>Apr</span>
+                        <span>Jul</span>
+                        <span>Oct</span>
+                        <span>Dec</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Heat Rate Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Heat Rates
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    Heat rate determines how much coal is burned per unit of generation.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="heat_rate_baseline_kc">KC Baseline Heat Rate</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="heat_rate_baseline_kc" id="heat_rate_baseline_kc" 
+                                   class="form-control" 
+                                   value="{{ heat_rate_baseline_kc }}"
+                                   step="10" min="8500" max="12000">
+                            <span class="unit">BTU/kWh</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="heat_rate_baseline_cc">CC Baseline Heat Rate</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="heat_rate_baseline_cc" id="heat_rate_baseline_cc" 
+                                   class="form-control" 
+                                   value="{{ heat_rate_baseline_cc }}"
+                                   step="10" min="8500" max="12000">
+                            <span class="unit">BTU/kWh</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="heat_rate_suf_correction">Startup/Shutdown Penalty</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="heat_rate_suf_correction" id="heat_rate_suf_correction" 
+                                   class="form-control" 
+                                   value="{{ heat_rate_suf_correction }}"
+                                   step="10" min="-500" max="500">
+                            <span class="unit">BTU/kWh</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="heat_rate_prb_penalty">PRB Blend Penalty</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="heat_rate_prb_penalty" id="heat_rate_prb_penalty" 
+                                   class="form-control" 
+                                   value="{{ heat_rate_prb_penalty }}"
+                                   step="10" min="0" max="300">
+                            <span class="unit">BTU/kWh per %PRB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Outages Section -->
+            <div class="form-section">
+                <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Outages (Annual Total)</span>
+                    <a href="/fuel-forecast/{{ session_id }}/step/outages" 
+                       style="font-size: 13px; color: #2d6a4f; text-decoration: none; font-weight: 500; padding: 6px 12px; background: #e6f4ec; border-radius: 6px;">
+                        📅 Detailed Unit Schedule →
+                    </a>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="outage_days_planned">Planned Outage Days</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="outage_days_planned" id="outage_days_planned" 
+                                   class="form-control" 
+                                   value="{{ outage_days_planned }}"
+                                   step="1" min="0" max="365">
+                            <span class="unit">days</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="outage_days_forced">Forced Outage (Est.)</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="outage_days_forced" id="outage_days_forced" 
+                                   class="form-control" 
+                                   value="{{ outage_days_forced }}"
+                                   step="1" min="0" max="365">
+                            <span class="unit">days</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                    Total outage impact: <strong>{{ outage_days_planned + outage_days_forced }} days</strong> 
+                    ({{ "%.1f"|format((outage_days_planned + outage_days_forced) / 365 * 100) }}% of year)
+                </p>
+                <p style="font-size: 12px; color: #9ca3af; margin-top: 4px;">
+                    Use "Detailed Unit Schedule" to enter outages by unit by month for more accurate EFOR and availability calculations.
+                </p>
+            </div>
+            
+            <!-- Deductions Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    Generation Deductions
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 12px;">
+                    These factors reduce gross generation to net delivered MWh.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fgd_aux_pct">FGD Auxiliary Load</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="fgd_aux_pct" id="fgd_aux_pct" 
+                                   class="form-control" 
+                                   value="{{ fgd_aux_pct }}"
+                                   step="0.1" min="0" max="10">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gsu_loss_pct">GSU Transformer Losses</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="gsu_loss_pct" id="gsu_loss_pct" 
+                                   class="form-control" 
+                                   value="{{ gsu_loss_pct }}"
+                                   step="0.01" min="0" max="2">
+                            <span class="unit">%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reserve_mw">System Regulating Reserve</label>
+                        <div class="input-with-unit">
+                            <input type="number" name="reserve_mw" id="reserve_mw" 
+                                   class="form-control" 
+                                   value="{{ reserve_mw }}"
+                                   step="1" min="0" max="50">
+                            <span class="unit">MW</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Net Deduction Factor</label>
+                        <div style="padding: 10px 12px; background: #f3f4f6; border-radius: 6px; font-family: 'JetBrains Mono', monospace;">
+                            {{ "%.2f"|format(100 - fgd_aux_pct - gsu_loss_pct) }}% of gross
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-actions">
+            <a href="/fuel-forecast/{{ session_id }}/step/5" class="btn btn-secondary">
+                ← Back to Heat Rates
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Continue to Other Costs →
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Update generation estimate when inputs change
+document.querySelectorAll('#capacity_mw_kc, #capacity_mw_cc, #use_factor').forEach(input => {
+    input.addEventListener('change', function() {
+        const capacityKc = parseFloat(document.getElementById('capacity_mw_kc').value) || 0;
+        const capacityCc = parseFloat(document.getElementById('capacity_mw_cc').value) || 0;
+        const useFactor = parseFloat(document.getElementById('use_factor').value) || 0;
+        
+        const totalCapacity = capacityKc + capacityCc;
+        const annualGwh = totalCapacity * 8760 * useFactor / 100 / 1000;
+        
+        document.getElementById('est_generation').textContent = annualGwh.toFixed(1) + ' GWh';
+        updateUsePattern();
+    });
+});
+
+// Monthly use factor patterns
+const usePatterns = {
+    flat: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    seasonal: [0.9, 0.85, 0.8, 0.75, 0.85, 1.1, 1.2, 1.15, 1.0, 0.85, 0.9, 0.95],
+    outage_spring: [0.95, 0.9, 0.6, 0.5, 0.85, 1.0, 1.05, 1.0, 0.95, 0.9, 0.95, 0.95],
+    outage_fall: [0.95, 0.95, 0.9, 0.95, 0.95, 1.0, 1.05, 1.0, 0.6, 0.5, 0.85, 0.95]
+};
+
+function updateUsePattern() {
+    const patternEl = document.getElementById('use_pattern');
+    const container = document.getElementById('use_sparkline');
+    // Skip if elements don't exist (e.g., when curve editor is used instead)
+    if (!patternEl || !container) return;
+    
+    const pattern = patternEl.value;
+    const multipliers = usePatterns[pattern];
+    const baseUse = parseFloat(document.getElementById('use_factor')?.value) || 85;
+    
+    // Generate sparkline bars
+    let html = '';
+    const maxMultiplier = Math.max(...multipliers);
+    
+    for (let i = 0; i < 12; i++) {
+        const height = (multipliers[i] / maxMultiplier) * 100;
+        const useFactor = (baseUse * multipliers[i]).toFixed(0);
+        const isLow = multipliers[i] < 0.7;
+        html += `<div class="sparkline-bar ${isLow ? 'low' : ''}" style="height: ${height}%;" title="Month ${i+1}: ${useFactor}%"></div>`;
+    }
+    
+    container.innerHTML = html;
+}
+
+// Initialize sparkline on load
+document.addEventListener('DOMContentLoaded', function() {
+    updateUsePattern();
+});
+</script>
+
+<!-- Curve Editor for monthly patterns -->
+<script src="/static/curve_editor.js"></script>
+{% endblock %}

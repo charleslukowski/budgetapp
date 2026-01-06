@@ -1,0 +1,495 @@
+{% extends "base.html" %}
+
+{% block title %}Fuel Forecast - {{ steps[current_step - 1].label if steps else 'Workflow' }}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/fuel_forecast.css">
+<link rel="stylesheet" href="/static/fuel_forecast_responsive.css">
+<style>
+/* Inline workflow-specific styles for immediate availability */
+.workflow-header {
+    background: #ffffff;
+    border-bottom: 1px solid #d1d9e6;
+    padding: 0 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.workflow-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.workflow-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a5f;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.workflow-title .icon {
+    font-size: 18px;
+}
+
+.workflow-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.workflow-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Step Navigation */
+.step-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    min-width: 120px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.step.clickable {
+    cursor: pointer;
+}
+
+.step.clickable:hover {
+    background: #f0f4f8;
+}
+
+.step:not(.clickable) {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Step number circle */
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    transition: all 0.2s ease;
+}
+
+/* Status-based styling */
+.step.pending .step-number {
+    background: #f0f4f8;
+    border: 2px solid #d1d9e6;
+    color: #9ca3af;
+}
+
+.step.active .step-number {
+    background: #1e3a5f;
+    border: 2px solid #2d4a6f;
+    color: white;
+    box-shadow: 0 0 8px rgba(30, 58, 95, 0.3);
+}
+
+.step.done .step-number {
+    background: #059669;
+    border: 2px solid #10b981;
+    color: white;
+}
+
+.step.done .step-number::after {
+    content: "✓";
+}
+
+.step.done .step-number span {
+    display: none;
+}
+
+.step.changed .step-number {
+    background: #d97706;
+    border: 2px solid #f59e0b;
+    color: white;
+}
+
+/* Step labels */
+.step-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.step.active .step-label {
+    color: #1e3a5f;
+    font-weight: 600;
+}
+
+.step.done .step-label {
+    color: #374151;
+}
+
+/* Connector lines between steps */
+.step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    right: -4px;
+    width: 8px;
+    height: 2px;
+    background: #d1d9e6;
+}
+
+.step.done:not(:last-child)::after {
+    background: #10b981;
+}
+
+/* Step content area */
+.step-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+.step-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+}
+
+.step-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #d1d9e6;
+    background: #f0f4f8;
+}
+
+.step-card-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.step-card-header p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.step-card-body {
+    padding: 24px;
+}
+
+/* Form elements */
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+}
+
+.form-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-section-title .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.badge-optional {
+    background: #e8eef5;
+    color: #1e3a5f;
+}
+
+.badge-changed {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #111827;
+    transition: all 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #2d4a6f;
+    box-shadow: 0 0 0 3px rgba(45, 74, 111, 0.15);
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Radio and checkbox styling */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.option-card {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.option-card:hover {
+    border-color: #2d4a6f;
+    background: #f8fafc;
+}
+
+.option-card.selected {
+    border-color: #2d4a6f;
+    background: #f0f4f8;
+}
+
+.option-card input[type="radio"] {
+    margin-right: 12px;
+    margin-top: 3px;
+}
+
+.option-card-content h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.option-card-content p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Buttons */
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: #1e3a5f;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #2d4a6f;
+}
+
+.btn-secondary {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.btn-success {
+    background: #059669;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #047857;
+}
+
+/* Keep prior toggle */
+.keep-prior-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.keep-prior-toggle input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #059669;
+}
+
+.keep-prior-toggle label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #166534;
+}
+
+.keep-prior-toggle .prior-value {
+    margin-left: auto;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Summary tables */
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table th,
+.summary-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.summary-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-table td {
+    font-size: 14px;
+    color: #111827;
+}
+
+.summary-table .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.summary-table .changed {
+    color: #d97706;
+}
+
+/* Input with unit */
+.input-with-unit {
+    position: relative;
+}
+
+.input-with-unit .form-control {
+    padding-right: 60px;
+}
+
+.input-with-unit .unit {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #6b7280;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Workflow Header -->
+<div class="workflow-header">
+    <div class="workflow-title-bar">
+        <div class="workflow-title">
+            <span class="icon">⚡</span>
+            Fuel Forecast Workflow
+        </div>
+        <div class="workflow-meta">
+            <span>📅 Session: {{ session_id }}</span>
+            {% if session.as_of_date %}
+            <span>📊 As of: {{ session.as_of_date.strftime('%B %Y') if session.as_of_date else 'Not set' }}</span>
+            {% endif %}
+            {% if session.base_scenario_name %}
+            <span>📁 Base: {{ session.base_scenario_name }}</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Step Navigation -->
+    {% include "fuel_forecast/_step_nav.html" %}
+</div>
+
+<!-- Step Content -->
+<div class="step-content" id="main-content">
+    {% block step_content %}{% endblock %}
+</div>
+
+<!-- Keyboard Navigation -->
+<script src="/static/keyboard_nav.js"></script>
+{% endblock %}
+

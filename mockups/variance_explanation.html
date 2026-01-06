@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variance Explanation | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="monthly_summary.html">Summary</a>
+            <a href="department_input.html">Forecast Input</a>
+            <a href="budget_view.html">Budget</a>
+            <a href="variance_explanation.html" class="active">Variance</a>
+            <a href="funding_changes.html">Funding Changes</a>
+        </div>
+        <div class="nav-right">
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Dept Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="monthly_summary.html" class="back-link">&larr; Back</a>
+                <h1>Kyger Creek <span class="subtitle">Variance Explanation</span></h1>
+                <div class="breadcrumb">
+                    <strong>PLANNED-01</strong> &mdash; Unit 1 Planned Outage
+                    <span class="status-draft">Draft</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <select class="month-picker">
+                    <option>January 2025</option>
+                    <option>February 2025</option>
+                    <option>March 2025</option>
+                    <option>April 2025</option>
+                    <option>May 2025</option>
+                    <option>June 2025</option>
+                    <option>July 2025</option>
+                    <option>August 2025</option>
+                    <option>September 2025</option>
+                    <option>October 2025</option>
+                    <option selected>November 2025</option>
+                </select>
+                <button class="btn btn-primary">Save Draft</button>
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </header>
+
+        <!-- Month Summary -->
+        <div class="variance-summary">
+            <div class="summary-item">
+                <span class="label">Budget</span>
+                <span class="value">$45,000</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Actual</span>
+                <span class="value">$42,100</span>
+            </div>
+            <div class="summary-item highlight favorable">
+                <span class="label">Variance</span>
+                <span class="value">-$2,900</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">% Variance</span>
+                <span class="value">-6.4%</span>
+            </div>
+        </div>
+
+        <!-- Variance Grid -->
+        <div class="grid-container">
+            <table class="data-grid variance-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-account">Account</th>
+                        <th class="sticky-col col-acctdesc">Acct Desc</th>
+                        <th class="sticky-col col-desc">Description</th>
+                        <th class="num-col align-right">Budget</th>
+                        <th class="num-col align-right">Actual</th>
+                        <th class="num-col align-right">Variance</th>
+                        <th class="explanation-col">Explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-126-4</td>
+                        <td class="sticky-col col-acctdesc">PULVERIZER</td>
+                        <td class="sticky-col col-desc">PULV TEMP & PRESS. SYSTEMS INSPECT</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col variance-zero">0</td>
+                        <td class="explanation-col">
+                            <span class="no-variance">No variance</span>
+                        </td>
+                    </tr>
+                    <tr class="has-variance favorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">PRECIP. INSPECT & REPAIR (Parts)</td>
+                        <td class="num-col">15,000</td>
+                        <td class="num-col">12,400</td>
+                        <td class="num-col variance-favorable">-2,600</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Parts delivery delayed to December. Will incur cost next month.</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">INSPECT & CLEAN BUS</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col variance-zero">0</td>
+                        <td class="explanation-col">
+                            <span class="no-variance">No variance</span>
+                        </td>
+                    </tr>
+                    <tr class="has-variance unfavorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR INSPECT & CLEAN</td>
+                        <td class="num-col">24,000</td>
+                        <td class="num-col">26,200</td>
+                        <td class="num-col variance-unfavorable">+2,200</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Additional cleaning required due to higher ash content in coal blend. Contractor overtime authorized by Plant Manager.</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-203-4</td>
+                        <td class="sticky-col col-acctdesc">AIR PREHEATERS</td>
+                        <td class="sticky-col col-desc">AIR PREHEATER WASH</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col">0</td>
+                        <td class="num-col variance-zero">0</td>
+                        <td class="explanation-col">
+                            <span class="no-variance">No variance</span>
+                        </td>
+                    </tr>
+                    <tr class="has-variance favorable-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-205-4</td>
+                        <td class="sticky-col col-acctdesc">OVERFIRE AIR</td>
+                        <td class="sticky-col col-desc">OVERFIRE AIR DAMPERS - MATS</td>
+                        <td class="num-col">6,000</td>
+                        <td class="num-col">3,500</td>
+                        <td class="num-col variance-favorable">-2,500</td>
+                        <td class="explanation-col">
+                            <textarea class="explanation-input" placeholder="Explain variance...">Used refurbished parts from inventory instead of purchasing new. Cost savings permanent.</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="totals-row">
+                        <td class="sticky-col col-account">DEPARTMENT TOTAL</td>
+                        <td class="sticky-col col-acctdesc"></td>
+                        <td class="sticky-col col-desc"></td>
+                        <td class="num-col">45,000</td>
+                        <td class="num-col">42,100</td>
+                        <td class="num-col variance-favorable">-2,900</td>
+                        <td class="explanation-col"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Department Summary Explanation -->
+        <div class="dept-summary-section">
+            <h3>Department Summary</h3>
+            <textarea class="dept-summary-input" placeholder="Provide overall department variance summary...">November variances driven by timing differences and one-time savings. Parts delay ($2,600) will shift to December. SCR overage ($2,200) was necessary maintenance but offset by permanent savings on overfire air dampers ($2,500) from using refurbished parts. Net favorable variance of $2,900 expected to hold through year-end.</textarea>
+        </div>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">6 line items &bull; 3 with variances</span>
+            </div>
+            <div class="footer-right">
+                <span class="dept-nav">
+                    <a href="#">&larr; UNPLANNED</a>
+                    &nbsp;|&nbsp;
+                    <a href="#">PLANNED-02 &rarr;</a>
+                </span>
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary">Save Draft</button>
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+

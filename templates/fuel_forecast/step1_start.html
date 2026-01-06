@@ -1,0 +1,116 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Step 1: Start Point</h2>
+        <p>Choose how to initialize your forecast - roll forward from last month, copy an existing scenario, or start fresh.</p>
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/1">
+        <div class="step-card-body">
+            <!-- Start Mode Selection -->
+            <div class="form-section">
+                <div class="form-section-title">How would you like to begin?</div>
+                <div class="option-group">
+                    <label class="option-card {% if selected_mode == 'roll_forward' %}selected{% endif %}">
+                        <input type="radio" name="start_mode" value="roll_forward" 
+                               {% if selected_mode == 'roll_forward' %}checked{% endif %}
+                               onchange="toggleScenarioSelect(this.value)">
+                        <div class="option-card-content">
+                            <h4>🔄 Roll Forward from Last Forecast</h4>
+                            <p>Start with your most recent forecast values. Only update what has changed.</p>
+                        </div>
+                    </label>
+                    
+                    <label class="option-card {% if selected_mode == 'copy' %}selected{% endif %}">
+                        <input type="radio" name="start_mode" value="copy"
+                               {% if selected_mode == 'copy' %}checked{% endif %}
+                               onchange="toggleScenarioSelect(this.value)">
+                        <div class="option-card-content">
+                            <h4>📋 Copy Existing Scenario</h4>
+                            <p>Create a new version based on a specific saved scenario.</p>
+                        </div>
+                    </label>
+                    
+                    <label class="option-card {% if selected_mode == 'fresh' %}selected{% endif %}">
+                        <input type="radio" name="start_mode" value="fresh"
+                               {% if selected_mode == 'fresh' %}checked{% endif %}
+                               onchange="toggleScenarioSelect(this.value)">
+                        <div class="option-card-content">
+                            <h4>✨ Start Fresh</h4>
+                            <p>Begin with system defaults. Useful for building a new budget year.</p>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Scenario Selection (conditional) -->
+            <div class="form-section" id="scenario-select" style="{% if selected_mode == 'fresh' %}display: none;{% endif %}">
+                <div class="form-section-title">Select Source Scenario</div>
+                <div class="form-group">
+                    <label for="scenario_id">Source Scenario</label>
+                    <select name="scenario_id" id="scenario_id" class="form-control">
+                        <option value="">-- Select a scenario --</option>
+                        {% for scenario in scenarios %}
+                        <option value="{{ scenario.id }}" {% if scenario.id == selected_scenario_id %}selected{% endif %}>
+                            {{ scenario.name }} ({{ scenario.created_at }})
+                        </option>
+                        {% endfor %}
+                        {% if not scenarios %}
+                        <option value="" disabled>No saved scenarios available</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Forecast Period -->
+            <div class="form-section">
+                <div class="form-section-title">Forecast Period</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="as_of_month">As-Of Month</label>
+                        <input type="month" name="as_of_month" id="as_of_month" 
+                               class="form-control" 
+                               value="{{ session.as_of_date.strftime('%Y-%m') if session.as_of_date else '' }}">
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                    The "as-of" month determines which months are actual vs. forecast in your model.
+                </p>
+            </div>
+        </div>
+        
+        <div class="step-actions">
+            <a href="/energy-summary/{{ year|default(2025) }}" class="btn btn-secondary">
+                ← Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Continue to Coal Position →
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function toggleScenarioSelect(mode) {
+    const scenarioSelect = document.getElementById('scenario-select');
+    if (mode === 'fresh') {
+        scenarioSelect.style.display = 'none';
+    } else {
+        scenarioSelect.style.display = 'block';
+    }
+    
+    // Update option card selection state
+    document.querySelectorAll('.option-card').forEach(card => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+    });
+}
+</script>
+{% endblock %}
+

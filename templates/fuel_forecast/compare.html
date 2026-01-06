@@ -1,0 +1,477 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<style>
+.compare-header {
+    padding: 24px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 24px;
+}
+
+.compare-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+}
+
+.compare-header .subtitle {
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.scenario-selectors {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.scenario-selector {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.scenario-selector h3 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.scenario-selector select {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+}
+
+.vs-badge {
+    width: 48px;
+    height: 48px;
+    background: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #6b7280;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.metric-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.metric-card .label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.metric-card .values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.metric-card .scenario-value {
+    text-align: center;
+}
+
+.metric-card .scenario-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+.metric-card .value {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.metric-card .value.scenario-a {
+    color: #2d4a6f;
+}
+
+.metric-card .value.scenario-b {
+    color: #7c3aed;
+}
+
+.metric-card .variance {
+    text-align: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.metric-card .variance-value {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.metric-card .variance-value.positive {
+    color: #dc2626;
+}
+
+.metric-card .variance-value.negative {
+    color: #059669;
+}
+
+.differences-table-container {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.differences-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.differences-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #374151;
+}
+
+.differences-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.differences-table th,
+.differences-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.differences-table th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.differences-table th:nth-child(2),
+.differences-table th:nth-child(3),
+.differences-table th:nth-child(4),
+.differences-table td:nth-child(2),
+.differences-table td:nth-child(3),
+.differences-table td:nth-child(4) {
+    text-align: right;
+}
+
+.differences-table tbody tr:hover {
+    background: #f0f9ff;
+}
+
+.differences-table .changed-row {
+    background: #fefce8;
+}
+
+.driver-category {
+    font-size: 11px;
+    color: #6b7280;
+    padding: 2px 8px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.no-comparison {
+    text-align: center;
+    padding: 48px;
+    color: #6b7280;
+}
+
+.no-comparison p {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+}
+
+.waterfall-container {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.waterfall-container h3 {
+    margin: 0 0 16px 0;
+    color: #374151;
+    font-size: 16px;
+}
+
+.waterfall-chart-wrapper {
+    height: 300px;
+    position: relative;
+}
+</style>
+
+<div class="step-card" style="max-width: 1200px;">
+    <div class="compare-header">
+        <h2>Scenario Comparison</h2>
+        <div class="subtitle">Compare two forecast scenarios side-by-side</div>
+    </div>
+    
+    <form method="GET" action="/fuel-forecast/{{ session_id }}/compare">
+        <div class="scenario-selectors">
+            <div class="scenario-selector">
+                <h3>Scenario A (Baseline)</h3>
+                <select name="scenario_a" id="scenario_a" onchange="this.form.submit()">
+                    <option value="">-- Select Scenario --</option>
+                    {% for s in available_scenarios %}
+                    <option value="{{ s.id }}" {% if scenario_a and scenario_a.id == s.id %}selected{% endif %}>
+                        {{ s.name }} ({{ s.created_at.strftime('%b %d, %Y') if s.created_at else 'N/A' }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="vs-badge">VS</div>
+            
+            <div class="scenario-selector">
+                <h3>Scenario B (Compare)</h3>
+                <select name="scenario_b" id="scenario_b" onchange="this.form.submit()">
+                    <option value="">-- Select Scenario --</option>
+                    {% for s in available_scenarios %}
+                    <option value="{{ s.id }}" {% if scenario_b and scenario_b.id == s.id %}selected{% endif %}>
+                        {{ s.name }} ({{ s.created_at.strftime('%b %d, %Y') if s.created_at else 'N/A' }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </form>
+    
+    {% if comparison %}
+    <!-- Key Metrics Comparison -->
+    <div class="comparison-grid">
+        <div class="metric-card">
+            <div class="label">Total Fuel Cost</div>
+            <div class="values">
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_a.name }}</div>
+                    <div class="value scenario-a">${{ "{:,.0f}".format(comparison.a.total_cost / 1000000) }}M</div>
+                </div>
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_b.name }}</div>
+                    <div class="value scenario-b">${{ "{:,.0f}".format(comparison.b.total_cost / 1000000) }}M</div>
+                </div>
+            </div>
+            <div class="variance">
+                <span class="variance-value {% if comparison.variance.total_cost > 0 %}positive{% else %}negative{% endif %}">
+                    {{ "{:+,.0f}".format(comparison.variance.total_cost / 1000000) }}M
+                    ({{ "{:+.1f}".format(comparison.variance.total_cost_pct) }}%)
+                </span>
+            </div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="label">Cost per MWh</div>
+            <div class="values">
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_a.name }}</div>
+                    <div class="value scenario-a">${{ "%.2f"|format(comparison.a.cost_per_mwh) }}</div>
+                </div>
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_b.name }}</div>
+                    <div class="value scenario-b">${{ "%.2f"|format(comparison.b.cost_per_mwh) }}</div>
+                </div>
+            </div>
+            <div class="variance">
+                <span class="variance-value {% if comparison.variance.cost_per_mwh > 0 %}positive{% else %}negative{% endif %}">
+                    {{ "{:+.2f}".format(comparison.variance.cost_per_mwh) }}/MWh
+                </span>
+            </div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="label">Total Generation</div>
+            <div class="values">
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_a.name }}</div>
+                    <div class="value scenario-a">{{ "{:,.0f}".format(comparison.a.total_mwh / 1000) }} GWh</div>
+                </div>
+                <div class="scenario-value">
+                    <div class="scenario-label">{{ scenario_b.name }}</div>
+                    <div class="value scenario-b">{{ "{:,.0f}".format(comparison.b.total_mwh / 1000) }} GWh</div>
+                </div>
+            </div>
+            <div class="variance">
+                <span class="variance-value {% if comparison.variance.total_mwh > 0 %}negative{% else %}positive{% endif %}">
+                    {{ "{:+,.0f}".format(comparison.variance.total_mwh / 1000) }} GWh
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Variance Waterfall Chart (placeholder - will be populated by waterfall component) -->
+    <div class="waterfall-container" id="waterfall-section">
+        <h3>Cost Variance Breakdown</h3>
+        <div class="waterfall-chart-wrapper">
+            <canvas id="waterfallChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Driver Differences Table -->
+    <div class="differences-table-container">
+        <div class="differences-header">
+            <h3>Driver Value Differences ({{ comparison.different_count }} changed)</h3>
+        </div>
+        <table class="differences-table">
+            <thead>
+                <tr>
+                    <th>Driver</th>
+                    <th>{{ scenario_a.name }}</th>
+                    <th>{{ scenario_b.name }}</th>
+                    <th>Variance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for diff in comparison.differences %}
+                <tr class="changed-row">
+                    <td>
+                        <span class="driver-category">{{ diff.category }}</span>
+                        {{ diff.driver_label }}
+                    </td>
+                    <td>{{ diff.value_a_formatted }}</td>
+                    <td>{{ diff.value_b_formatted }}</td>
+                    <td class="{% if diff.variance > 0 %}positive{% else %}negative{% endif %}">
+                        {{ diff.variance_formatted }}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not comparison.differences %}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #6b7280; padding: 24px;">
+                        No differences found between scenarios
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% else %}
+    <div class="no-comparison">
+        <p>Select two scenarios above to compare them.</p>
+        <p style="font-size: 14px; color: #9ca3af;">
+            Choose a baseline scenario (A) and a scenario to compare (B) to see the differences.
+        </p>
+    </div>
+    {% endif %}
+    
+    <!-- Actions -->
+    <div class="step-actions">
+        <a href="/fuel-forecast/{{ session_id }}/step/8" class="btn btn-secondary">
+            ← Back to Review
+        </a>
+        <div style="display: flex; gap: 12px;">
+            <a href="/fuel-forecast/{{ session_id }}/multi-year" class="btn btn-secondary">
+                📈 Multi-Year View
+            </a>
+            {% if comparison %}
+            <a href="/fuel-forecast/{{ session_id }}/compare/export?scenario_a={{ scenario_a.id }}&scenario_b={{ scenario_b.id }}" 
+               class="btn btn-secondary">
+                📊 Export Comparison
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if comparison %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Waterfall chart data from variance breakdown
+const waterfallData = {{ waterfall_data|safe }};
+
+const ctx = document.getElementById('waterfallChart').getContext('2d');
+
+// Process waterfall data for Chart.js
+const labels = waterfallData.map(d => d.label);
+const values = waterfallData.map(d => d.value);
+
+// Calculate running total for waterfall effect
+let runningTotal = waterfallData[0].value;
+const backgroundColors = waterfallData.map((d, i) => {
+    if (i === 0 || i === waterfallData.length - 1) return '#2d4a6f'; // Start/end
+    return d.value >= 0 ? '#ef4444' : '#22c55e'; // Increase/decrease
+});
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Impact ($M)',
+            data: values.map(v => v / 1000000),
+            backgroundColor: backgroundColors,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const val = context.raw;
+                        return (val >= 0 ? '+' : '') + val.toFixed(1) + 'M';
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Cost Impact ($M)'
+                },
+                grid: {
+                    color: 'rgba(0,0,0,0.05)'
+                }
+            }
+        }
+    }
+});
+</script>
+{% endif %}
+{% endblock %}
+

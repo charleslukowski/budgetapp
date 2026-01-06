@@ -1,0 +1,20 @@
+category_code,category_name,parent_code,display_order,mwhr_group
+FUEL,Fuel Costs,,1,FUEL
+FUEL-COST,Fuel Costs,FUEL,1,FUEL
+FUEL-BYPRODUCT,Byproducts/Disposal/Reagents,FUEL,2,FUEL
+FUEL-ALLOWANCE,Allowance Costs,FUEL,3,FUEL
+OP,Operating Costs,,2,OP
+OP-GEN,Generation,OP,1,OP
+OP-GEN-CAP,Capital,OP-GEN,1,OP
+OP-GEN-OM,O&M,OP-GEN,2,OP
+OP-GEN-AG,A&G,OP-GEN,3,OP
+OP-GEN-TAX,Taxes,OP-GEN,4,OP
+OP-TRANS,Transmission,OP,2,OP
+OP-TRANS-AG,A&G (Transmission),OP-TRANS,1,OP
+OP-TRANS-TD,T&D,OP-TRANS,2,OP
+OP-TRANS-CAP,T&D Capital,OP-TRANS,3,OP
+NON-OP,Non-Operating Costs,,3,NON-OP
+NON-OP-STD,Short Term Debt,NON-OP,1,NON-OP
+NON-OP-LTD,Long Term Debt,NON-OP,2,NON-OP
+NON-OP-POST,Post Retirement,NON-OP,3,NON-OP
+NON-OP-DECOM,Decommission & Demolition Fund,NON-OP,4,NON-OP

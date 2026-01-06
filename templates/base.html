@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}OVEC Budget System{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+    /* Scenario Selectors in Header */
+    .scenario-selectors {
+        display: flex;
+        gap: 12px;
+        margin-right: 16px;
+        padding-right: 16px;
+        border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .scenario-select-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .scenario-select-group label {
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: rgba(255,255,255,0.7);
+    }
+    
+    .scenario-select-group.budget label {
+        color: #93c5fd;
+    }
+    
+    .scenario-select-group.fuel label {
+        color: #86efac;
+    }
+    
+    .scenario-select {
+        padding: 4px 8px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 4px;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        cursor: pointer;
+        min-width: 120px;
+        max-width: 180px;
+    }
+    
+    .scenario-select:hover {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.5);
+    }
+    
+    .scenario-select:focus {
+        outline: none;
+        border-color: rgba(255,255,255,0.6);
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    }
+    
+    .scenario-select option {
+        background: #1e3a5f;
+        color: white;
+    }
+    
+    /* Responsive: hide labels on smaller screens */
+    @media (max-width: 1200px) {
+        .scenario-select-group label {
+            display: none;
+        }
+        .scenario-select {
+            min-width: 100px;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .scenario-selectors {
+            display: none;
+        }
+    }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC<br>Budget System</div>
+        <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">
+            ☰
+        </button>
+        <div class="nav-links">
+            <a href="/summary/{{ year }}" class="{% if active_page == 'summary' %}active{% endif %}">Summary</a>
+            <a href="/budget-entry/{{ plant_code | default('KC') }}" class="{% if active_page == 'budget_entry' %}active{% endif %}">Budget Entry</a>
+            <a href="/budget-approval/{{ plant_code | default('KC') }}" class="{% if active_page == 'budget_approval' %}active{% endif %}">Approvals</a>
+            <a href="/forecast/{{ plant_code | default('KC') }}" class="{% if active_page == 'forecast' %}active{% endif %}">Forecast</a>
+            <a href="/budget/{{ plant_code | default('KC') }}" class="{% if active_page == 'budget' %}active{% endif %}">Budget View</a>
+            <a href="/variance/{{ plant_code | default('KC') }}" class="{% if active_page == 'variance' %}active{% endif %}">Variance</a>
+            <a href="/funding/{{ plant_code | default('KC') }}" class="{% if active_page == 'funding' %}active{% endif %}">Funding</a>
+            <span class="nav-divider">|</span>
+            <a href="/energy-summary/{{ year }}" class="{% if active_page == 'energy_summary' %}active{% endif %}">Energy</a>
+            <a href="/generation/{{ plant_code | default('KC') }}" class="{% if active_page == 'generation' %}active{% endif %}">Generation</a>
+            <a href="/fuel/{{ plant_code | default('KC') }}" class="{% if active_page == 'fuel' %}active{% endif %}">Fuel</a>
+            <a href="/coal/{{ plant_code | default('KC') }}" class="{% if active_page == 'coal' %}active{% endif %}">Coal</a>
+            <a href="/inputs/{{ year }}" class="{% if active_page == 'fuel_forecast' or active_page == 'forecast_inputs' %}active{% endif %}">Fuel Forecast</a>
+            <a href="/scenarios" class="{% if active_page == 'scenarios' %}active{% endif %}">Scenarios</a>
+            <a href="/coal-contracts" class="{% if active_page == 'coal_contracts' %}active{% endif %}">Contracts</a>
+        </div>
+        <div class="nav-right">
+            <!-- Scenario Version Selectors -->
+            <div class="scenario-selectors" id="scenario-selectors">
+                <div class="scenario-select-group budget">
+                    <label>Budget:</label>
+                    <select class="scenario-select" id="budget-scenario-select" onchange="setActiveScenario('budget', this.value)">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+                <div class="scenario-select-group fuel">
+                    <label>Fuel/Gen:</label>
+                    <select class="scenario-select" id="fuel-scenario-select" onchange="setActiveScenario('fuel', this.value)">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+            </div>
+            <select class="year-select" onchange="location.href='/summary/' + this.value">
+                {% for y in [2024, 2025, 2026] %}
+                <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+            <span class="user-badge">{{ user_role|default('Dept Manager') }}</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Scenario Selector Script -->
+    <script>
+    // Load scenario context on page load
+    async function loadScenarioSelectors() {
+        try {
+            const response = await fetch('/api/scenarios/active/context');
+            if (!response.ok) return;
+            
+            const data = await response.json();
+            
+            // Populate budget dropdown
+            const budgetSelect = document.getElementById('budget-scenario-select');
+            if (budgetSelect) {
+                budgetSelect.innerHTML = '';
+                if (data.budget_scenarios && data.budget_scenarios.length > 0) {
+                    data.budget_scenarios.forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s.id;
+                        option.textContent = s.display_name;
+                        if (data.active_budget && data.active_budget.id === s.id) {
+                            option.selected = true;
+                        }
+                        budgetSelect.appendChild(option);
+                    });
+                } else {
+                    budgetSelect.innerHTML = '<option value="">No scenarios</option>';
+                }
+            }
+            
+            // Populate fuel dropdown
+            const fuelSelect = document.getElementById('fuel-scenario-select');
+            if (fuelSelect) {
+                fuelSelect.innerHTML = '';
+                if (data.fuel_scenarios && data.fuel_scenarios.length > 0) {
+                    data.fuel_scenarios.forEach(s => {
+                        const option = document.createElement('option');
+                        option.value = s.id;
+                        option.textContent = s.display_name;
+                        if (data.active_fuel && data.active_fuel.id === s.id) {
+                            option.selected = true;
+                        }
+                        fuelSelect.appendChild(option);
+                    });
+                } else {
+                    fuelSelect.innerHTML = '<option value="">No scenarios</option>';
+                }
+            }
+        } catch (error) {
+            console.error('Error loading scenarios:', error);
+        }
+    }
+    
+    async function setActiveScenario(type, scenarioId) {
+        if (!scenarioId) return;
+        
+        try {
+            const response = await fetch('/api/scenarios/active/set', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    scenario_type: type,
+                    scenario_id: parseInt(scenarioId)
+                })
+            });
+            
+            if (response.ok) {
+                // Reload the page to reflect the new scenario
+                location.reload();
+            } else {
+                console.error('Failed to set active scenario');
+            }
+        } catch (error) {
+            console.error('Error setting active scenario:', error);
+        }
+    }
+    
+    // Load scenarios when DOM is ready
+    document.addEventListener('DOMContentLoaded', loadScenarioSelectors);
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+

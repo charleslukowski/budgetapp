@@ -1,0 +1,330 @@
+{% extends "fuel_forecast/_layout.html" %}
+
+{% block step_content %}
+<div class="step-card">
+    <div class="step-card-header">
+        <h2>Step 3: Coal Contracts</h2>
+        <p>Review and adjust coal contract pricing for the forecast period.</p>
+    </div>
+    
+    <form method="POST" action="/fuel-forecast/{{ session_id }}/step/3">
+        <div class="step-card-body">
+            <!-- Active Contracts Summary -->
+            <div class="form-section">
+                <div class="form-section-title">Active Contracts for {{ year }}</div>
+                
+                {% if contracts %}
+                <div class="contracts-table-wrapper">
+                    <table class="contracts-table">
+                        <thead>
+                            <tr>
+                                <th>Supplier</th>
+                                <th>Contract ID</th>
+                                <th>Plant</th>
+                                <th>Annual Tons</th>
+                                <th>Coal $/ton</th>
+                                <th>Barge $/ton</th>
+                                <th>Delivered</th>
+                                <th>BTU/lb</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in contracts %}
+                            <tr>
+                                <td>{{ c.supplier }}</td>
+                                <td class="mono">{{ c.contract_id }}</td>
+                                <td>{{ c.plant_name }}</td>
+                                <td class="value">{{ "{:,.0f}".format(c.annual_tons) }}</td>
+                                <td class="value">${{ "%.2f"|format(c.coal_price_per_ton) }}</td>
+                                <td class="value">${{ "%.2f"|format(c.barge_price_per_ton) }}</td>
+                                <td class="value">${{ "%.2f"|format(c.delivered_cost_per_ton) }}</td>
+                                <td class="value">{{ "{:,.0f}".format(c.btu_per_lb) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>No active contracts found for {{ year }}.</p>
+                    <p>Forecasts will use uncommitted coal pricing.</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Blended Cost Preview -->
+            <div class="form-section">
+                <div class="form-section-title">Blended Cost Preview</div>
+                
+                <div class="cost-preview-grid">
+                    <div class="cost-preview-card">
+                        <div class="cost-preview-label">Kyger Creek</div>
+                        <div class="cost-preview-value">${{ "%.2f"|format(kc_blended.delivered_cost_per_ton) }}/ton</div>
+                        <div class="cost-preview-detail">{{ "%.2f"|format(kc_blended.cost_per_mmbtu) }} $/MMBtu</div>
+                        <div class="cost-preview-sources">
+                            {% for s in kc_blended.source_breakdown %}
+                            <span class="source-badge {{ s.type }}">{{ s.source }} ({{ s.pct }}%)</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="cost-preview-card">
+                        <div class="cost-preview-label">Clifty Creek</div>
+                        <div class="cost-preview-value">${{ "%.2f"|format(cc_blended.delivered_cost_per_ton) }}/ton</div>
+                        <div class="cost-preview-detail">{{ "%.2f"|format(cc_blended.cost_per_mmbtu) }} $/MMBtu</div>
+                        <div class="cost-preview-sources">
+                            {% for s in cc_blended.source_breakdown %}
+                            <span class="source-badge {{ s.type }}">{{ s.source }} ({{ s.pct }}%)</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Uncommitted Coal Pricing -->
+            <div class="form-section">
+                <div class="form-section-title">Uncommitted Coal Pricing</div>
+                <p class="form-section-description">Set spot market prices for coal purchased beyond contracted supply.</p>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>KC Spot Price ($/ton)</label>
+                        <input type="number" name="kc_uncommitted_price" 
+                               value="{{ kc_uncommitted.price_per_ton }}" 
+                               step="0.50" min="0" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label>KC Barge ($/ton)</label>
+                        <input type="number" name="kc_uncommitted_barge" 
+                               value="{{ kc_uncommitted.barge_per_ton }}" 
+                               step="0.50" min="0" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label>KC BTU/lb</label>
+                        <input type="number" name="kc_uncommitted_btu" 
+                               value="{{ kc_uncommitted.btu_per_lb }}" 
+                               step="50" min="8000" max="15000" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="input-grid" style="margin-top: 16px;">
+                    <div class="input-group">
+                        <label>CC Spot Price ($/ton)</label>
+                        <input type="number" name="cc_uncommitted_price" 
+                               value="{{ cc_uncommitted.price_per_ton }}" 
+                               step="0.50" min="0" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label>CC Barge ($/ton)</label>
+                        <input type="number" name="cc_uncommitted_barge" 
+                               value="{{ cc_uncommitted.barge_per_ton }}" 
+                               step="0.50" min="0" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label>CC BTU/lb</label>
+                        <input type="number" name="cc_uncommitted_btu" 
+                               value="{{ cc_uncommitted.btu_per_lb }}" 
+                               step="50" min="8000" max="15000" class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contract Pricing Adjustments (Optional) -->
+            {% if contracts %}
+            <details class="form-section collapsible">
+                <summary class="form-section-title clickable">
+                    Contract Price Adjustments
+                    <span class="toggle-hint">Click to expand</span>
+                </summary>
+                
+                <p class="form-section-description">Override contract pricing for specific months if needed.</p>
+                
+                <div class="contract-adjustments">
+                    {% for c in contracts %}
+                    <div class="contract-adjust-row">
+                        <div class="contract-adjust-header">
+                            <span class="supplier-name">{{ c.supplier }}</span>
+                            <span class="contract-id">{{ c.contract_id }}</span>
+                        </div>
+                        <div class="input-grid compact">
+                            <div class="input-group">
+                                <label>Coal Adj ($/ton)</label>
+                                <input type="number" name="contract_{{ c.id }}_coal_adj" 
+                                       value="0" step="0.50" class="form-control small">
+                            </div>
+                            <div class="input-group">
+                                <label>Barge Adj ($/ton)</label>
+                                <input type="number" name="contract_{{ c.id }}_barge_adj" 
+                                       value="0" step="0.50" class="form-control small">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </details>
+            {% endif %}
+        </div>
+        
+        <div class="step-actions">
+            <a href="/fuel-forecast/{{ session_id }}/step/2" class="btn btn-secondary">
+                ← Back to Coal Position
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Continue to Use Factors →
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+.contracts-table-wrapper {
+    overflow-x: auto;
+}
+
+.contracts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.contracts-table th,
+.contracts-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.contracts-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+}
+
+.contracts-table .value {
+    text-align: right;
+    font-family: 'SF Mono', 'Consolas', monospace;
+}
+
+.contracts-table .mono {
+    font-family: 'SF Mono', 'Consolas', monospace;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.empty-state {
+    padding: 24px;
+    text-align: center;
+    color: #6b7280;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.cost-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.cost-preview-card {
+    padding: 20px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
+    border-radius: 12px;
+    color: white;
+}
+
+.cost-preview-label {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.cost-preview-value {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.cost-preview-detail {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+.cost-preview-sources {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.source-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.2);
+}
+
+.source-badge.contract {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+.source-badge.uncommitted {
+    background: rgba(245, 158, 11, 0.3);
+}
+
+.source-badge.default {
+    background: rgba(156, 163, 175, 0.3);
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.collapsible summary {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-hint {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: normal;
+}
+
+.contract-adjust-row {
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.contract-adjust-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.supplier-name {
+    font-weight: 600;
+}
+
+.contract-id {
+    font-size: 12px;
+    color: #6b7280;
+    font-family: monospace;
+}
+
+.input-grid.compact {
+    gap: 12px;
+}
+
+.form-control.small {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+</style>
+{% endblock %}
+

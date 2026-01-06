@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(venvScripts:*)",
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(curl:*)",
+      "Bash(cat:*)",
+      "Bash(for url in \"/budget-entry/KC\" \"/forecast/KC\" \"/variance/KC\" \"/generation/KC\" \"/fuel/KC\")",
+      "Bash(do echo \"Testing $url:\")",
+      "Bash(done)",
+      "Bash(time curl:*)",
+      "Bash(git config:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,39 @@
+# Account CTUF01 to Department Mapping
+# Used as fallback when no project number is present
+# Fill in the dept_code column based on your departments.csv
+ctuf01,account_count,dept_code
+AC,10,AC
+AP,8,AC
+CHEM,81,ENV
+CP,2,MAINT
+D&D,4,MAINT
+EA,37,EA
+EM,21,MAINT
+ENV,132,ENV
+EO,23,EO
+FPR,6,MAINT
+FPR132,1,MAINT
+GA,48,MAINT
+HR,50,HR
+IC,37,IC
+IS,24,IS
+LABOR,8,MAINT
+M&S,25,MAINT
+MAINT,1131,MAINT
+MAT MGT,24,MAINT
+MGT,24,MAINT
+OPER,41,OPER
+OS,20,OS
+OUTAGE,9,OUTAGE
+RE,92,RE
+RPC100,2,MAINT
+SAFETY,46,EA
+SC,65,MAINT
+SO,9,MAINT
+SUPPORT,35,MAINT
+T&C,7,TC
+TA,15,TA
+TECH,11,MAINT
+TECH ENG,2,MAINT
+TS,83,TS
+YARD,222,YARD

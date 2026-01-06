@@ -1,0 +1,15 @@
+{# Step navigation component - displays 5-step progress indicator #}
+<nav class="step-nav" aria-label="Workflow steps">
+    {% for step in steps %}
+    <a href="{% if step.is_clickable %}/fuel-forecast/{{ session_id }}/step/{{ step.number }}{% else %}#{% endif %}"
+       class="step {{ step.status }} {% if step.is_clickable %}clickable{% endif %}"
+       {% if not step.is_clickable %}aria-disabled="true"{% endif %}
+       title="{{ step.label }}{% if step.status == 'done' %} (Complete){% elif step.status == 'changed' %} (Has changes){% elif step.status == 'pending' %} (Not started){% endif %}">
+        <div class="step-number">
+            <span>{{ step.number }}</span>
+        </div>
+        <span class="step-label">{{ step.label }}</span>
+    </a>
+    {% endfor %}
+</nav>
+

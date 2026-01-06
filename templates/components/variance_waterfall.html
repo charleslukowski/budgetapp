@@ -1,0 +1,190 @@
+{# 
+Variance Waterfall Chart Component
+
+Usage:
+{% include 'components/variance_waterfall.html' with context only %}
+
+Required context:
+- waterfall_id: Unique ID for the canvas element
+- waterfall_data: JSON string of waterfall data array, each item: {label: string, value: number}
+- waterfall_title: Optional title for the chart section
+
+The waterfall data should include:
+- First item: Starting value (e.g., "Prior Forecast")
+- Middle items: Delta contributions (positive/negative)
+- Last item: Ending value (e.g., "Current Forecast")
+#}
+
+<style>
+.waterfall-component {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.waterfall-component h3 {
+    margin: 0 0 16px 0;
+    color: #374151;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.waterfall-chart-wrapper {
+    height: 300px;
+    position: relative;
+}
+
+.waterfall-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.waterfall-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.waterfall-legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.waterfall-legend-color.base {
+    background: #3b82f6;
+}
+
+.waterfall-legend-color.increase {
+    background: #ef4444;
+}
+
+.waterfall-legend-color.decrease {
+    background: #22c55e;
+}
+</style>
+
+<div class="waterfall-component">
+    {% if waterfall_title %}
+    <h3>{{ waterfall_title }}</h3>
+    {% endif %}
+    
+    <div class="waterfall-chart-wrapper">
+        <canvas id="{{ waterfall_id }}"></canvas>
+    </div>
+    
+    <div class="waterfall-legend">
+        <div class="waterfall-legend-item">
+            <div class="waterfall-legend-color base"></div>
+            <span>Base / Result</span>
+        </div>
+        <div class="waterfall-legend-item">
+            <div class="waterfall-legend-color increase"></div>
+            <span>Cost Increase</span>
+        </div>
+        <div class="waterfall-legend-item">
+            <div class="waterfall-legend-color decrease"></div>
+            <span>Cost Decrease</span>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const waterfallData = {{ waterfall_data|safe }};
+    const ctx = document.getElementById('{{ waterfall_id }}').getContext('2d');
+    
+    if (!waterfallData || waterfallData.length === 0) {
+        console.log('No waterfall data provided');
+        return;
+    }
+    
+    const labels = waterfallData.map(d => d.label);
+    const rawValues = waterfallData.map(d => d.value);
+    
+    // Calculate floating bars for waterfall effect
+    const barData = [];
+    const backgroundColors = [];
+    let runningTotal = 0;
+    
+    waterfallData.forEach((item, index) => {
+        if (index === 0) {
+            // First bar: starts at 0
+            barData.push([0, item.value / 1000000]);
+            backgroundColors.push('#3b82f6');
+            runningTotal = item.value;
+        } else if (index === waterfallData.length - 1) {
+            // Last bar: result bar
+            barData.push([0, item.value / 1000000]);
+            backgroundColors.push('#3b82f6');
+        } else {
+            // Middle bars: floating on running total
+            const start = runningTotal / 1000000;
+            const end = (runningTotal + item.value) / 1000000;
+            barData.push([Math.min(start, end), Math.max(start, end)]);
+            backgroundColors.push(item.value >= 0 ? '#ef4444' : '#22c55e');
+            runningTotal += item.value;
+        }
+    });
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: barData,
+                backgroundColor: backgroundColors,
+                borderRadius: 4,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'x',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const dataIndex = context.dataIndex;
+                            const rawValue = waterfallData[dataIndex].value / 1000000;
+                            if (dataIndex === 0 || dataIndex === waterfallData.length - 1) {
+                                return 'Total: $' + rawValue.toFixed(1) + 'M';
+                            }
+                            return (rawValue >= 0 ? '+' : '') + '$' + rawValue.toFixed(1) + 'M';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Cost ($M)'
+                    },
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)'
+                    }
+                }
+            }
+        }
+    });
+})();
+</script>
+

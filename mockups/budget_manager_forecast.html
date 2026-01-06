@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecast Editor | OVEC Budget System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">OVEC Budget System</div>
+        <div class="nav-links">
+            <a href="budget_manager_dashboard.html">Dashboard</a>
+            <a href="budget_manager_forecast.html" class="active">Forecast</a>
+            <a href="budget_manager_variance.html">Variance</a>
+            <a href="internal_reallocations.html">Reallocations</a>
+            <a href="corporate_view.html">Corporate</a>
+        </div>
+        <div class="nav-right">
+            <select class="location-select">
+                <option>Kyger Creek</option>
+                <option>Clifty Creek</option>
+            </select>
+            <select class="year-select">
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+            <span class="user-badge">Budget Manager</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header with Department Switcher -->
+        <header class="page-header">
+            <div class="header-left">
+                <a href="budget_manager_dashboard.html" class="back-link">&larr; Dashboard</a>
+                <h1>Kyger Creek <span class="subtitle">2025 Forecast</span></h1>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary">Export All</button>
+                <button class="btn btn-primary">Save All</button>
+            </div>
+        </header>
+
+        <!-- Department Tabs -->
+        <div class="dept-tabs">
+            <div class="tab-group">
+                <span class="tab-group-label">OUTAGE</span>
+                <a href="?dept=PLANNED-01" class="dept-tab active">PLANNED-01</a>
+                <a href="?dept=PLANNED-02" class="dept-tab">PLANNED-02</a>
+                <a href="?dept=UNPLANNED" class="dept-tab has-issue">UNPLANNED</a>
+                <a href="?dept=OUTAGE" class="dept-tab">OUTAGE</a>
+            </div>
+            <div class="tab-group">
+                <span class="tab-group-label">NON-OUTAGE</span>
+                <a href="?dept=MAINT" class="dept-tab">MAINT</a>
+                <a href="?dept=OPER" class="dept-tab has-issue">OPER</a>
+                <a href="?dept=ENV" class="dept-tab">ENV</a>
+                <a href="?dept=CHEM" class="dept-tab">CHEM</a>
+                <a href="?dept=TECH" class="dept-tab">TECH</a>
+                <a href="?dept=SAFETY" class="dept-tab">SAFETY</a>
+            </div>
+            <div class="tab-group">
+                <span class="tab-group-label">LABOR</span>
+                <a href="?dept=LABOR" class="dept-tab">Plant Labor</a>
+                <a href="?dept=BENEFITS" class="dept-tab">Benefits</a>
+            </div>
+        </div>
+
+        <!-- Current Department Info -->
+        <div class="dept-info-bar">
+            <div class="dept-info-left">
+                <strong>PLANNED-01</strong> &mdash; Unit 1 Planned Outage
+                <span class="dept-status complete">Complete</span>
+            </div>
+            <div class="dept-info-right">
+                <span class="dept-total">Dept Total: <strong>$451,500</strong></span>
+                <span class="dept-updated">Last updated: 2h ago by J. Smith</span>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-left">
+                <input type="text" class="search-input" placeholder="Search account or description...">
+            </div>
+            <div class="filter-right">
+                <button class="btn btn-outline">Copy From...</button>
+                <button class="btn btn-outline">+ Add Line Item</button>
+            </div>
+        </div>
+
+        <!-- Data Grid -->
+        <div class="grid-container">
+            <table class="data-grid">
+                <thead>
+                    <tr>
+                        <th class="sticky-col col-account">Account</th>
+                        <th class="sticky-col col-acctdesc">Acct Desc</th>
+                        <th class="sticky-col col-desc">Description</th>
+                        <th class="month-col align-right">Jan</th>
+                        <th class="month-col align-right">Feb</th>
+                        <th class="month-col align-right">Mar</th>
+                        <th class="month-col align-right">Apr</th>
+                        <th class="month-col align-right">May</th>
+                        <th class="month-col align-right">Jun</th>
+                        <th class="month-col align-right">Jul</th>
+                        <th class="month-col align-right">Aug</th>
+                        <th class="month-col align-right">Sep</th>
+                        <th class="month-col align-right">Oct</th>
+                        <th class="month-col align-right">Nov</th>
+                        <th class="month-col align-right">Dec</th>
+                        <th class="total-col align-right">Total</th>
+                        <th class="year-col align-right">2026</th>
+                        <th class="year-col align-right">2027</th>
+                        <th class="actions-col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-126-4</td>
+                        <td class="sticky-col col-acctdesc">PULVERIZER</td>
+                        <td class="sticky-col col-desc">PULV TEMP & PRESS. SYSTEMS INSPECT - MATS</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">1,400</td>
+                        <td class="editable year-col">1,400</td>
+                        <td class="editable year-col">1,400</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-152-4</td>
+                        <td class="sticky-col col-acctdesc">BURNER PIPE</td>
+                        <td class="sticky-col col-desc">BURNER SHUT OFF DAMPER INSPECT & REPAIR</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">7,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">7,000</td>
+                        <td class="editable year-col">7,000</td>
+                        <td class="editable year-col">7,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-180-4</td>
+                        <td class="sticky-col col-acctdesc">PRECIPITATORS</td>
+                        <td class="sticky-col col-desc">PRECIP. INSPECT & REPAIR (Parts)</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">15,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">15,000</td>
+                        <td class="editable year-col">15,000</td>
+                        <td class="editable year-col">15,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR INSPECT & CLEAN</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value has-note" title="Pre-outage inspection">78,000<span class="note-indicator">📝</span></td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">24,000</td>
+                        <td class="editable has-value">56,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col highlight">170,000</td>
+                        <td class="editable year-col">170,000</td>
+                        <td class="editable year-col">170,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-186-4</td>
+                        <td class="sticky-col col-acctdesc">SCR</td>
+                        <td class="sticky-col col-desc">SCR LAYER 3 - LEVEL 5 (CATALYST CHANGE)</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value has-note" title="Catalyst replacement">175,000<span class="note-indicator">📝</span></td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col highlight">175,000</td>
+                        <td class="editable year-col">175,000</td>
+                        <td class="editable year-col">175,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-203-4</td>
+                        <td class="sticky-col col-acctdesc">AIR PREHEATERS</td>
+                        <td class="sticky-col col-desc">AIR PREHEATER WASH</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">8,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">10,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">20,000</td>
+                        <td class="editable year-col">20,000</td>
+                        <td class="editable year-col">20,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-205-4</td>
+                        <td class="sticky-col col-acctdesc">OVERFIRE AIR</td>
+                        <td class="sticky-col col-desc">OVERFIRE AIR DAMPERS - MATS</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">5,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">5,000</td>
+                        <td class="editable year-col">5,000</td>
+                        <td class="editable year-col">5,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                    <tr>
+                        <td class="sticky-col col-account">003-1-20-401-20-320-512-206-4</td>
+                        <td class="sticky-col col-acctdesc">AIR&GAS DUCT</td>
+                        <td class="sticky-col col-desc">SCR INLET DUCT CLEANING & STRUCTURAL</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="editable has-value">25,000</td>
+                        <td class="editable">0</td>
+                        <td class="editable">0</td>
+                        <td class="total-col">30,000</td>
+                        <td class="editable year-col">30,000</td>
+                        <td class="editable year-col">30,000</td>
+                        <td class="actions-col"><button class="btn-icon" title="Options">⋮</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="totals-row">
+                        <td class="sticky-col col-account">DEPARTMENT TOTAL</td>
+                        <td class="sticky-col col-acctdesc"></td>
+                        <td class="sticky-col col-desc"></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>96,000</td>
+                        <td>175,000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>49,000</td>
+                        <td>93,000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="total-col">$451,500</td>
+                        <td class="year-col">$451,500</td>
+                        <td class="year-col">$451,500</td>
+                        <td class="actions-col"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Footer Actions -->
+        <footer class="page-footer">
+            <div class="footer-left">
+                <span class="item-count">8 line items &bull; 2 with notes</span>
+            </div>
+            <div class="footer-right">
+                <span class="dept-nav">
+                    <a href="?dept=OUTAGE">&larr; OUTAGE</a>
+                    &nbsp;|&nbsp;
+                    <a href="?dept=PLANNED-02">PLANNED-02 &rarr;</a>
+                </span>
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary">Save Department</button>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+
