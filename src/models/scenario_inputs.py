@@ -19,6 +19,7 @@ from sqlalchemy.orm import relationship, Session
 from typing import Dict, List, Optional, Any
 
 from src.database import Base
+from src.utils.json_encoder import serialize_for_json
 
 
 class ScenarioInputSnapshot(Base):
@@ -105,18 +106,6 @@ class ScenarioInputSnapshot(Base):
 # Helper Functions
 # =============================================================================
 
-def convert_decimals(obj):
-    """Recursively convert Decimal values to float for JSON serialization."""
-    from decimal import Decimal
-
-    if isinstance(obj, Decimal):
-        return float(obj)
-    elif isinstance(obj, dict):
-        return {k: convert_decimals(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [convert_decimals(item) for item in obj]
-    else:
-        return obj
 
 
 def capture_current_inputs(db: Session, year: int) -> Dict[str, Any]:
@@ -199,7 +188,7 @@ def capture_current_inputs(db: Session, year: int) -> Dict[str, Any]:
             snapshot["coal_pricing"][str(plant_id)] = plant_pricing
 
     # Ensure all Decimal values are converted to float
-    return convert_decimals(snapshot)
+    return serialize_for_json(snapshot)
 
 
 def calculate_summary_metrics(snapshot: Dict[str, Any]) -> Dict[str, Decimal]:
@@ -309,15 +298,14 @@ def save_scenario_snapshot(
     if existing:
         db.delete(existing)
     
-    # Capture current state
+    # Capture current state (already serialized for JSON)
     snapshot_data = capture_current_inputs(db, year)
 
     # Calculate summary metrics
     metrics = calculate_summary_metrics(snapshot_data)
 
-    # Convert all Decimal values to float for JSON storage
-    snapshot_data = convert_decimals(snapshot_data)
-    metrics = convert_decimals(metrics)
+    # Convert metrics to float for storage
+    metrics = serialize_for_json(metrics)
 
     # Create snapshot
     snapshot = ScenarioInputSnapshot(

@@ -2,9 +2,18 @@
 PostgreSQL database connection and session management.
 """
 
+import json
+from decimal import Decimal
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 from src.config import Config
+
+
+def decimal_json_serializer(obj):
+    """JSON serializer for objects not serializable by default json code."""
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError(f"Type {type(obj)} not serializable")
 
 # SQLAlchemy base for models
 Base = declarative_base()
@@ -20,7 +29,8 @@ def get_engine():
         _engine = create_engine(
             Config.get_postgres_url(),
             echo=False,  # Set True for SQL debugging
-            pool_pre_ping=True
+            pool_pre_ping=True,
+            json_serializer=lambda obj: json.dumps(obj, default=decimal_json_serializer)
         )
     return _engine
 
